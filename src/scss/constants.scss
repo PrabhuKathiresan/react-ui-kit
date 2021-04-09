@@ -1,0 +1,41 @@
+$primary: var(--primary-color);
+$primary-dark: var(--primary-dark);
+$danger: var(--danger-color);
+$danger-dark: var(--danger-dark);
+$border-color: var(--border-color);
+$hover-border-color: var(--hover-border-color);
+$hover-bg: var(--hover-bg);
+$disabled: var(--disabled-bg);
+$disabled-text: var(--disabled-text);
+$icon-color: var(--icon-color);
+$primary-light-bg: var(--primary-light);
+$input-icon-width: 24px;
+$border-radius: 3px;
+$readOnly: rgba(255, 255, 255, 0.6);
+$label-color: #6c757d;
+$black: #000000;
+$white: #ffffff;
+$table-header-bg: var(--table-header-bg);
+$table-header-text-color: var(--table-header-text-color);
+$table-selected-bg: var(--table-selected-bg);
+
+$font-size-big: 14px;
+$font-size-default: 13px;
+$font-size-small: 12px;
+$font-size-x-small: 11px;
+$btn-color: rgba(0, 0, 0, 0.87);
+
+$btn-border: #cacaca;
+$btn-bg: #dee2e6;
+$accent: #00d2be;
+$secondary: #00d2be;
+$secondary-dark: #009688;
+
+$dialog-header-height: 60px;
+
+// Breakpoints
+$xs: 0;
+$sm: 576px;
+$md: 768px;
+$lg: 1024px;
+$xl: 1200px;
