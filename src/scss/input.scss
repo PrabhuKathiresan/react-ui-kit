@@ -1,0 +1,154 @@
+.ui-kit-input-block {
+  width: 100%;
+  margin-bottom: 1rem;
+
+  .ui-kit-input-hint-icon {
+    display: inline-block;
+    color: $black;
+  }
+
+  .ui-kit-input-label {
+    display: inline-flex;
+    align-items: center;
+    color: $label-color;
+    margin-bottom: 0.5rem;
+
+    &.is-required {
+      &::after {
+        content: "*";
+        margin-left: 5px;
+        color: $danger;
+      }
+    }
+  }
+
+  .ui-kit-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .ui-kit-input-icon {
+      width: $input-icon-width;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      z-index: 0;
+
+      &.left {
+        left: 0;
+      }
+      &.right {
+        right: 0;
+      }
+    }
+
+    &.text-area {
+      .ui-kit-input-icon {
+        align-items: flex-start;
+        padding-top: 12px;
+      }
+    }
+  }
+
+  .ui-kit-input {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: inherit;
+    font-family: inherit;
+    -webkit-appearance: none;
+    height: 32px;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    transition: box-shadow .15s ease-out;
+
+    &:focus, &:active {
+      outline: none;
+    }
+
+    &:hover{
+      border-color: $hover-border-color;
+    }
+    
+    &:focus {
+      border-color: $primary;
+      @include input-box-shadow($primary);
+    }
+
+    &.is-small {
+      padding: 0 8px;
+      height: 28px;
+    }
+
+    &.is-large {
+      padding: 0 16px;
+      height: 36px;
+    }
+
+    &.ui-kit-input-with-left-icon {
+      padding-left: $input-icon-width;
+    }
+    &.ui-kit-input-with-right-icon {
+      padding-right: $input-icon-width;
+    }
+
+    &.disabled {
+      background: $disabled !important;
+      cursor: not-allowed;
+    }
+
+    &:read-only {
+      background-color: $readOnly;
+    }
+  }
+
+  textarea {
+    &.ui-kit-input {
+      height: auto;
+      line-height: 1.5 !important;
+      padding: 8px 12px;
+      resize: none;
+    }
+  }
+
+  &.is-row {
+    flex-direction: row;
+  }
+
+  &.vertically-center {
+    align-items: center;
+  }
+
+  .ui-kit-input-action-item {
+    text-align: right;
+    color: $primary;
+    cursor: pointer;
+  }
+}
+
+.has-error {
+  .ui-kit-select-input,
+  .ui-kit-input {
+    border-color: $danger !important;
+
+    &.ui-kit-select-has-focus,
+    &:focus {
+      @include input-box-shadow($danger);
+    }
+
+    &.pk-select-has-focus {
+      @include input-box-shadow($danger);
+    }
+  }
+
+  .ui-kit-input-label {
+    color: $danger;
+  }
+}

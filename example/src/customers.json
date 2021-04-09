@@ -1,0 +1,1590 @@
+[
+  {
+    "_id": "5fe48c21f084ea5464e76db6",
+    "name": "sample new customer",
+    "address": "sample new address",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "contact": "8172389217",
+    "gstInNumber": "33UIJB98U76YGZ5",
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-12-24T12:40:01.045Z",
+    "updatedAt": "2021-01-12T15:13:39.460Z"
+  },
+  {
+    "_id": "5fe2ef0300ca02809d8eefae",
+    "name": "Postman customer 6",
+    "address": "22/16 Vanchinathan street\nAnadhapuram, East Tambaram",
+    "gstInNumber": "33BBHPD3159G1Z6",
+    "contact": "044-48655931, 9841098444",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-12-23T07:17:23.480Z",
+    "updatedAt": "2021-01-05T13:43:52.306Z"
+  },
+  {
+    "_id": "5fe2eeb47251a38070f45acb",
+    "name": "Postman customer 5",
+    "address": "Test\nAddress",
+    "gstInNumber": "33BBHPD3159G1Z5",
+    "contact": "044-48655931, 9841098444",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-12-23T07:16:04.979Z",
+    "updatedAt": "2021-01-05T13:44:51.761Z"
+  },
+  {
+    "_id": "5fe2eeb47251a38070f45aca",
+    "name": "Postman customer 4",
+    "address": "22/16 Vanchinathan street\nAnandhapuram, East Tambaram",
+    "gstInNumber": "33BBHPD3159G1Z4",
+    "contact": "044-48655931, 9841098444",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-12-23T07:16:04.979Z",
+    "updatedAt": "2021-01-05T13:45:46.046Z"
+  },
+  {
+    "_id": "5fe210cfb9f4316e127555ee",
+    "name": "Postman customer 3",
+    "address": "Postman address",
+    "gstInNumber": "33BBHPD3159G1Z1",
+    "contact": "044-48655931, 9841098444",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5fcfa00df7d1410d126ae544",
+    "createdAt": "2020-12-22T15:29:19.184Z",
+    "updatedAt": "2020-12-22T15:34:18.423Z"
+  },
+  {
+    "_id": "5fe210aec77d026dfbfcbb28",
+    "name": "Postman customer 2",
+    "address": "9, 7th Street, Vinobaji Nagar Hasthinapuram, CH-600064",
+    "gstInNumber": "33BBHPD3159G1Z9",
+    "contact": "044-48655931, 9841098444",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-12-22T15:28:46.105Z",
+    "updatedAt": "2020-12-22T15:28:46.105Z"
+  },
+  {
+    "_id": "5fe20a8ef909026b69a9073f",
+    "name": "Postman customer",
+    "address": "9, 7th Street, Vinobaji Nagar Hasthinapuram, CH-600064",
+    "gstInNumber": "33BBHPD3159G1Z7",
+    "contact": "044-48655931, 9841098444",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-12-22T15:02:38.829Z",
+    "updatedAt": "2020-12-22T15:02:38.829Z"
+  },
+  {
+    "_id": "5fcf906e2ee1c042a70d4caf",
+    "name": "Sample customer",
+    "address": "Sample customer address\nChennai",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "contact": "65762537612",
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-12-08T14:40:46.032Z",
+    "updatedAt": "2020-12-22T13:58:47.107Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95619",
+    "name": "SDM SUPER MARKET",
+    "address": "SDM Plaza, No.1A, Thiruporur Road, Hasthinapuram, chrompet, Chennai- 600 064.",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.284Z",
+    "updatedAt": "2020-09-08T14:39:08.284Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95618",
+    "name": "CASH AND CARRY",
+    "address": "NO,22, NATARAJ NAGAR, AF/MES ROAD, MADAMBAKKAM, CHENNAI 600 073",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.284Z",
+    "updatedAt": "2020-11-17T13:34:32.756Z",
+    "contact": "8172398213"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95617",
+    "name": "SRI JAYAA CORP",
+    "address": "#2A/13, Soloman Street, rajaji nagar, Zamin Pallavaram, chennai-600 043",
+    "gstInNumber": "33BRFPJ5048G2ZX",
+    "contact": "9750187187 -  9943187187",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.284Z",
+    "updatedAt": "2020-09-08T14:39:08.284Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95616",
+    "name": "VV MART",
+    "address": "N0; 219 Velachery Main road, Sembakkam, Chennai 73",
+    "gstInNumber": "33ABXPJ7672F2Z5",
+    "contact": "044-45493337 , 8939093337",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.284Z",
+    "updatedAt": "2020-09-08T14:39:08.284Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95615",
+    "name": "POORVIKA SUPER MARKET",
+    "address": "NO.1 SHEBA NAGER, VENGAPAKAM MAIN ROAD, MOPAD, CHENNAI 600 126",
+    "gstInNumber": "33BBEPR8092P12V",
+    "contact": "9710114005",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.284Z",
+    "updatedAt": "2020-09-08T14:39:08.284Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95614",
+    "name": "P L VEL STORES",
+    "address": "Pillayar Koil Street, Keelkajjalai\nChennai",
+    "contact": "80120 68960",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.284Z",
+    "updatedAt": "2020-11-17T13:13:01.681Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95613",
+    "name": "SHRI AYYANAR SUPER MARKET",
+    "address": "No.113, Pammal Main Road, Chennai - 600 075.",
+    "gstInNumber": "33ADMPM1660R1Z1",
+    "contact": "9994223599",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.284Z",
+    "updatedAt": "2020-09-08T14:39:08.284Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95612",
+    "name": "INIIAAS SUPER MARKET",
+    "gstInNumber": "33AAHFI7121D1ZU",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.284Z",
+    "updatedAt": "2020-11-07T07:03:20.038Z",
+    "address": "My new address",
+    "contact": "9872312732"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95611",
+    "name": "ALAGAR PAZHAMUDIR NILAYAM",
+    "address": "No;34, 1st Main Road, Kamakotti Nagar, Pallikarani, Chennai- 600 100",
+    "gstInNumber": "33CMCPM6919G1Z1",
+    "contact": "98400 92335 / 78710 72754",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.283Z",
+    "updatedAt": "2020-09-08T14:39:08.284Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95610",
+    "name": "SAI SAKTHI SUPER MARKET",
+    "address": "9, 7th Street, Vinobaji Nagar Hasthinapuram, CH-600064",
+    "gstInNumber": "33BBHPD3159G1ZZ",
+    "contact": "044-48655931, 9841098444",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.283Z",
+    "updatedAt": "2020-09-08T14:39:08.283Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed9560f",
+    "name": "LATHA SUPER BAZAAR",
+    "address": "Surver No.114/2 & 114/5a, Kumaran Nagar 200 feet. Radial road, Zamin Pallavaram, CH-117",
+    "gstInNumber": "33AAIFL1620R1Z5",
+    "contact": "8939882222 & 9566121110",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.283Z",
+    "updatedAt": "2020-09-08T14:39:08.283Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed9560e",
+    "name": "MORIAN MEGA MART",
+    "address": "RUBY GRAND-A, 150th Feet Road, Agaramthen Main Road, Thiruvencherry, Selaiyur, Chennai-73",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.283Z",
+    "updatedAt": "2020-12-11T12:54:45.015Z",
+    "contact": "9723812739"
+  },
+  {
+    "_id": "5f57978c4a3176122ed9560d",
+    "name": "MURUGAN STORES SUPER MARKET",
+    "address": "No.18, RANGANATHAN NAGAR, AGARAM MAIN RD, SELAIYUR-73.",
+    "gstInNumber": "33ABLFM0813H1ZJ",
+    "contact": "9940037817",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.283Z",
+    "updatedAt": "2020-09-08T14:39:08.283Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed9560c",
+    "name": "SS STORES",
+    "address": "No.113, Pammal Main Road, Chennai - 600 075.",
+    "contact": "99942 23599",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.283Z",
+    "updatedAt": "2020-09-08T14:39:08.283Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed9560b",
+    "name": "LATTA SUPER MARKET",
+    "address": "636/63, VELACHERY TAMBARAM MAIN ROAD, 1st MAIN ROAD, KAMAKOTI NAGER, PALLIKARANAI",
+    "gstInNumber": "33AABFL6568K1Z1",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.283Z",
+    "updatedAt": "2020-09-08T14:39:08.283Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed9560a",
+    "name": "SHRI SAROJINIDEVI RICE MANDI",
+    "address": "No.4/1A, Annasamy Street, Pallavaram, Chennai - 600 043.",
+    "gstInNumber": "33CWHPS8029Q1ZO",
+    "contact": "9283456693 / 7598988693",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.283Z",
+    "updatedAt": "2021-01-25T15:06:00.854Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95609",
+    "name": "LAXMI SUPER MARKET",
+    "address": "No;183, Dharga Road, Zammin Pallavaram, Chennai-600 043",
+    "gstInNumber": "33AAIFL0014B1Z8",
+    "contact": "8680892306",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.283Z",
+    "updatedAt": "2020-09-08T14:39:08.283Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95608",
+    "name": "SRI ROJA PROVISION STORES",
+    "address": "NO,46/194, DHARGA ROAD, RAJAJI NAGER, ZAMIN PALLAVARAM",
+    "gstInNumber": "33ADJFS6676C1ZW",
+    "contact": "9710781419",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.283Z",
+    "updatedAt": "2020-09-08T14:39:08.283Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95607",
+    "name": "SHRI AYYANAR SUPER MARKET",
+    "address": "No 22, Railway Station Road, Pallavaram, Chennai-600043",
+    "gstInNumber": "33ADMPM1660R1Z1",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.283Z",
+    "updatedAt": "2020-09-08T14:39:08.283Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95606",
+    "name": "JANUARY Super Market",
+    "address": "No. 183,Dharga Road,Zamin pallavaram,Chennai - 600 043.",
+    "gstInNumber": "33AHTPV2928C1Z3",
+    "contact": "8939363655",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.283Z",
+    "updatedAt": "2020-09-08T14:39:08.283Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95605",
+    "name": "SRI PERUMAL SUPER MARKET",
+    "address": "NO.95 First Floor, Gokulam complex, P.V.VaithialingamRoad, Zamin Pallavaram, Chennai - 600 117.",
+    "gstInNumber": "33CISPD7831C1ZD",
+    "contact": "044-22662666",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.283Z",
+    "updatedAt": "2020-09-08T14:39:08.283Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95604",
+    "name": "SHREE KRISHNA SUPER MARKET",
+    "address": "NO.51,P.V.Vaithiyalingam Road,Old pallavaram,Chennai - 600 117.",
+    "gstInNumber": "33BXOPR9994N1Z3",
+    "contact": "9042310994",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.283Z",
+    "updatedAt": "2020-09-08T14:39:08.283Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95603",
+    "name": "ANANTHA STORES",
+    "address": "NO 56, DHARGA ROAD, RAJAJI NAGER,  Zamin pallavaram",
+    "gstInNumber": "33BQZPC6003K1ZP",
+    "contact": "9962269202",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.283Z",
+    "updatedAt": "2020-09-08T14:39:08.283Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95602",
+    "name": "RAJENDRAN STORES",
+    "address": "JAMIN PALLAVARAM",
+    "gstInNumber": "33AGZPR2788P1Z2",
+    "contact": "9498084041",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.283Z",
+    "updatedAt": "2020-09-08T14:39:08.283Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95601",
+    "name": "M S stores",
+    "address": "Zamin pallavaram,\nChennai",
+    "gstInNumber": "33CXCPS0376JIZB",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.283Z",
+    "updatedAt": "2020-12-07T12:35:35.502Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed95600",
+    "name": "S M SUPER MARKET",
+    "address": "3rd Main Road, Pallavaram Garden,Zamin pallavaram, Chennai - 600 117.",
+    "gstInNumber": "33ACMFS6350HIZY",
+    "contact": "8939924111",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.283Z",
+    "updatedAt": "2020-09-08T14:39:08.283Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955ff",
+    "name": "J.P. RAJA STORES",
+    "address": "NO. 151/2C ,CAMP ROAD, SELAIYUR, CHENNAI-600 073",
+    "gstInNumber": "33AAAPY4756D1ZP",
+    "contact": "044-22292365",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.282Z",
+    "updatedAt": "2020-09-08T14:39:08.282Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955fe",
+    "name": "NEW PONNU STORES",
+    "address": "NO:35, CAMP ROAD, SELAIVUR, CHENNAI:600073",
+    "gstInNumber": "33AALPI1465J1ZP",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.282Z",
+    "updatedAt": "2020-09-08T14:39:08.282Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955fd",
+    "name": "Ganesh Super Market",
+    "address": "NO.84 AGARAM MAIN ROAD,",
+    "gstInNumber": "33AWVPJ0421F1ZJ",
+    "contact": "044 22293148",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.282Z",
+    "updatedAt": "2020-09-08T14:39:08.282Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955fc",
+    "name": "JAYAM SUPER MARKET",
+    "address": "NO,80,Devaraj Nagar, Madambakkam Main Road, Madambakkam. Chennai - 600 073",
+    "gstInNumber": "33AAHFJ7120M1ZB",
+    "contact": "22295222",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955fb",
+    "name": "KK SUPER MARKET",
+    "address": "plot no.5 & 6, Indra Nager, Selaiyur, E Tambaram, che - 73",
+    "gstInNumber": "33AQMPR9777K1ZT",
+    "contact": "7602041188   9443789315",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955fa",
+    "name": "SRI VENKATESHWARA SUPER MARKET",
+    "address": "2, AGARAM MAIN R0AD, THIRUVANCHERRY , CHENNAI",
+    "gstInNumber": "33AJFPN8349F1Z3",
+    "contact": "044-22291337",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955f9",
+    "name": "AMUTHU SUPER MARKET",
+    "address": "69 & 80, Padmavathi Nager, Madambakkam main Road, Che - 126",
+    "gstInNumber": "33AAMFA2265K12F",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955f8",
+    "name": "CHELLAM SUPRE STORE",
+    "address": "No.11/41, Velachery main road, Madavakkam, che-100",
+    "gstInNumber": "33ANIPV8358H1ZF",
+    "contact": "4422770889",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955f7",
+    "name": "HARSHINI ENTERPRISES",
+    "address": "ZAMIN PALLAVARAM",
+    "gstInNumber": "33AAJFH6329Q1ZU",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955f6",
+    "name": "LATTA SUPER MARKET",
+    "address": "248/1A VELACHERY Main Road, Medavakkam Koot Road",
+    "gstInNumber": "33AABFL6568K1Z1",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955f5",
+    "name": "SRI VENKATESHWARA SUPER MARKET",
+    "address": "GOWRIWAKAM",
+    "gstInNumber": "33AJFPN8349F1Z3",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955f4",
+    "name": "VELAVAN SHOPPING MALL",
+    "address": "MADAVAKKAM",
+    "gstInNumber": "33CTZPM8937J1ZN",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955f3",
+    "name": "S NATESAN SUPER MARKET",
+    "address": "NO.130, 5th CROSS STREET, KAMAKOTI NAGER MAIN ROAD, PALLIKARANAI, CHENNAI-600100",
+    "gstInNumber": "33ACSFS8604A1Z5",
+    "contact": "7871899966",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955f2",
+    "name": "Om Stores",
+    "address": "Old Pallavaram",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955f1",
+    "name": "Hotel Dhana",
+    "address": "Old Pallavaram",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955f0",
+    "name": "Saranya Stores",
+    "address": "Old Pallavaram",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955ef",
+    "name": "Manikandan",
+    "address": "Old Pallavaram",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955ee",
+    "name": "Selvam",
+    "address": "Old Pallavaram",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955ed",
+    "name": "MS Stores",
+    "address": "Old Pallavaram",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955ec",
+    "name": "SM Super Market",
+    "address": "Old Pallavaram",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955eb",
+    "name": "Jayachandra Stores",
+    "address": "Old Pallavaram",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955ea",
+    "name": "SRI PERUMAL SUPER MARKET",
+    "address": "F2, Olympia Grande, GST Road, Paiiavaram.",
+    "gstInNumber": "33CISPD7831C1ZD",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955e9",
+    "name": "Jayanthi Stores",
+    "address": "Old pallavaram",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955e8",
+    "name": "Vijay Store",
+    "address": "Old Pallavarm",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.281Z",
+    "updatedAt": "2020-09-08T14:39:08.281Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955e7",
+    "name": "KAY MART (ISHWARYA TRADERS)",
+    "address": "NO,87 Thulukka Street, KUNDRATHUR, chenna-i600069",
+    "gstInNumber": "33ABQPI5190Q1ZY",
+    "contact": "9841633129",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955e6",
+    "name": "NEW Royal Bakery",
+    "address": "NO,78, VALMIKI STREET, E TAMBARAM, CHENNAI-",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955e5",
+    "name": "Perin Super Market",
+    "address": "E.Tambaram",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955e4",
+    "name": "ARIESH HOT CHIPS",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955e3",
+    "name": "GREEN SUPER MARKET",
+    "address": "NO. 6, Kannammal Street, Near Bus Stand, Hasthinapuram, Chennai-600 064",
+    "gstInNumber": "33AUKPM2174R1Z1",
+    "contact": "9444613306",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955e2",
+    "name": "GROCER SUPER MARKET",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955e1",
+    "name": "VINAYAGA SUPER MARKET",
+    "address": "1/6,R.P. Road, Hasthinapuram Chennai-600 064",
+    "gstInNumber": "33AMLPP3404A2ZK",
+    "contact": "ph: 044-43575950",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955e0",
+    "name": "EVERGREEN SUPER MARKET",
+    "address": "16/8A, RAGAVENDRA SALAI, KUMAR AVENUE, CHITLAPAKKAM, CHENNAI-64",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955df",
+    "name": "KUMAR SUPER MARKET",
+    "address": "NO;10, CHITLAPAKKAM  MAIN ROAD, CHENNAI-600073",
+    "gstInNumber": "33CZKPS6027A1ZI",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955de",
+    "name": "RAJESWARI SUPER MARKET",
+    "address": "NO27, MYLAI RAMAMURTHY STREET, SEMBAKKAM, CHENNAI.",
+    "gstInNumber": "33DEKPK8816R1ZO",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955dd",
+    "name": "NELLAI SUPER MARKET",
+    "address": "NO;1 KAMARAJAPURAM MAIN ROAD, KAMARAJAPURAM, CHENNAI-600073",
+    "gstInNumber": "33ACMPE9497P1Z0",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955dc",
+    "name": "ARCHANA BAKERY",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955db",
+    "name": "VIJAYA LAKSHMI STORES",
+    "address": "OLD PALLAVARAM",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955da",
+    "name": "KALAI VANI STORES",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955d9",
+    "name": "SELVAKANI STORES",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955d8",
+    "name": "NANAM STORES",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955d7",
+    "name": "MK MANI STORES",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955d6",
+    "name": "SUNDARAPANDIYAN STORES",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955d5",
+    "name": "BALAJI",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955d4",
+    "name": "BHUPATHY STORES",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955d3",
+    "name": "JEYAMURUGAN SUPER MARKET",
+    "address": "No: 107, Bharthi Nager Main Road, Zamin Pallavaram, Che - 43",
+    "gstInNumber": "33BGCPD9673HIZD",
+    "contact": "04422660011 / 04422661011",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.280Z",
+    "updatedAt": "2020-09-08T14:39:08.280Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955d2",
+    "name": "AMARAVATHI STORES",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.279Z",
+    "updatedAt": "2020-09-08T14:39:08.279Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955d1",
+    "name": "NEW PARIANDAVAR STORES",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.279Z",
+    "updatedAt": "2020-09-08T14:39:08.279Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955d0",
+    "name": "SARAVANA STORES",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.279Z",
+    "updatedAt": "2020-12-07T12:41:18.476Z",
+    "address": "this is the users address",
+    "contact": "8794837923"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955cf",
+    "name": "SUYAMBU STORES",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.279Z",
+    "updatedAt": "2020-09-08T14:39:08.279Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955ce",
+    "name": "KAMARAJ STORES",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.279Z",
+    "updatedAt": "2020-09-08T14:39:08.279Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955cd",
+    "name": "HOTAL LAKSHMI",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.279Z",
+    "updatedAt": "2020-09-08T14:39:08.279Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955cc",
+    "name": "ANITHA STORES",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.279Z",
+    "updatedAt": "2020-09-08T14:39:08.279Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955cb",
+    "name": "NEW JAYAM DEPARTMENTAL STORES",
+    "address": "142,Velachery Main Road, EastTambaram, Chennai - 600 059",
+    "gstInNumber": "33AAFFN5416Q1ZY",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.279Z",
+    "updatedAt": "2020-09-08T14:39:08.279Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955ca",
+    "name": "AKSHA ORGANICS & SUPER MARKET",
+    "address": "NO. 35, ANNA STREET, CHITLAPAKKAM, CHENNAI - 600 064.",
+    "gstInNumber": "33APIPC9575K1ZI",
+    "contact": "9500003368",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.279Z",
+    "updatedAt": "2020-09-08T14:39:08.279Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955c9",
+    "name": "KRISHNA HOT CHIPS",
+    "address": "CHITLAPAKKAM",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.279Z",
+    "updatedAt": "2020-09-08T14:39:08.279Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955c8",
+    "name": "VENKADESWARA SWEET & BAKERY",
+    "address": "M L NAGAR",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.279Z",
+    "updatedAt": "2020-09-08T14:39:08.279Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955c7",
+    "name": "RATHNA HOT CHIPS",
+    "address": "SANTHOSHPURAM",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.279Z",
+    "updatedAt": "2020-09-08T14:39:08.279Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955c6",
+    "name": "THANGAM SUPER MARKET",
+    "address": "141,VELACHERY MAIN ROAD, GOWRIVAKKAM, CHENNAI-73",
+    "gstInNumber": "33AGYPV0784A1Z2",
+    "contact": "4422780409",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.279Z",
+    "updatedAt": "2020-09-08T14:39:08.279Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955c5",
+    "name": "LAKSHMI Deptmental Stores",
+    "address": "NO;252, VELACHERY MAIN ROAD, SEMBAKKAM, CHENNAL-600073",
+    "gstInNumber": "33ACKPN3669A1ZQ",
+    "contact": "044-22282395",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.279Z",
+    "updatedAt": "2020-09-08T14:39:08.279Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955c4",
+    "name": "METRO MART SUPER MARKET",
+    "address": "MAMBAKKAM",
+    "gstInNumber": "33ADSPJ1980D1ZK",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.279Z",
+    "updatedAt": "2020-09-08T14:39:08.279Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955c3",
+    "name": "AAJ SUPER MARKET",
+    "address": "NO:4/262; OTTIYAMPAKKAM MAIN ROAD, SITHALAPAKKAM, CHENNAI-600126",
+    "gstInNumber": "33AQEPA1150B1ZY",
+    "contact": "9500955966",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.279Z",
+    "updatedAt": "2020-09-08T14:39:08.279Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955c2",
+    "name": "J P BAKERY",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.279Z",
+    "updatedAt": "2020-09-08T14:39:08.279Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955c1",
+    "name": "RAJENDRAN SUPER MARKET",
+    "address": "No 152/2, CAMP ROAD, SELAIYUR, CHENNAI-600 073",
+    "gstInNumber": "33AJLPA4281B1ZR",
+    "contact": "9080384858",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.279Z",
+    "updatedAt": "2020-09-08T14:39:08.279Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955c0",
+    "name": "K K SUPER MARKET",
+    "address": "PLOT NO, 5 & 6 , INDRA NAGAR, SELAIYUR, EAST TAMBARAM, CHENNAI -73",
+    "gstInNumber": "33AQMPR9777K1ZT",
+    "contact": "9443789315",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.278Z",
+    "updatedAt": "2020-09-08T14:39:08.278Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955bf",
+    "name": "VAIBHAVE SHOPPIE SUPER MARKET",
+    "address": "NO, 28, SRI RANGANATHAN NAGAR, AGARAM MAIN ROAD, SELAIYUR, CHENNAI - 600 073",
+    "gstInNumber": "33AAMFV7737MIZF",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.278Z",
+    "updatedAt": "2020-09-08T14:39:08.278Z"
+  },
+  {
+    "_id": "5f57978c4a3176122ed955be",
+    "name": "LONDAN STORES",
+    "state": {
+      "_id": "5f5793d813b7de11e38985ef",
+      "name": "Tamil Nadu",
+      "key": "33",
+      "__v": 0
+    },
+    "createdBy": "5f57946daac14012129277e8",
+    "updatedBy": "5f57946daac14012129277e8",
+    "createdAt": "2020-09-08T14:39:08.278Z",
+    "updatedAt": "2020-09-08T14:39:08.278Z"
+  }
+]

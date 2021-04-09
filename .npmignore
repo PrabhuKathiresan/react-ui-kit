@@ -1,0 +1,17 @@
+.DS_Store
+.eslintcache
+node_modules
+npm-debug.log
+.travis.yml
+example/
+src/
+test/
+*.test.js
+coverage/
+*.stories.js
+*.stories.jsx
+rollup.config.js
+.babelrc
+.eslintignore
+.eslintrc
+.gitignore

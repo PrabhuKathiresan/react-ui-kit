@@ -1,0 +1,39 @@
+.has-hover-effect {
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+  }
+}
+
+.radius-circle {
+  border-radius: 50%;
+}
+
+.ui-kit-form {
+  width: 100%;
+  min-height: 100%;
+
+  &.form-with-fixed-action {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-action-button {
+    margin: 0 -16px;
+    padding: 0 16px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  
+    &.sticky-footer {
+      margin-top: auto;
+      background-color: #fff;
+      box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.12);
+    }
+  }
+}
+
+.sticky-footer {
+  position: sticky;
+  bottom: 0;
+}
