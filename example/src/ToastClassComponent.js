@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Toast } from '@mi-design/react-ui-kit'
+import { Button, Toast } from '@pk-design/react-ui-kit'
 
 const { withToastManager } = Toast
 

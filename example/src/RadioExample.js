@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Radio } from '@mi-design/react-ui-kit'
+import { Radio } from '@pk-design/react-ui-kit'
 
 export default function RadioExample() {
   let [simpleChecked, setSimpleChecked] = useState(false)

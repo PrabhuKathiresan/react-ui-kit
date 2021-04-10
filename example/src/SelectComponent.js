@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Select, AsyncSelect } from '@mi-design/react-ui-kit';
+import { Select, AsyncSelect } from '@pk-design/react-ui-kit';
 import data from './countries.json';
 
 export default function SelectComponent() {

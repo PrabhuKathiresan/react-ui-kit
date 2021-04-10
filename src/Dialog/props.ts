@@ -27,6 +27,7 @@ export interface Props extends DialogProps {
 export interface DialogContainerProps {
   children: any;
   hidden: boolean;
+  transitionDuration?: number;
 }
 
 export interface DialogState {

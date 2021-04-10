@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextInput } from '@mi-design/react-ui-kit'
+import { TextInput } from '@pk-design/react-ui-kit'
 
 export default function TextInputExample() {
   return (

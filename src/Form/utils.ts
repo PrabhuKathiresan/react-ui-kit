@@ -56,7 +56,7 @@ export const validators = {
 
 const MULTI_VALUE_COMPONENTS = ['Checkbox.Group']
 
-const isArrayField = (component: string, props: any) => {
+export const isArrayField = (component: string, props: any) => {
   return (
     MULTI_VALUE_COMPONENTS.includes(component) ||
     (component === 'Select' && Boolean(props.multiple))
@@ -86,8 +86,10 @@ export class FormValidation {
         validation,
         type,
         dependencyCheck,
-        formatter,
         required,
+        editable = true,
+        hidden = false,
+        hiddenIf,
         component = 'TextInput',
         componentProps
       } = field
@@ -95,21 +97,17 @@ export class FormValidation {
       isArray = isArray || isArrayField(component, componentProps)
       isEmail = isEmail || type === 'email'
       isNumber = isNumber || type === 'number'
-      let ctx = {
-        isBoolean,
-        isEmail,
-        isNumber,
-        isArray
-      }
-      // let required = requiredIf && isFunction(requiredIf) ? requiredIf() : field.required
       if (required) {
         rules.push({
           name,
           method: 'isRequired',
           message: errorMessage || `${label || name} is required`,
           validationProps: { ...validationProps },
-          formatter,
-          ctx
+          ctx: {
+            editable,
+            hidden,
+            hiddenIf
+          }
         })
       }
       if (requiredIf && isFunction(requiredIf)) {
@@ -118,8 +116,11 @@ export class FormValidation {
           method: requiredIf,
           message: errorMessage || `${label || name} is required`,
           validationProps: { ...validationProps },
-          formatter,
-          ctx
+          ctx: {
+            editable,
+            hidden,
+            hiddenIf
+          }
         })
       }
       if (isEmail) {
@@ -128,8 +129,11 @@ export class FormValidation {
           method: 'isEmail',
           validationProps: { ...validationProps },
           message: errorMessage || `Please enter valid ${label || name}`,
-          formatter,
-          ctx
+          ctx: {
+            editable,
+            hidden,
+            hiddenIf
+          }
         });
       }
       if (validation) {
@@ -138,8 +142,11 @@ export class FormValidation {
           method: 'customValidation',
           validationProps: { ...validationProps },
           message: errorMessage || `Please enter valid ${label || name}`,
-          formatter,
-          ctx
+          ctx: {
+            editable,
+            hidden,
+            hiddenIf
+          }
         });
       }
       if (isNumber) {
@@ -149,8 +156,11 @@ export class FormValidation {
           method: 'isNumber',
           validationProps: { ...validationProps, min, max },
           message: errorMessage || `${label || name} must be ${min ? `greater than ${min} ${max ? 'and' : ''}` : ''}${max ? ` lesser than ${max}` : ''}`,
-          formatter,
-          ctx
+          ctx: {
+            editable,
+            hidden,
+            hiddenIf
+          }
         });
       }
       if (dependencyCheck) {
@@ -159,8 +169,11 @@ export class FormValidation {
           method: dependencyCheck.validate,
           validationProps: { ...validationProps },
           message: dependencyCheck.errorMessage,
-          formatter,
-          ctx
+          ctx: {
+            editable,
+            hidden,
+            hiddenIf
+          }
         });
       }
       return rules
@@ -170,13 +183,18 @@ export class FormValidation {
   validate(data: object) {
     let validation: any = this.rules.reduce((validation, rule) => {
       try {
-        let { name, method, validationProps, message } = rule
-        let value = get(data, name)
-        let validation_method = typeof method === 'string' ? validators[method] : method;
+        let { name, method, validationProps, message, ctx } = rule
+        let { editable, hidden, hiddenIf } = ctx;
+        hidden = hiddenIf && isFunction(hiddenIf) ? hiddenIf(data) : Boolean(hidden)
+        let validField = editable && !hidden
+        if (validField) {
+          let value = get(data, name)
+          let validation_method = typeof method === 'string' ? validators[method] : method;
 
-        if (isFunction(validation_method) && !validation_method(value, validationProps, data)) {
-          set(validation.errors, name, message)
-          validation.isValid = false;
+          if (isFunction(validation_method) && !validation_method(value, validationProps, data)) {
+            set(validation.errors, name, message)
+            validation.isValid = false;
+          }
         }
       } catch (error) {
         set(validation.errors, 'generic', error.message)
@@ -197,7 +215,7 @@ export class FormData {
     this.fields = fields
   }
 
-  toJSON(data: object) {
+  toJSON(data: object, includeAll = false) {
     return this.fields.reduce((formdata, field) => {
       let {
         name,
@@ -208,28 +226,35 @@ export class FormData {
         type,
         formatter,
         component = 'TextInput',
-        componentProps
+        componentProps,
+        editable = true,
+        hidden,
+        hiddenIf
       } = field
-      isBoolean = isBoolean || component === 'Checkbox'
-      isArray = isArray || isArrayField(component, componentProps)
-      isEmail = isEmail || type === 'email'
-      isNumber = isNumber || type === 'number'
 
-      let value = get(data, name)
-      let field_value: any = value
-      if (isBoolean) {
-        field_value = Boolean(value)
-      }
-      if (isNumber) {
-        field_value = (typeof value !== 'undefined' && value !== null) ? parseFloat(value) : ''
-      }
-      if (isArray) {
-        field_value = Array.isArray(value) ? value : []
-      }
+      hidden = hiddenIf && isFunction(hiddenIf) ? hiddenIf(data) : Boolean(hidden)
+      if ((editable && !hidden) || includeAll) {
+        isBoolean = isBoolean || component === 'Checkbox'
+        isArray = isArray || isArrayField(component, componentProps)
+        isEmail = isEmail || type === 'email'
+        isNumber = isNumber || type === 'number'
 
-      field_value = formatter && isFunction(formatter) ? formatter(field_value) : field_value
+        let value = get(data, name)
+        let field_value: any = value
+        if (isBoolean) {
+          field_value = Boolean(value)
+        }
+        if (isNumber) {
+          field_value = (typeof value !== 'undefined' && value !== null) ? parseFloat(value) : ''
+        }
+        if (isArray) {
+          field_value = Array.isArray(value) ? value : []
+        }
 
-      set(formdata, name, field_value)
+        field_value = formatter && isFunction(formatter) ? formatter(field_value) : field_value
+
+        set(formdata, name, field_value)
+      }
 
       return formdata
     }, {})

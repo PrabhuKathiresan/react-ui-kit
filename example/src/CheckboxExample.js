@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Checkbox } from '@mi-design/react-ui-kit'
+import { Checkbox } from '@pk-design/react-ui-kit'
 
 const CheckboxGroup = Checkbox.Group
 

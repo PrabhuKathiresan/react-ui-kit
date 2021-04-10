@@ -1,7 +1,9 @@
 import React from 'react'
-import { Form } from '@mi-design/react-ui-kit'
+import { Form, Toast } from '@pk-design/react-ui-kit'
 import { isEmpty } from 'lodash'
 import COUNTRIES from './countries.json'
+
+const { useToasts } = Toast
 
 const FRUITS = [
   {
@@ -207,7 +209,8 @@ const isNewForm = agent => isEmpty(agent._id)
 const AGENT_FIELDS = [
   {
     name: '_id',
-    hidden: true
+    hidden: true,
+    editable: false
   },
   {
     name: 'name',
@@ -229,7 +232,7 @@ const AGENT_FIELDS = [
     type: 'password',
     label: 'Create password for agent',
     value: '',
-    hiddenIf: (agent) => agent._id && `${agent._id}`.toString().length === 24,
+    hiddenIf: (agent) => Boolean(agent._id),
     dependencyCheck: {
       validate: (value, options, agent) => { // eslint-disable
         return !isNewForm(agent) || !isEmpty(value);
@@ -313,7 +316,6 @@ const AGENT_FIELDS = [
       let [, ,agent] = args
       return isSuperAdmin(agent) || agent.manageAllBrands || !isEmpty(agent.managedBrands)
     },
-    value: [],
     formatter: function (value) {
       if (value && Array.isArray(value)) {
         return value.map(v => v._id);
@@ -331,6 +333,7 @@ const AGENT_FIELDS = [
   {
     name: 'createdAt',
     hidden: true,
+    editable: false,
   },
   {
     name: 'updatedAt',
@@ -340,15 +343,43 @@ const AGENT_FIELDS = [
     useSort: 'updatedAt',
     width: 160,
     sortable: true,
+    editable: false,
   }
 ]
 
+let service = {
+  create: (data) => {
+    return Promise.resolve({ success: true });
+  },
+  update: (id, data) => {
+    return Promise.resolve({ success: true });
+  }
+}
+
 export default function FormComponent({ stickyFooter = true }) {
+  const toasts = useToasts();
+  const data = {
+    _id: 1,
+    name: 'Prabhu Kathiresan',
+    email: 'prabhukathir30@gmail.com',
+    role: {
+      name: 'Admin',
+      value: 'admin'
+    },
+    manageAllBrands: true,
+    managedBrands: []
+  }
   return (
     <Form
+      name='agent-form'
       fields={AGENT_FIELDS}
-      data={{ name: 'Prabhu Kathiresan' }}
-      onSubmit={(data) => console.log(data)}
+      data={data}
+      service={service}
+      isNewForm={false}
+      dataId={1}
+      submitBtnText='Save Agent'
+      onError={(error) => console.error(error)}
+      onSuccess={() => toasts.addToast('Agent updated successfully', { title: 'Update success', type: 'success', autoDismiss: true, duration: 5000 })}
       stickyFooter={stickyFooter}
     />
   )

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { DataTable } from '@mi-design/react-ui-kit'
+import { DataTable } from '@pk-design/react-ui-kit'
 import service from './service'
 import CUSTOMERS from './customers.json'
 
@@ -182,6 +182,7 @@ export default function TableComponent() {
         selectable
         headerHeight={40}
         footerHeight={40}
+        showProgress
       />
     </div>
   )

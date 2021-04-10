@@ -8,7 +8,7 @@ import TextInput from '../TextInput'
 import Select from '../Select'
 import Checkbox from '../Checkbox'
 import Radio from '../Radio'
-import { isDefined, isFunction } from '../utils'
+import { isDefined, isEqual, isFunction, noop } from '../utils'
 import { FormFields, FormProps, FormState } from './props'
 import { FormValidation, FormData } from './utils'
 
@@ -21,10 +21,11 @@ const getFormData = (props: FormProps) => {
     let value = getter && isFunction(getter) ? getter(data) : get(data, name)
     let defaultValue: any = ''
     if (MULTI_VALUE_FIELDS.includes(component)) {
-      value = value ? [value] : []
+      value = value ? Array.isArray(value) ? value : [value] : []
       defaultValue = []
     }
     set(formData, name, value || defaultValue)
+    set(formData, `__previous_${name}`, value || defaultValue)
     return formData
   }, {})
 }
@@ -36,7 +37,9 @@ export default class Form extends Component<FormProps, FormState> {
     super(props)
     this.state = {
       formData: getFormData(this.props),
-      errors: {}
+      errors: {},
+      submitting: false,
+      dirty: false
     }
     this.fieldsHash = this.props.fields.reduce((hash, field) => {
       hash[field.name] = { ...field }
@@ -45,22 +48,57 @@ export default class Form extends Component<FormProps, FormState> {
     this.formValidation = new FormValidation(this.props.fields)
   }
 
-  getNormalizedData = () => {
+  getNormalizedData = (includeAll?: boolean) => {
     let { formData } = this.state
     let { fields } = this.props
 
-    return new FormData(fields).toJSON(formData)
+    return new FormData(fields).toJSON(formData, Boolean(includeAll))
   }
 
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
-    let data = this.getNormalizedData()
-    let validation = this.formValidation.validate(data)
+    let formdata = this.getNormalizedData(true)
+    let validation = this.formValidation.validate(formdata)
     if (!validation.isValid) return this.setState({ errors: validation.errors })
 
     this.setState({ errors: {} })
-    this.props.onSubmit(data)
+
+    let data = this.getNormalizedData()
+    let { onSubmit } = this.props
+
+    if (onSubmit && isFunction(onSubmit)) {
+      return onSubmit(data);
+    }
+
+    let {
+      service = {},
+      isNewForm,
+      createMethod = 'create',
+      updateMethod = 'update',
+      dataId,
+      onSuccess = noop,
+      onError = noop
+    } = this.props
+
+    let serviceMethod, params;
+    if (isNewForm) {
+      serviceMethod = service[createMethod]
+      params = [data]
+    } else {
+      serviceMethod = service[updateMethod]
+      params = [dataId, data]
+    }
+
+    if (serviceMethod && isFunction(serviceMethod)) {
+      this.setState({ submitting: true });
+
+      return serviceMethod(...params)
+        .then((response: any) => onSuccess(response))
+        .catch((error: any) => onError(error.message))
+        .finally(() => this.setState({ submitting: false }))
+    }
+
+    onError('Service method is not configured');
   }
 
   handleInputChange = (name: string, value: any) => {
@@ -68,23 +106,7 @@ export default class Form extends Component<FormProps, FormState> {
       let { formData } = state
       set(formData, name, value)
       return { formData: { ...formData } }
-    }, () => {
-      let field = this.fieldsHash[name]
-      if (isFunction(field.onInputChange)) {
-        let normalizedData = this.getNormalizedData()
-        let updates = field.onInputChange(normalizedData)
-        let { type, ...data } = updates
-        if (type === 'update') {
-          this.setState((state: FormState) => {
-            let { formData } = state
-            Object.keys(data).forEach(key => {
-              set(formData, key, data[key])
-            })
-            return { formData: { ...formData } }
-          })
-        }
-      }
-    })
+    }, () => this.afterChange(name))
   }
 
   handleCheckboxChange = (name: string, e: any) => {
@@ -96,7 +118,39 @@ export default class Form extends Component<FormProps, FormState> {
       index !== -1 ? values.splice(index, 1) : values.push(value)
       set(formData, name, [...values])
       return { formData: { ...formData } }
-    })
+    }, () => this.afterChange(name))
+  }
+
+  afterChange = (fieldName: any) => {
+    let field = this.fieldsHash[fieldName]
+    if (isFunction(field.onInputChange)) {
+      let normalizedData = this.getNormalizedData(true)
+      let updates = field.onInputChange(normalizedData)
+      let { type, ...data } = updates
+      if (type === 'update') {
+        this.setState((state: FormState) => {
+          let { formData } = state
+          Object.keys(data).forEach(key => {
+            set(formData, key, data[key])
+          })
+          return { formData: { ...formData } }
+        })
+      }
+    }
+    let { formData } = this.state
+    let { fields } = this.props
+    let dirty = false
+    for (let f of fields) {
+      let { name } = f
+      let previousValue = get(formData, `__previous_${name}`)
+      let currentValue = get(formData, name)
+
+      if (!isEqual(previousValue, currentValue)) {
+        dirty = true
+        break
+      }
+    }
+    this.setState({ dirty })
   }
 
   renderField = (field: FormFields) => {
@@ -114,10 +168,12 @@ export default class Form extends Component<FormProps, FormState> {
       name,
       maxLength,
       dependencyCheck,
+      formatter,
+      validationProps = {},
       ...restProps
     } = field
 
-    let data = this.getNormalizedData()
+    let data = this.getNormalizedData(true)
     if (hiddenIf(data)) return null
 
     let error = get(errors, name)
@@ -183,12 +239,31 @@ export default class Form extends Component<FormProps, FormState> {
   }
 
   render() {
-    let { fields, stickyFooter } = this.props
+    let {
+      fields,
+      stickyFooter,
+      submitBtnText = 'Submit',
+      submitBtnIcon = {},
+      showCancelBtn = false,
+      cancelBtnText = 'Cancel',
+      cancelBtnIcon = {},
+      onCancel = noop,
+      name,
+      disabled,
+      loading,
+      isNewForm
+    } = this.props
+    let {
+      submitting,
+      dirty
+    } = this.state
 
+    let formType = isNewForm ? 'create' : 'update'
     let renderableFields = fields.filter(f => !f.hidden)
+    let disableSubmit = disabled || loading || submitting || !dirty
     return (
       <>
-        <form className={cx('ui-kit-form', { 'form-with-fixed-action': stickyFooter })} onSubmit={this.handleSubmit}>
+        <form name={name} data-testid={`${formType}-${name}`} noValidate className={cx('ui-kit-form', { 'form-with-fixed-action': stickyFooter })} onSubmit={this.handleSubmit}>
           <div className='form-fields'>
             {
               renderableFields.map(field => (
@@ -201,7 +276,27 @@ export default class Form extends Component<FormProps, FormState> {
             }
           </div>
           <div className={cx('form-action-button', { 'sticky-footer': stickyFooter })}>
-            <Button type='submit'>Submit</Button>
+            {
+              showCancelBtn && (
+                <Button
+                  type='button'
+                  icon={cancelBtnIcon}
+                  onClick={() => onCancel()}
+                  data-testid={`cancel-${name}`}
+                >
+                  {cancelBtnText}
+                </Button>
+              )
+            }
+            <Button
+              theme='primary'
+              type='submit'
+              icon={submitBtnIcon}
+              disabled={disableSubmit}
+              data-testid={`submit-${name}`}
+            >
+              {submitBtnText}
+            </Button>
           </div>
         </form>
       </>

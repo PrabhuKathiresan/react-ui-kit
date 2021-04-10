@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
-import { Button } from '@mi-design/react-ui-kit'
+import { Button } from '@pk-design/react-ui-kit'
 
 export default function ButtonExample() {
   return (

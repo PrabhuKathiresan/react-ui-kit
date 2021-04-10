@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Dialog, Select, Checkbox } from '@mi-design/react-ui-kit'
+import { Button, Dialog, Select, Checkbox } from '@pk-design/react-ui-kit'
 import FormComponent from './FormComponent'
 
 const { withDialogManager } = Dialog
@@ -134,7 +134,7 @@ class DialogExample extends Component {
             selected={[getSelected(SIZES, size, DEFAULTSIZE)]}
             onChange={selected => this.setOptions('size', selected[0]?.value || 'sm')}
           />
-          <Checkbox className='mr-8 mb-16' checked={showBackdrop} onChange={e => this.setOptions(showBackdrop, e.target.checked)}>Show backdrop</Checkbox>
+          <Checkbox className='mr-8 mb-16' checked={showBackdrop} onChange={e => this.setOptions('showBackdrop', e.target.checked)}>Show backdrop</Checkbox>
         </div>
         <Button onClick={() => this.handleClick()}>Show Dialog</Button>
       </div>

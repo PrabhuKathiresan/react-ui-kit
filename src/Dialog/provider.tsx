@@ -91,14 +91,18 @@ export class DialogProvider extends Component<Props, DialogState> {
           portalTarget ?
             (
               createPortal(
-                <DialogContainer hidden={!hasModal}>
+                <DialogContainer hidden={!hasModal} transitionDuration={transitionDuration}>
                   <TransitionGroup component={null}>
                     {
                       modals.map((modal: DialogProps) => (
                         <Transition
                           appear
                           mountOnEnter
-                          timeout={transitionDuration}
+                          timeout={{
+                            appear: transitionDuration,
+                            enter: 0,
+                            exit: transitionDuration
+                          }}
                           unmountOnExit
                           key={modal.id}
                         >

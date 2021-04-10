@@ -47,6 +47,6 @@ export default function ProgressBar(props: ProgressBarProps) {
   }, [loading])
 
   return (
-    <div className='ui-table-progress' style={{ width: `${progress}%` }} />
+    <div className='ui-kit-table-progress' style={{ width: `${progress}%` }} />
   )
 }

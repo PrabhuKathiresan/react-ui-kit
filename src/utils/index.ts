@@ -9,7 +9,11 @@ export const isString = (str: any) => typeof str === 'string'
 
 export const isObject = (obj: any) => typeof obj === 'object'
 
-export const isEqual = (val1: any, val2: any) => `${val1}` === `${val2}`
+export const isEqual = (val1: any, val2: any) => {
+  let v1 = typeof val1 === 'object' ? JSON.stringify(val1) : val1
+  let v2 = typeof val2 === 'object' ? JSON.stringify(val2) : val2
+  return `${v1}` === `${v2}`
+}
 
 export const isFunction = (v: any) => typeof v === 'function';
 

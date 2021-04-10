@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Dialog, Select, Checkbox } from '@mi-design/react-ui-kit'
+import { Button, Dialog, Select, Checkbox } from '@pk-design/react-ui-kit'
 import FormComponent from './FormComponent'
 
 const { useDialog } = Dialog

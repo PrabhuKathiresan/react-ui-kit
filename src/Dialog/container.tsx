@@ -3,13 +3,19 @@ import { Transition } from 'react-transition-group'
 import { DialogContainerProps } from './props'
 
 export default function DialogContainer(props: DialogContainerProps) {
+  let {
+    hidden,
+    transitionDuration,
+    children
+  } = props
   return (
     <Transition
       timeout={{
-        enter: 220,
-        exit: 220
+        appear: transitionDuration,
+        enter: 0,
+        exit: transitionDuration
       }}
-      in={!props.hidden}
+      in={!hidden}
       unmountOnExit
       appear
     >
@@ -26,7 +32,7 @@ export default function DialogContainer(props: DialogContainerProps) {
             boxSizing: 'border-box',
           }}
         >
-          {props.children}
+          {children}
         </div>
       )}
     </Transition>

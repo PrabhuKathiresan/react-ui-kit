@@ -5,7 +5,6 @@ import SelectComponent from './SelectComponent';
 import TableComponent from './TableComponent';
 import FormComponent from './FormComponent';
 
-// import '@mi-design/react-ui-kit/lib/css/ui-kit.css';
 import './App.css';
 
 function App() {
@@ -13,7 +12,7 @@ function App() {
     <div className="">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
-          <Link className="navbar-brand" to='/'>@mi-design/react-ui-kit</Link>
+          <Link className="navbar-brand" to='/'>@pk-design/react-ui-kit</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
