@@ -347,16 +347,24 @@ const AGENT_FIELDS = [
   }
 ]
 
-let service = {
-  create: (data) => {
+class Service {
+  constructor(allowedMethods) {
+    this.allowedMethods = allowedMethods
+  }
+
+  create(data) {
+    console.log(this.allowedMethods);
     return Promise.resolve({ success: true });
-  },
-  update: (id, data) => {
+  }
+
+  update = (id, data) => {
+    console.log(this.allowedMethods);
     return Promise.resolve({ success: true });
   }
 }
 
-export default function FormComponent({ stickyFooter = true }) {
+export default function FormComponent({ stickyFooter = true, onError = () => {}, onSuccess = () => {}, onCancel = () => {} }) {
+  const service = new Service(['post', 'put']);
   const toasts = useToasts();
   const data = {
     _id: 1,
@@ -369,6 +377,17 @@ export default function FormComponent({ stickyFooter = true }) {
     manageAllBrands: true,
     managedBrands: []
   }
+
+  function handleSuccess() {
+    onSuccess()
+    toasts.addToast('Agent updated successfully', { title: 'Update success', type: 'success', autoDismiss: true, duration: 5000 })
+  }
+
+  function handleError() {
+    onError()
+    toasts.addToast('Agent updated failed', { title: 'Update failed', type: 'error', autoDismiss: true, duration: 5000 })
+  }
+
   return (
     <Form
       name='agent-form'
@@ -378,9 +397,12 @@ export default function FormComponent({ stickyFooter = true }) {
       isNewForm={false}
       dataId={1}
       submitBtnText='Save Agent'
-      onError={(error) => console.error(error)}
-      onSuccess={() => toasts.addToast('Agent updated successfully', { title: 'Update success', type: 'success', autoDismiss: true, duration: 5000 })}
+      onError={handleError}
+      onSuccess={handleSuccess}
       stickyFooter={stickyFooter}
+      strict
+      showCancelBtn
+      onCancel={() => onCancel()}
     />
   )
 }

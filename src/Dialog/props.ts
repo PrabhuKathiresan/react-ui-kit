@@ -44,5 +44,6 @@ export interface DialogControllerProps {
 
 export interface ProviderProps {
   show: Function;
-  hide: Function
+  hide: Function;
+  update: Function;
 }

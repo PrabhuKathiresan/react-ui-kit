@@ -67,6 +67,25 @@ export class DialogProvider extends Component<Props, DialogState> {
     }, callback)
   }
 
+  update = (id: string, option: DialogProps, cb: Function = noop) => {
+    // bail if NO dialog exists with this ID
+    if (!this.has(id)) {
+      return
+    }
+
+    let callback = () => cb()
+    this.setState((state) => {
+      let modals = state.modals.map(m => {
+        if (m.id !== id) return { ...m }
+        return {
+          ...m,
+          ...option
+        }
+      })
+      return { modals }
+    }, callback)
+  }
+
   render() {
     let {
       position = 'right',
@@ -85,7 +104,7 @@ export class DialogProvider extends Component<Props, DialogState> {
     let portalTarget = canUseDOM ? container ? document.querySelector(container) : document.body : null
 
     return (
-      <Provider value={{ show: this.show, hide: this.hide }}>
+      <Provider value={{ show: this.show, hide: this.hide, update: this.update }}>
         {children}
         {
           portalTarget ?
@@ -156,6 +175,7 @@ export const useDialog = () => {
 
   return {
     show: ctx.show,
-    hide: ctx.hide
+    hide: ctx.hide,
+    update: ctx.update
   };
 };

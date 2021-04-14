@@ -12,7 +12,7 @@ export interface FormFields {
   requiredIf?: Function;
   hiddenIf?: Function;
   onInputChange?: Function;
-  validation?: Function;
+  validation?: Function | boolean;
   formatter?: Function;
   validationProps?: object;
   editable?: boolean;
@@ -56,4 +56,5 @@ export interface FormProps {
   dataId?: any;
   onSuccess?: Function;
   onError?: Function;
+  strict?: boolean;
 }

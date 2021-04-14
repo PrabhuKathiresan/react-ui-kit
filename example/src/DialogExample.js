@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Dialog, Select, Checkbox } from '@pk-design/react-ui-kit'
 import FormComponent from './FormComponent'
 
@@ -80,11 +80,21 @@ const DEFAULTSIZE = {
   value: 'sm'
 }
 const getSelected = (opts, s, defaultVal) => opts.find(o => o.value === s) || defaultVal
+const DIALOG = 'basic-dialog'
+const UPDATABLE_DIALOG = 'updatable-dialog'
+
+const MyComponent = ({ useNew, onClick }) => (
+  <div>
+    <div>{useNew ? 'I am new component' : 'old component'}</div>
+    <Button onClick={onClick}>{`Swtich to ${useNew ? 'old' : 'new'} component`}</Button>
+  </div>
+)
 
 export default function DialogExample() {
-  let dialog = useDialog();
-
+  let dialog = useDialog()
+  let [useNew, setUseNew] = useState(false)
   let [options, setOptions] = useState({
+    id: DIALOG,
     title: 'Test',
     content: 'This is a description component in the dialog window',
     position: 'right',
@@ -92,13 +102,28 @@ export default function DialogExample() {
     showBackdrop: true
   })
 
+  let hideDialog = () => dialog.hide(DIALOG)
+
   let handleClick = () => {
-    
     dialog.show({
       ...options,
-      content: <FormComponent stickyFooter={false} />
+      content: <FormComponent onSuccess={hideDialog} onError={hideDialog} stickyFooter onCancel={hideDialog} />
     })
   }
+
+  let openWithUpdate = () => {
+    dialog.show({
+      ...options,
+      id: UPDATABLE_DIALOG,
+      content: <MyComponent useNew={useNew} onClick={() => setUseNew(!useNew)} />
+    })
+  }
+
+  useEffect(() => {
+    dialog.update(UPDATABLE_DIALOG, {
+      content: <MyComponent useNew={useNew} onClick={() => setUseNew(!useNew)} />
+    })
+  }, [useNew]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className='col-lg-4 mb-16'>
@@ -130,7 +155,8 @@ export default function DialogExample() {
         />
         <Checkbox className='mr-8 mb-16' checked={options.showBackdrop} onChange={e => setOptions(options => ({ ...options, showBackdrop: e.target.checked }))}>Show backdrop</Checkbox>
       </div>
-      <Button onClick={() => handleClick()}>Show Dialog</Button>
+      <Button onClick={() => handleClick()} className='mr-16'>Show Dialog</Button>
+      <Button onClick={() => openWithUpdate()}>Updatable Dialog</Button>
     </div>
   )
 }

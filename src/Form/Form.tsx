@@ -48,23 +48,24 @@ export default class Form extends Component<FormProps, FormState> {
     this.formValidation = new FormValidation(this.props.fields)
   }
 
-  getNormalizedData = (includeAll?: boolean) => {
+  getNormalizedData = (includeAll: boolean, strict: boolean) => {
     let { formData } = this.state
     let { fields } = this.props
 
-    return new FormData(fields).toJSON(formData, Boolean(includeAll))
+    return new FormData(fields).toJSON(formData, { includeAll, strict })
   }
 
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    let formdata = this.getNormalizedData(true)
+    let formdata = this.getNormalizedData(true, false)
     let validation = this.formValidation.validate(formdata)
     if (!validation.isValid) return this.setState({ errors: validation.errors })
 
     this.setState({ errors: {} })
 
-    let data = this.getNormalizedData()
-    let { onSubmit } = this.props
+    let { onSubmit, strict = false } = this.props
+    let data = this.getNormalizedData(false, strict)
+    console.log(data)
 
     if (onSubmit && isFunction(onSubmit)) {
       return onSubmit(data);
@@ -124,7 +125,7 @@ export default class Form extends Component<FormProps, FormState> {
   afterChange = (fieldName: any) => {
     let field = this.fieldsHash[fieldName]
     if (isFunction(field.onInputChange)) {
-      let normalizedData = this.getNormalizedData(true)
+      let normalizedData = this.getNormalizedData(true, false)
       let updates = field.onInputChange(normalizedData)
       let { type, ...data } = updates
       if (type === 'update') {
@@ -173,7 +174,7 @@ export default class Form extends Component<FormProps, FormState> {
       ...restProps
     } = field
 
-    let data = this.getNormalizedData(true)
+    let data = this.getNormalizedData(true, false)
     if (hiddenIf(data)) return null
 
     let error = get(errors, name)
@@ -280,9 +281,11 @@ export default class Form extends Component<FormProps, FormState> {
               showCancelBtn && (
                 <Button
                   type='button'
+                  className='mr-16'
                   icon={cancelBtnIcon}
                   onClick={() => onCancel()}
                   data-testid={`cancel-${name}`}
+                  tabIndex={-1}
                 >
                   {cancelBtnText}
                 </Button>

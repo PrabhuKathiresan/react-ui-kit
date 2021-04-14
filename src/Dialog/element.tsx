@@ -82,7 +82,6 @@ export default function Dialog(props: DialogProps) {
       <div
         className='ui-kit-dialog'
         style={{
-          
           ...dialogStates(position)[transitionState],
           transition: `transform 220ms, opacity 220ms`,
           ...getGutter(position)

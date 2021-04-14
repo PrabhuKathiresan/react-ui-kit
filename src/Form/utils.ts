@@ -1,6 +1,6 @@
 import get from 'lodash.get'
 import set from 'lodash.set'
-import { isFunction } from '../utils'
+import { isEqual, isFunction } from '../utils'
 import { FormFields } from './props'
 
 interface FieldRules {
@@ -22,35 +22,40 @@ export const validators = {
     if (options.allowBlank && !text) {
       return true;
     }
-    return emailRegex.test(text);
+    return emailRegex.test(text)
   },
   isRequired: (value = '', options: any) => {
     const text = getValue(value, options);
-    return typeof text !== 'undefined' && text !== '';
+    return typeof text !== 'undefined' && text !== ''
   },
   customValidation: (value = '', options: any) => {
-    const text = getValue(value, options);
-    if (options.allowBlank && !text) {
-      return true;
+    let { validation, ...option } = options
+    if (isFunction(validation)) {
+      return validation(value, option)
     }
-    if (options.maxLength) {
-      return (text && text.length === options.maxLength);
+    const text = getValue(value, option);
+    let { allowBlank, maxLength } = option;
+    if (allowBlank && !text) {
+      return true
     }
-    return false;
+    if (maxLength) {
+      return (text && text.length === maxLength)
+    }
+    return false
   },
   isNumber: (value = '', options: any) => {
     const number = getValue(value, options);
     if (options.allowBlank && (typeof number === 'undefined' || number === '')) {
-      return true;
+      return true
     }
     const _number = parseFloat(number);
     if (options.min && _number < options.min) {
-      return false;
+      return false
     }
     if (options.max && _number > options.max) {
-      return false;
+      return false
     }
-    return true;
+    return true
   }
 }
 
@@ -140,7 +145,7 @@ export class FormValidation {
         rules.push({
           name,
           method: 'customValidation',
-          validationProps: { ...validationProps },
+          validationProps: { ...validationProps, validation },
           message: errorMessage || `Please enter valid ${label || name}`,
           ctx: {
             editable,
@@ -215,7 +220,7 @@ export class FormData {
     this.fields = fields
   }
 
-  toJSON(data: object, includeAll = false) {
+  toJSON(data: object, options = { includeAll: false, strict: false }) {
     return this.fields.reduce((formdata, field) => {
       let {
         name,
@@ -233,13 +238,14 @@ export class FormData {
       } = field
 
       hidden = hiddenIf && isFunction(hiddenIf) ? hiddenIf(data) : Boolean(hidden)
-      if ((editable && !hidden) || includeAll) {
+      if ((editable && !hidden) || options.includeAll) {
         isBoolean = isBoolean || component === 'Checkbox'
         isArray = isArray || isArrayField(component, componentProps)
         isEmail = isEmail || type === 'email'
         isNumber = isNumber || type === 'number'
 
         let value = get(data, name)
+        let previousValue = get(data, `__previous_${name}`)
         let field_value: any = value
         if (isBoolean) {
           field_value = Boolean(value)
@@ -253,7 +259,9 @@ export class FormData {
 
         field_value = formatter && isFunction(formatter) ? formatter(field_value) : field_value
 
-        set(formdata, name, field_value)
+        if (!options.strict || !isEqual(value, previousValue)) {
+          set(formdata, name, field_value)
+        }
       }
 
       return formdata

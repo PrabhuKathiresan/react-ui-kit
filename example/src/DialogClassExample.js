@@ -80,9 +80,11 @@ const DEFAULTSIZE = {
   value: 'sm'
 }
 const getSelected = (opts, s, defaultVal) => opts.find(o => o.value === s) || defaultVal
+const DIALOG = 'class-dialog'
 
 class DialogExample extends Component {
   state = {
+    id: DIALOG,
     title: 'Test',
     content: 'This is a description component in the dialog window',
     position: 'right',
@@ -90,10 +92,13 @@ class DialogExample extends Component {
     showBackdrop: true
   }
 
+  hideDialog = () => this.props.dialogManager.hide(DIALOG)
+
   handleClick = () => {
-    this.props.dialogManager.show({
+    let { dialogManager } = this.props
+    dialogManager.show({
       ...this.state,
-      content: <FormComponent stickyFooter={false} />
+      content: <FormComponent stickyFooter={false} onSuccess={this.hideDialog} onError={this.hideDialog} onCancel={this.hideDialog} />
     })
   }
 

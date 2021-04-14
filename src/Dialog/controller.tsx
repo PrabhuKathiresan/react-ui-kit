@@ -3,8 +3,8 @@ import Dialog from './element'
 import { DialogProps, DialogPositions, TransitionState } from './props'
 
 const sizeMap = {
-  xs: 320,
-  sm: 480,
+  xs: 360,
+  sm: 520,
   md: 720,
   lg: 991,
   xl: 1200
