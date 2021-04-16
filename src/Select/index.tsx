@@ -543,25 +543,16 @@ class Select extends PureComponent<SelectProps, SelectState> {
       inputClass = '',
       container,
       required = false,
-      // animate = false,
-      // transitionDuration = animate ? ANIMATION_TIMER : 0,
       textOnly = false
     } = this.props
 
     let {
-      // value,
-      // menuPosition,
       open,
       selected,
       id: internalId
     } = this.state
 
     id = id || internalId
-
-    // let mergedStateAndProps = {
-    //   ...this.props,
-    //   ...this.state,
-    // }
 
     let rightIcon = {
       component: showRightIcon ? (isEmpty(icons.right) ? <ArrowUpDown width={14} height={14} /> : icons.right) : null,
@@ -594,7 +585,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
           }
           <div data-testid={`${id}-select`} className={cx('ui-kit-select', { 'ui-kit-select--multiple': multiple })} id={`${id}-select`} style={containerStyle}>
             <InputWrapper
-              {...inputProps}
+              inputProps={inputProps}
               inputClass={inputClass}
               disabled={disabled}
               placeHolder={placeHolder ? placeHolder : (searchable ? 'Search...' : 'Select...')}

@@ -95,6 +95,7 @@ export default function SelectComponent() {
             icons={{
               right: <i className='bi-chevron-expand'></i>
             }}
+            inputProps={{ tabIndex: 0 }}
           />
         </div>
         <div className='col-lg-4'>

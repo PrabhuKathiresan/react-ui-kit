@@ -28,6 +28,7 @@ import {
 class AsyncTable extends Component<AsyncProps, AsyncTableState> {
   scrollableArea = React.createRef<HTMLDivElement>()
   columnSettings: (HTMLDivElement | null) = null
+  _unsubscribe: boolean = false
 
   constructor(props: AsyncProps) {
     super(props)
@@ -58,6 +59,10 @@ class AsyncTable extends Component<AsyncProps, AsyncTableState> {
     ) {
       this.fetchRecord()
     }
+  }
+
+  componentWillUnmount() {
+    this._unsubscribe = true
   }
 
   scrollToInitialPosition = () => {
@@ -94,24 +99,28 @@ class AsyncTable extends Component<AsyncProps, AsyncTableState> {
       .get(this.getParams())
       .then((response: ServiceResponseProps) => {
         let { data, total } = response
-        this.setState({
-          data: data.map((d, i) => ({ ...d, ___id: generateID(total), index: i })),
-          total,
-          selected: [],
-          selectAll: false
-        }, this.afterSelect)
-        this.scrollToInitialPosition()
+        if (!this._unsubscribe) {
+          this.setState({
+            data: data.map((d, i) => ({ ...d, ___id: generateID(total), index: i })),
+            total,
+            selected: [],
+            selectAll: false
+          }, this.afterSelect)
+          this.scrollToInitialPosition()
+        }
       })
       .catch((err: any) => {
         console.error(err)
       })
       .finally(() => {
-        this.setState({ loading: false }, () => {
-          loadingHandler(false)
-          setTimeout(() => {
-            this.setState({ progressing: false })
-          }, 500)
-        })
+        if (!this._unsubscribe) {
+          this.setState({ loading: false }, () => {
+            loadingHandler(false)
+            setTimeout(() => {
+              this.setState({ progressing: false })
+            }, 500)
+          })
+        }
       })
   }
 

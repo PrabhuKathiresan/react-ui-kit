@@ -25,11 +25,11 @@ const Input = (props: SelectInputProps & SelectProps) => {
     onFocus = noop,
     onInputChange = noop,
     id,
-    inputProps,
     extraProps,
     allowClear,
     open,
-    textOnly
+    textOnly,
+    inputProps
   } = props
 
   let hasLeftIcon = !isEmpty(icons.left.component)
@@ -51,6 +51,8 @@ const Input = (props: SelectInputProps & SelectProps) => {
 
   return (
     <input
+      {...inputProps}
+      {...extraProps}
       className={cx('ui-kit-select-input read-only', inputClass, { 'ui-kit-select-has-focus': open, 'has-left-icon': hasLeftIcon, 'has-right-icon': hasRightIcon, 'has-clear-icon': showClearIcon, 'text-only': textOnly })}
       value={value}
       ref={(input) => inputRef(input)}
@@ -60,8 +62,6 @@ const Input = (props: SelectInputProps & SelectProps) => {
       id={id}
       data-testid={`${id}-input`}
       onChange={e => onInputChange(e)}
-      {...inputProps}
-      {...extraProps}
     />
   );
 }
@@ -78,7 +78,6 @@ const InputWrapper = (props: SelectProps & SelectInputProps) => {
     multiple,
     selected = [],
     labelKey,
-    onMenuItemRender,
     onRemove = noop,
     open,
     extraProps,
@@ -86,8 +85,7 @@ const InputWrapper = (props: SelectProps & SelectInputProps) => {
     onInputChange = noop,
     onChange = noop,
     allowClear = false,
-    textOnly,
-    ...inputProps
+    inputProps
   } = props
 
   let hasLeftIcon = !isEmpty(icons.left.component)

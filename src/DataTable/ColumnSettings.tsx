@@ -1,11 +1,10 @@
-import React from 'react';
-import cx from 'classnames';
-import CheckedIcon from '../icons/checked-icon';
-import UncheckedIcon from '../icons/unchecked-icon';
+import React from 'react'
+import Checkbox from '../Checkbox'
 import {
   ColumnProps,
   ColumnItemProps
 } from './props'
+import { noop } from '../utils'
 
 interface ColumnSettingsProps {
   columns: Array<ColumnProps>,
@@ -15,19 +14,17 @@ interface ColumnSettingsProps {
 }
 
 function ColumnItem(props: ColumnItemProps) {
-  let { selected, name, disabled, onClick } = props;
+  let { selected, name, disabled, onClick } = props
+  let _handleChange = disabled ? noop : (e: any) => onClick(e.target.checked)
   return (
-    <li className={cx({ 'settings-disabled': disabled })} onClick={disabled ? () => { } : () => onClick()}>
-      <span className='column-settings-icon'>
-        {selected ? <CheckedIcon /> : <UncheckedIcon />}
-      </span>
-      <span>{name}</span>
+    <li>
+      <Checkbox checked={selected} disabled={disabled} onChange={_handleChange}>{name}</Checkbox>
     </li>
-  );
+  )
 }
 
 export default function ColumnSettings(props: ColumnSettingsProps) {
-  let { columns = [], style, onChange, setRef } = props;
+  let { columns = [], style, onChange, setRef } = props
   return (
     <div className='ui-kit-table-column-settings' style={style} ref={setRef}>
       <div className='ui-kit-table-column-settings--header'>List of columns</div>
@@ -45,5 +42,5 @@ export default function ColumnSettings(props: ColumnSettingsProps) {
         }
       </ul>
     </div>
-  );
+  )
 }

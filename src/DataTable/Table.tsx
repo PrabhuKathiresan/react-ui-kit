@@ -61,6 +61,10 @@ const getCellData = (rowData: { [k: string]: any }, column: ColumnProps) => {
 }
 
 export default class Table extends Component<TableProps & InternalTableState, {}> {
+  _handleColumnSelectionClick = () => {
+    this.props.showColumnSelection && this.props.toggleColumnSettings()
+  }
+
   renderColGroup = (columns: Array<ColumnProps>) => (
     <colgroup>
       {
@@ -90,7 +94,6 @@ export default class Table extends Component<TableProps & InternalTableState, {}
       sortedColumns,
       sortColumn,
       getSelectedState,
-      toggleColumnSettings,
       toggleSelectAll
     } = this.props
 
@@ -109,6 +112,7 @@ export default class Table extends Component<TableProps & InternalTableState, {}
                     'header-selection-column': column.selectionColumn
                   })}
                   onClick={() => sortColumn(column)}
+                  style={{ height: column.selectionColumn ? headerHeight : 'auto' }}
                 >
                   {
                     column.selectColumn ?
@@ -118,7 +122,7 @@ export default class Table extends Component<TableProps & InternalTableState, {}
                       :
                       column.selectionColumn ?
                         (
-                          <span role='button' aria-hidden tabIndex={0} className='cursor-pointer selection-column-icon' onClick={() => showColumnSelection ? toggleColumnSettings : noop}>
+                          <span role='button' aria-hidden tabIndex={0} className='cursor-pointer d-flex-justify-center-align-center selection-column-icon' onClick={() => this._handleColumnSelectionClick()}>
                             <Settings />
                           </span>
                         )

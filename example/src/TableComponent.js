@@ -106,6 +106,7 @@ export default function TableComponent() {
   let [customers, setCustomers] = useState([])
   let [selected, setSelected] = useState([])
   let [loading, setLoading] = useState(true)
+  let [basicColumns, setBasicColumns] = useState([...COLUMNS])
 
   useEffect(() => {
     setTimeout(() => {
@@ -158,11 +159,18 @@ export default function TableComponent() {
     setSelected(selectedRecords);
   }
 
+  let onColumnChange = (hidden, index, column) => {
+    setBasicColumns(columns => {
+      columns[index].hidden = hidden
+      return [...columns]
+    })
+  }
+
   return (
     <div>
       <h4 className='mb-20'>Basic table</h4>
       <BasicTable
-        columns={[...COLUMNS]}
+        columns={[...basicColumns]}
         data={[...customers]}
         loading={loading}
         selectable
@@ -172,6 +180,8 @@ export default function TableComponent() {
         selected={selected}
         onSelect={onRowSelect}
         onSelectAll={onSelectAll}
+        showColumnSelection
+        onColumnChange={onColumnChange}
       />
       <h4 className='my-20'>Async table</h4>
       <AsyncTable

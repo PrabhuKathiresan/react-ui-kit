@@ -170,6 +170,7 @@ export default class Form extends Component<FormProps, FormState> {
       maxLength,
       dependencyCheck,
       formatter,
+      validation,
       validationProps = {},
       ...restProps
     } = field
