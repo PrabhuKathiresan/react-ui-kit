@@ -351,7 +351,7 @@ class AsyncTable extends Component<AsyncProps, AsyncTableState> {
                 top: headerHeight,
                 maxHeight: `calc(${tableStyle.height} - ${footerHeight + headerHeight}px)`
               }}
-              onChange={() => onColumnChange()}
+              onChange={onColumnChange}
               setRef={(columnSettings: HTMLDivElement) => this.columnSettings = columnSettings}
             />
           )
