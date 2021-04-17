@@ -65,7 +65,6 @@ export default class Form extends Component<FormProps, FormState> {
 
     let { onSubmit, strict = false } = this.props
     let data = this.getNormalizedData(false, strict)
-    console.log(data)
 
     if (onSubmit && isFunction(onSubmit)) {
       return onSubmit(data);

@@ -18,14 +18,14 @@ const getValue = (v: any, o: any) => String(o.accessor ? (v[o.accessor] || '') :
 
 export const validators = {
   isEmail: (value = '', options: any) => {
-    const text = getValue(value, options);
+    let text = getValue(value, options);
     if (options.allowBlank && !text) {
       return true;
     }
     return emailRegex.test(text)
   },
   isRequired: (value = '', options: any) => {
-    const text = getValue(value, options);
+    let text = getValue(value, options);
     return typeof text !== 'undefined' && text !== ''
   },
   customValidation: (value = '', options: any) => {
@@ -33,7 +33,7 @@ export const validators = {
     if (isFunction(validation)) {
       return validation(value, option)
     }
-    const text = getValue(value, option);
+    let text = getValue(value, option);
     let { allowBlank, maxLength } = option;
     if (allowBlank && !text) {
       return true
@@ -44,11 +44,11 @@ export const validators = {
     return false
   },
   isNumber: (value = '', options: any) => {
-    const number = getValue(value, options);
+    let number = getValue(value, options);
     if (options.allowBlank && (typeof number === 'undefined' || number === '')) {
       return true
     }
-    const _number = parseFloat(number);
+    let _number = parseFloat(number);
     if (options.min && _number < options.min) {
       return false
     }
@@ -251,7 +251,7 @@ export class FormData {
           field_value = Boolean(value)
         }
         if (isNumber) {
-          field_value = (typeof value !== 'undefined' && value !== null) ? parseFloat(value) : ''
+          field_value = (typeof value !== 'undefined' && value !== null && value !== '') ? parseFloat(value) : ''
         }
         if (isArray) {
           field_value = Array.isArray(value) ? value : []
