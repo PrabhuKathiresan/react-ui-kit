@@ -5,7 +5,7 @@ import set from 'lodash.set'
 import isEmpty from 'is-empty'
 import Button from '../Button'
 import TextInput from '../TextInput'
-import Select from '../Select'
+import { BasicSelect } from '../Select'
 import Checkbox from '../Checkbox'
 import Radio from '../Radio'
 import { isDefined, isEqual, isFunction, noop } from '../utils'
@@ -211,7 +211,7 @@ export default class Form extends Component<FormProps, FormState> {
         inputProps.onChange = (s: Array<any>) => this.handleInputChange(name, s)
         inputProps.container = 'body'
         delete inputProps.value
-        Component = Select
+        Component = BasicSelect
         break;
       case 'Radio':
         Component = Radio

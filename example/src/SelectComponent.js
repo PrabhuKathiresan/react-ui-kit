@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import { Select, AsyncSelect } from '@pk-design/react-ui-kit';
+import { Select } from '@pk-design/react-ui-kit';
 import data from './countries.json';
+
+const { BasicSelect, AsyncSelect } = Select;
 
 export default function SelectComponent() {
   let [selected, setSelected] = useState([]);
@@ -86,7 +88,7 @@ export default function SelectComponent() {
       </div>
       <div className='row'>
         <div className='col-lg-4'>
-          <Select
+          <BasicSelect
             onChange={(s) => setSelected(s)}
             selected={selected}
             id='demo-select'

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Select from './index'
+import BasicSelect from './BasicSelect'
 import { OptionProps, SelectProps } from './props'
 import { debounce } from './helpers'
 import { noop } from './utils'
@@ -59,7 +59,7 @@ export default class AsyncSelect extends Component<SelectProps, { loading: boole
       ...this.state,
     }
     return (
-      <Select
+      <BasicSelect
         {...mergedStateAndProps}
         async
         onInputChange={this.onInputChange}

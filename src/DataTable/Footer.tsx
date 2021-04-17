@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Select from '../Select';
+import { BasicSelect } from '../Select';
 import Pager from './Pager';
 import RefreshIcon from '../icons/refresh-icon';
 import ChevronUp from '../icons/chevron-up';
@@ -64,7 +64,7 @@ export default function Footer(props: FooterProps) {
                 <span className='hide-md mr-16'>
                   Rows per page
                 </span>
-                <Select
+                <BasicSelect
                   options={dropdownOptions}
                   selected={pageLimit}
                   onChange={(opt: any) => handlePageLimitChange(opt)}

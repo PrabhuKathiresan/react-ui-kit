@@ -2,7 +2,7 @@ import './scss/react-ui-kit.scss'
 
 export * as DataTable from './DataTable'
 
-export { default as Select } from './Select'
+export * as Select from './Select'
 
 export { default as AsyncSelect } from './Select/AsyncSelect';
 
