@@ -29,18 +29,29 @@ const Input = (props: SelectInputProps & SelectProps) => {
     allowClear,
     open,
     textOnly,
-    inputProps
+    inputProps,
+    size = 'default'
   } = props
 
+  let isSmallInput = size === 'sm'
   let hasLeftIcon = !isEmpty(icons.left.component)
   let hasRightIcon = !isEmpty(icons.right.component) && !disabled
   let value = isEmpty(selected) ? '' : getSelectedValue({ selected, multiple, key: labelKey })
   let showClearIcon = (allowClear && !disabled) && (multiple ? !isEmpty(selected) : !isEmpty(value))
 
+  let inputClassHash = {
+    'has-left-icon': hasLeftIcon,
+    'has-right-icon': hasRightIcon,
+    'has-clear-icon': showClearIcon,
+    'text-only': textOnly,
+    'has-less-padding': isSmallInput,
+    'ui-kit-select-has-focus': open
+  }
+
   if (disabled) {
     return (
       <input
-        className={cx('ui-kit-select-input', inputClass, { 'has-left-icon': hasLeftIcon, 'has-right-icon': hasRightIcon, 'has-clear-icon': showClearIcon, 'text-only': textOnly })}
+        className={cx('ui-kit-select-input', inputClass, inputClassHash)}
         defaultValue={value}
         disabled
         data-testid={`${id}-input-disabled`}
@@ -53,7 +64,7 @@ const Input = (props: SelectInputProps & SelectProps) => {
     <input
       {...inputProps}
       {...extraProps}
-      className={cx('ui-kit-select-input read-only', inputClass, { 'ui-kit-select-has-focus': open, 'has-left-icon': hasLeftIcon, 'has-right-icon': hasRightIcon, 'has-clear-icon': showClearIcon, 'text-only': textOnly })}
+      className={cx('ui-kit-select-input read-only', inputClass, inputClassHash)}
       value={value}
       ref={(input) => inputRef(input)}
       placeholder={placeHolder}
@@ -85,11 +96,15 @@ const InputWrapper = (props: SelectProps & SelectInputProps) => {
     onInputChange = noop,
     onChange = noop,
     allowClear = false,
+    size = 'default',
     inputProps
   } = props
 
+  let isSmallInput = size === 'sm'
+
   let hasLeftIcon = !isEmpty(icons.left.component)
   let hasRightIcon = !isEmpty(icons.right.component) && !disabled
+  let iconClass = isSmallInput ? 'ui-kit-select-input-icon-sm' : '';
 
   let value = isEmpty(selected) ? '' : getSelectedValue({ selected, multiple, key: labelKey })
 
@@ -101,7 +116,7 @@ const InputWrapper = (props: SelectProps & SelectInputProps) => {
     <div className='ui-kit-select-input-wrapper'>
       {
         hasLeftIcon ? (
-          <span role='button' tabIndex={-1} className={cx('ui-kit-select-input-icon icon-left', icons.left.additionalClasses)} onClick={() => icons.left.onClick()}>
+          <span role='button' tabIndex={-1} className={cx('ui-kit-select-input-icon icon-left', iconClass, icons.left.additionalClasses)} onClick={() => icons.left.onClick()}>
             {icons.left.component}
           </span>
         )
@@ -120,6 +135,7 @@ const InputWrapper = (props: SelectProps & SelectInputProps) => {
                 'has-left-icon': hasLeftIcon,
                 'has-right-icon': hasRightIcon,
                 'has-clear-icon': showClearIcon,
+                'has-less-padding': isSmallInput,
                 'disabled': disabled
               })}
             >
@@ -162,7 +178,7 @@ const InputWrapper = (props: SelectProps & SelectInputProps) => {
       <>
         {
           showClearIcon && (
-            <span role='button' tabIndex={-1} className={cx('ui-kit-select-input-icon clear-icon is-clickable', { 'has-right-icon': hasRightIcon })} onClick={() => onChange([])}>
+            <span role='button' tabIndex={-1} className={cx('ui-kit-select-input-icon clear-icon is-clickable', iconClass, { 'has-right-icon': hasRightIcon })} onClick={() => onChange([])}>
               <Close />
             </span>
           )
@@ -181,7 +197,7 @@ const InputWrapper = (props: SelectProps & SelectInputProps) => {
             :
             hasRightIcon ?
               (
-                <span role='button' tabIndex={-1} className={cx('ui-kit-select-input-icon icon-right', icons.right.additionalClasses)} onClick={onRightIconClick} ref={icons.right.iconRef}>
+                <span role='button' tabIndex={-1} className={cx('ui-kit-select-input-icon icon-right', iconClass, icons.right.additionalClasses)} onClick={onRightIconClick} ref={icons.right.iconRef}>
                   {icons.right.component}
                 </span>
               )

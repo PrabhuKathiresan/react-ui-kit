@@ -543,7 +543,8 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
       inputClass = '',
       container,
       required = false,
-      textOnly = false
+      textOnly = false,
+      size = 'default'
     } = this.props
 
     let {
@@ -607,6 +608,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
               allowClear={allowClear}
               onChange={onChange}
               textOnly={textOnly}
+              size={size}
             />
             {
               portalTarget ?

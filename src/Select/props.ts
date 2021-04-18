@@ -60,6 +60,7 @@ export interface SelectProps {
   container?: any,
   textOnly?: boolean;
   required?: boolean;
+  size?: 'default' | 'sm'
 }
 
 export interface SelectState {

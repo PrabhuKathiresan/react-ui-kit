@@ -81,6 +81,7 @@ export default function Footer(props: FooterProps) {
                   height={28}
                   textOnly
                   inputClass='text-center pl-4'
+                  size='sm'
                 />
               </div>
               <Pager
