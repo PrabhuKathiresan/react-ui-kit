@@ -51,7 +51,8 @@ export default class Form extends Component<FormProps, FormState> {
   componentDidUpdate(prevProps: FormProps) {
     if (!isEqual(prevProps.data, this.props.data)) {
       this.setState({
-        formData: getFormData(this.props)
+        formData: getFormData(this.props),
+        dirty: false
       })
     }
   }
