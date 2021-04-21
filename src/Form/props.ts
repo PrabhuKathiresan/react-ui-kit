@@ -57,4 +57,5 @@ export interface FormProps {
   onSuccess?: Function;
   onError?: Function;
   strict?: boolean;
+  extra?: any;
 }

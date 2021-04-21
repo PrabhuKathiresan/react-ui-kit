@@ -8,61 +8,6 @@
   }
 }
 
-.ui-kit-dropdown {
-  position: relative;
-  height: 28px;
-
-  &-input {
-    width: 100%;
-    height: 100%;
-    padding: 0 8px;
-    display: flex;
-    align-items: center;
-    border-radius: 2px;
-
-    &:hover {
-      background-color: rgba($color: #000000, $alpha: .05);
-    }
-  }
-
-  &-container {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-
-    display: none;
-    
-    position: absolute;
-    bottom: 30px;
-    left: 0;
-    right: 0;
-    background-color: #ffffff;
-    border: 1px solid $border-color;
-    border-radius: 2px;
-    z-index: 1000;
-
-    &.open {
-      display: block;
-
-      animation: drop-up 0.2s ease-in-out;
-    }
-  }
-
-  &-item {
-    padding: 6px 8px;
-    display: flex;
-    align-items: center;
-
-    &:hover {
-      background-color: rgba($color: #000000, $alpha: .05);
-    }
-
-    &.active {
-      color: $primary;
-    }
-  }
-}
-
 .ui-kit-table-empty,
 .ui-kit-table-loader-container {
   position: absolute;

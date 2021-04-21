@@ -1,5 +1,5 @@
-import React from 'react'
-import { Form, Toast } from '@pk-design/react-ui-kit'
+import React, { useState } from 'react'
+import { Form, Toast, Button } from '@pk-design/react-ui-kit'
 import { isEmpty } from 'lodash'
 import COUNTRIES from './countries.json'
 
@@ -366,7 +366,7 @@ class Service {
 export default function FormComponent({ stickyFooter = true, onError = () => {}, onSuccess = () => {}, onCancel = () => {} }) {
   const service = new Service(['post', 'put']);
   const toasts = useToasts();
-  const data = {
+  const [data, setData] = useState({
     _id: 1,
     name: 'Prabhu Kathiresan',
     email: 'prabhukathir30@gmail.com',
@@ -376,7 +376,7 @@ export default function FormComponent({ stickyFooter = true, onError = () => {},
     },
     manageAllBrands: true,
     managedBrands: []
-  }
+  });
 
   function handleSuccess() {
     onSuccess()
@@ -386,6 +386,13 @@ export default function FormComponent({ stickyFooter = true, onError = () => {},
   function handleError() {
     onError()
     toasts.addToast('Agent updated failed', { title: 'Update failed', type: 'error', autoDismiss: true, duration: 5000 })
+  }
+
+  function updateForm() {
+    setData(_prevData => ({
+      ..._prevData,
+      name: 'Prabhu updated'
+    }))
   }
 
   return (
@@ -403,6 +410,9 @@ export default function FormComponent({ stickyFooter = true, onError = () => {},
       strict
       showCancelBtn
       onCancel={() => onCancel()}
+      extra={
+        <Button type='button' onClick={updateForm}>Update Form</Button>
+      }
     />
   )
 }

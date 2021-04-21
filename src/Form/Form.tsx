@@ -48,6 +48,14 @@ export default class Form extends Component<FormProps, FormState> {
     this.formValidation = new FormValidation(this.props.fields)
   }
 
+  componentDidUpdate(prevProps: FormProps) {
+    if (!isEqual(prevProps.data, this.props.data)) {
+      this.setState({
+        formData: getFormData(this.props)
+      })
+    }
+  }
+
   getNormalizedData = (includeAll: boolean, strict: boolean) => {
     let { formData } = this.state
     let { fields } = this.props
@@ -252,7 +260,8 @@ export default class Form extends Component<FormProps, FormState> {
       name,
       disabled,
       loading,
-      isNewForm
+      isNewForm,
+      extra = null
     } = this.props
     let {
       submitting,
@@ -276,6 +285,7 @@ export default class Form extends Component<FormProps, FormState> {
               ))
             }
           </div>
+          {extra}
           <div className={cx('form-action-button', { 'sticky-footer': stickyFooter })}>
             {
               showCancelBtn && (
