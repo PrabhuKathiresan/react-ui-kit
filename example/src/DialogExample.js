@@ -3,6 +3,7 @@ import { Button, Dialog, Select, Checkbox } from '@pk-design/react-ui-kit'
 import FormComponent from './FormComponent'
 
 const { useDialog } = Dialog
+const { BasicSelect } = Select
 const POSITIONS = [
   {
     name: 'Top',
@@ -131,7 +132,7 @@ export default function DialogExample() {
       <hr />
       <h6>Options</h6>
       <div className='d-flex flex-wrap'>
-        <Select
+        <BasicSelect
           labelKey='name'
           label='Select position'
           containerClass='mr-8'
@@ -142,7 +143,7 @@ export default function DialogExample() {
             setOptions(options => ({ ...options, position: selected[0]?.value || 'right' }))
           }}
         />
-        <Select
+        <BasicSelect
           labelKey='name'
           label='Select size'
           containerClass='mr-8'

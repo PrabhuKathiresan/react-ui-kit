@@ -3,16 +3,22 @@ interface IconProps {
   right?: any
 }
 
+export type TransitionState = 'entering' | 'entered' | 'exiting' | 'exited';
+
 export interface OptionItem {
-  name: string,
-  disabled?: boolean,
-  hidden?: boolean,
-  key: string
+  name: string;
+  disabled?: boolean;
+  hidden?: boolean;
+  key: string;
+  onClick?: Function;
+  divider?: boolean;
 }
 
 export interface DropdownPosition {
-  right?: undefined | number,
-  left?: undefined | number
+  right?: undefined | number;
+  left?: undefined | number;
+  bottom?: undefined | string | number;
+  top?: undefined | string | number;
 }
 
 export interface DropdownProps {

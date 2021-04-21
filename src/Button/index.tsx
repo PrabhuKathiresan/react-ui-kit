@@ -3,7 +3,7 @@ import cx from 'classnames'
 import { noop } from '../utils'
 import { ButtonProps } from './props'
 
-function Button(props: ButtonHTMLAttributes<HTMLButtonElement> & ButtonProps) {
+function Button(props: ButtonHTMLAttributes<HTMLButtonElement> & ButtonProps, ref: any = noop) {
   let {
     children,
     icon = { left: null, right: null },
@@ -11,7 +11,6 @@ function Button(props: ButtonHTMLAttributes<HTMLButtonElement> & ButtonProps) {
     loadingText = '',
     disabled = false,
     className = '',
-    ref= noop,
     block = false,
     large = false,
     small = false,
@@ -54,4 +53,4 @@ function Button(props: ButtonHTMLAttributes<HTMLButtonElement> & ButtonProps) {
   )
 }
 
-export default Button
+export default React.forwardRef(Button)

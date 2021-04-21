@@ -7,6 +7,7 @@ import ButtonExample from './ButtonExample'
 import DialogExample from './DialogExample'
 import DialogClassExample from './DialogClassExample'
 import RadioExample from './RadioExample'
+import DropdownExample from './DropdownExample'
 
 export default function BasicComponent() {
   return (
@@ -19,6 +20,7 @@ export default function BasicComponent() {
       <ToastClassComponent />
       <DialogExample />
       <DialogClassExample />
+      <DropdownExample />
     </div>
   )
 }
