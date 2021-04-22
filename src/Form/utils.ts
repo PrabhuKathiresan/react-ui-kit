@@ -56,6 +56,12 @@ export const validators = {
       return false
     }
     return true
+  },
+  isBoolean: (value: any) => {
+    return Boolean(value);
+  },
+  isArray: (value: any) => {
+    return Array.isArray(value) && Boolean(value.length)
   }
 }
 
@@ -98,48 +104,14 @@ export class FormValidation {
         component = 'TextInput',
         componentProps
       } = field
-      isBoolean = isBoolean || component === 'Checkbox'
+      isBoolean = isBoolean || component === 'Checkbox' || type === 'boolean'
       isArray = isArray || isArrayField(component, componentProps)
       isEmail = isEmail || type === 'email'
       isNumber = isNumber || type === 'number'
-      if (required) {
-        rules.push({
-          name,
-          method: 'isRequired',
-          message: errorMessage || `${label || name} is required`,
-          validationProps: { ...validationProps },
-          ctx: {
-            editable,
-            hidden,
-            hiddenIf
-          }
-        })
-      }
-      if (requiredIf && isFunction(requiredIf)) {
-        rules.push({
-          name,
-          method: requiredIf,
-          message: errorMessage || `${label || name} is required`,
-          validationProps: { ...validationProps },
-          ctx: {
-            editable,
-            hidden,
-            hiddenIf
-          }
-        })
-      }
-      if (isEmail) {
-        rules.push({
-          name,
-          method: 'isEmail',
-          validationProps: { ...validationProps },
-          message: errorMessage || `Please enter valid ${label || name}`,
-          ctx: {
-            editable,
-            hidden,
-            hiddenIf
-          }
-        });
+      let ctx = {
+        editable,
+        hidden,
+        hiddenIf
       }
       if (validation) {
         rules.push({
@@ -147,39 +119,66 @@ export class FormValidation {
           method: 'customValidation',
           validationProps: { ...validationProps, validation },
           message: errorMessage || `Please enter valid ${label || name}`,
-          ctx: {
-            editable,
-            hidden,
-            hiddenIf
-          }
+          ctx
         });
-      }
-      if (isNumber) {
-        let { min, max } = field
-        rules.push({
-          name,
-          method: 'isNumber',
-          validationProps: { ...validationProps, min, max },
-          message: errorMessage || `${label || name} must be ${min ? `greater than ${min} ${max ? 'and' : ''}` : ''}${max ? ` lesser than ${max}` : ''}`,
-          ctx: {
-            editable,
-            hidden,
-            hiddenIf
-          }
-        });
-      }
-      if (dependencyCheck) {
-        rules.push({
-          name,
-          method: dependencyCheck.validate,
-          validationProps: { ...validationProps },
-          message: dependencyCheck.errorMessage,
-          ctx: {
-            editable,
-            hidden,
-            hiddenIf
-          }
-        });
+      } else {
+        if (required) {
+          let method = 'isRequired'
+          if (isBoolean) method = 'isBoolean'
+          if (isArray) method = 'isArray'
+          rules.push({
+            name,
+            method,
+            message: errorMessage || `${label || name} is required`,
+            validationProps: { ...validationProps },
+            ctx
+          })
+        }
+        if (requiredIf && isFunction(requiredIf)) {
+          rules.push({
+            name,
+            method: requiredIf,
+            message: errorMessage || `${label || name} is required`,
+            validationProps: { ...validationProps },
+            ctx
+          })
+        }
+        if (isEmail) {
+          rules.push({
+            name,
+            method: 'isEmail',
+            validationProps: { ...validationProps },
+            message: errorMessage || `Please enter valid ${label || name}`,
+            ctx: {
+              editable,
+              hidden,
+              hiddenIf
+            }
+          });
+        }
+        if (isNumber) {
+          let { min, max } = field
+          rules.push({
+            name,
+            method: 'isNumber',
+            validationProps: { ...validationProps, min, max },
+            message: errorMessage || `${label || name} must be ${min ? `greater than ${min} ${max ? 'and' : ''}` : ''}${max ? ` lesser than ${max}` : ''}`,
+            ctx: {
+              editable,
+              hidden,
+              hiddenIf
+            }
+          });
+        }
+        if (dependencyCheck) {
+          rules.push({
+            name,
+            method: dependencyCheck.validate,
+            validationProps: { ...validationProps },
+            message: dependencyCheck.errorMessage,
+            ctx
+          });
+        }
       }
       return rules
     }, [])
@@ -239,7 +238,7 @@ export class FormData {
 
       hidden = hiddenIf && isFunction(hiddenIf) ? hiddenIf(data) : Boolean(hidden)
       if ((editable && !hidden) || options.includeAll) {
-        isBoolean = isBoolean || component === 'Checkbox'
+        isBoolean = isBoolean || component === 'Checkbox' || type === 'boolean'
         isArray = isArray || isArrayField(component, componentProps)
         isEmail = isEmail || type === 'email'
         isNumber = isNumber || type === 'number'

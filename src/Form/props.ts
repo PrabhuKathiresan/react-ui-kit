@@ -6,7 +6,8 @@ export interface FormFields {
   disabled?: boolean;
   hidden?: boolean;
   type?: string;
-  component?: 'TextInput' | 'TextArea' | 'Checkbox' | 'Checkbox.Group' | 'Select' | 'Radio' | 'Radio.Group';
+  component?: 'TextInput' | 'TextArea' | 'Checkbox' | 'Checkbox.Group' | 'Select' | 'Radio' | 'Radio.Group' | 'Custom';
+  customComponent?: any;
   componentProps?: object;
   disabledIf?: Function;
   requiredIf?: Function;

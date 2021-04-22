@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Toast, Button } from '@pk-design/react-ui-kit'
+import { Form, Toast } from '@pk-design/react-ui-kit'
 import { isEmpty } from 'lodash'
 import COUNTRIES from './countries.json'
 
@@ -206,6 +206,30 @@ const isSuperAdmin = (agent) => agent.role === 'super_admin'
 
 const isNewForm = agent => isEmpty(agent._id)
 
+const CustomCompoent = (props) => {
+  return (
+    <div className='mb-16'>
+      <div className='mb-2'>
+        <label htmlFor={props.id}>{props.label}</label>
+        <input type='checkbox' checked={Boolean(props.value)} id={props.id} onChange={(e) => props.onChange(e.target.checked)} />
+      </div>
+      {props.error && <span className='text-danger'>{props.error}</span>}
+    </div>
+  )
+}
+
+const CustomTextArea = (props) => {
+  return (
+    <div className='mb-16'>
+      <div className='mb-2'>
+        <label htmlFor={props.id}>{props.label}</label>
+        <textarea id={props.id} onChange={(e) => props.onChange(e.target.value)} value={props.value} />
+      </div>
+      {props.error && <span className='text-danger'>{props.error}</span>}
+    </div>
+  )
+}
+
 const AGENT_FIELDS = [
   {
     name: '_id',
@@ -313,7 +337,7 @@ const AGENT_FIELDS = [
       labelKey: 'name'
     },
     requiredIf: (...args) => {
-      let [, ,agent] = args
+      let [, , agent] = args
       return isSuperAdmin(agent) || agent.manageAllBrands || !isEmpty(agent.managedBrands)
     },
     formatter: function (value) {
@@ -329,6 +353,24 @@ const AGENT_FIELDS = [
       },
       errorMessage: 'Atleast one brand is required'
     }
+  },
+  {
+    name: 'custom',
+    label: 'Free text',
+    component: 'Custom',
+    type: 'text',
+    customComponent: CustomTextArea,
+    required: true,
+    errorMessage: 'Please enter some free text'
+  },
+  {
+    name: 'agreeTerms',
+    label: 'Accept terms and conditions',
+    component: 'Custom',
+    type: 'boolean',
+    customComponent: CustomCompoent,
+    required: true,
+    errorMessage: 'Please agree terms and conditions'
   },
   {
     name: 'createdAt',
@@ -353,20 +395,18 @@ class Service {
   }
 
   create(data) {
-    console.log(this.allowedMethods);
     return Promise.resolve({ success: true });
   }
 
   update = (id, data) => {
-    console.log(this.allowedMethods);
     return Promise.resolve({ success: true });
   }
 }
 
-export default function FormComponent({ stickyFooter = true, onError = () => {}, onSuccess = () => {}, onCancel = () => {} }) {
+export default function FormComponent({ stickyFooter = true, onError = () => { }, onSuccess = () => { }, onCancel = () => { } }) {
   const service = new Service(['post', 'put']);
   const toasts = useToasts();
-  const [data, setData] = useState({
+  const [data,] = useState({
     _id: 1,
     name: 'Prabhu Kathiresan',
     email: 'prabhukathir30@gmail.com',
@@ -388,13 +428,6 @@ export default function FormComponent({ stickyFooter = true, onError = () => {},
     toasts.addToast('Agent updated failed', { title: 'Update failed', type: 'error', autoDismiss: true, duration: 5000 })
   }
 
-  function updateForm() {
-    setData(_prevData => ({
-      ..._prevData,
-      name: 'Prabhu updated'
-    }))
-  }
-
   return (
     <Form
       name='agent-form'
@@ -410,9 +443,6 @@ export default function FormComponent({ stickyFooter = true, onError = () => {},
       strict
       showCancelBtn
       onCancel={() => onCancel()}
-      extra={
-        <Button type='button' onClick={updateForm}>Update Form</Button>
-      }
     />
   )
 }

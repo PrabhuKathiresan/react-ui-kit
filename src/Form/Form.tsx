@@ -180,6 +180,7 @@ export default class Form extends Component<FormProps, FormState> {
       formatter,
       validation,
       validationProps = {},
+      customComponent = null,
       ...restProps
     } = field
 
@@ -239,6 +240,10 @@ export default class Form extends Component<FormProps, FormState> {
       case 'Checkbox.Group':
         inputProps.onChange = (e: any) => this.handleCheckboxChange(name, e)
         Component = Checkbox.Group
+        break;
+      case 'Custom':
+        Component = customComponent
+        inputProps.onChange = (value: any) => this.handleInputChange(name, value)
         break;
       case 'TextInput':
       default:
