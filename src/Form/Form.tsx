@@ -8,11 +8,13 @@ import TextInput from '../TextInput'
 import { BasicSelect } from '../Select'
 import Checkbox from '../Checkbox'
 import Radio from '../Radio'
+import Alert from '../Alert';
 import { isDefined, isEqual, isFunction, noop } from '../utils'
 import { FormFields, FormProps, FormState } from './props'
 import { FormValidation, FormData } from './utils'
 
 const MULTI_VALUE_FIELDS = ['Select', 'Checkbox.Group']
+const SERVICE_METHOD_NOT_AVAILABLE = 'Service method is not configured'
 
 const getFormData = (props: FormProps) => {
   let { fields, data } = props
@@ -38,6 +40,7 @@ export default class Form extends Component<FormProps, FormState> {
     this.state = {
       formData: getFormData(this.props),
       errors: {},
+      genericError: null,
       submitting: false,
       dirty: false
     }
@@ -67,13 +70,17 @@ export default class Form extends Component<FormProps, FormState> {
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     let formdata = this.getNormalizedData(true, false)
-    let validation = this.formValidation.validate(formdata)
-    if (!validation.isValid) return this.setState({ errors: validation.errors })
+    let { customValidation } = this.props
+    let validationMethod = typeof customValidation === 'function' ? customValidation : this.formValidation.validate
+    let validation = validationMethod(formdata)
+    if (!validation.isValid) return this.setState({ errors: validation.errors, genericError: validation.genericError })
 
-    this.setState({ errors: {} })
+    this.setState({ errors: {}, genericError: null })
 
-    let { onSubmit, strict = false } = this.props
+    let { onSubmit, strict = false, constructParams } = this.props
     let data = this.getNormalizedData(false, strict)
+
+    if (typeof constructParams === 'function') data = constructParams(data)
 
     if (onSubmit && isFunction(onSubmit)) {
       return onSubmit(data);
@@ -107,7 +114,8 @@ export default class Form extends Component<FormProps, FormState> {
         .finally(() => this.setState({ submitting: false }))
     }
 
-    onError('Service method is not configured');
+    onError(SERVICE_METHOD_NOT_AVAILABLE);
+    this.setState({ genericError: SERVICE_METHOD_NOT_AVAILABLE })
   }
 
   handleInputChange = (name: string, value: any) => {
@@ -271,7 +279,8 @@ export default class Form extends Component<FormProps, FormState> {
     } = this.props
     let {
       submitting,
-      dirty
+      dirty,
+      genericError
     } = this.state
 
     let formType = isNewForm ? 'create' : 'update'
@@ -279,6 +288,9 @@ export default class Form extends Component<FormProps, FormState> {
     let disableSubmit = disabled || loading || submitting || !dirty
     return (
       <>
+        {
+          genericError && <Alert type='error' className='mb-16' dismissable onClose={() => this.setState({ genericError: null })}>{genericError}</Alert>
+        }
         <form name={name} data-testid={`${formType}-${name}`} noValidate className={cx('ui-kit-form', { 'form-with-fixed-action': stickyFooter })} onSubmit={this.handleSubmit}>
           <div className='form-fields'>
             {

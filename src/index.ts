@@ -21,3 +21,5 @@ export * as Toast from './Toast'
 export * as Dialog from './Dialog'
 
 export { default as Form } from './Form'
+
+export { default as Alert } from './Alert';

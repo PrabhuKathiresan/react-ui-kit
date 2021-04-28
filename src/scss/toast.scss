@@ -7,23 +7,23 @@
   background-color: $white;
 
   &.ui-kit-toast-success {
-    color: #224a23;
+    color: $text-success;
     border: 0px solid #439446;
   }
 
   &.ui-kit-toast-error {
-    color: #73000c;
+    color: $text-error;
     border: 0px solid #e60017;
   }
 
   &.ui-kit-toast-warning {
-    color: #6d5100;
+    color: $text-warning;
     border: 0px solid #d9a300;
   }
 
   &.ui-kit-toast-info {
     border: 0px solid #0891cf;
-    color: #044868;
+    color: $text-info;
   }
 
   &.ui-kit-toast-top-left {

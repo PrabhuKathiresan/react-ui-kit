@@ -4,6 +4,7 @@ import BasicComponent from './BasicComponent';
 import SelectComponent from './SelectComponent';
 import TableComponent from './TableComponent';
 import FormComponent from './FormComponent';
+import CustomFormComponent from './CustomFormComponent';
 
 import './App.css';
 
@@ -21,6 +22,7 @@ function App() {
               <NavLink className='nav-link' exact activeClassName='active' aria-current='page' to='/'>Basic</NavLink>
               <NavLink className='nav-link' activeClassName='active' aria-current='page' to='/select'>Select</NavLink>
               <NavLink className='nav-link' activeClassName='active' aria-current='page' to='/form'>Form</NavLink>
+              <NavLink className='nav-link' activeClassName='active' aria-current='page' to='/custom-form'>Custom Form</NavLink>
               <NavLink className='nav-link' activeClassName='active' aria-current='page' to='/data-table'>Data table</NavLink>
             </div>
           </div>
@@ -30,6 +32,7 @@ function App() {
         <Route exact path='/' component={BasicComponent} />
         <Route exact path='/select' component={SelectComponent} />
         <Route exact path='/form' component={FormComponent} />
+        <Route exact path='/custom-form' component={CustomFormComponent} />
         <Route exact path='/data-table' component={TableComponent} />
       </div>
     </div>

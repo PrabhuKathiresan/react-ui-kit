@@ -23,6 +23,7 @@ export interface FormFields {
 export interface FormState {
   formData?: any;
   errors?: object;
+  genericError: any;
   submitting?: boolean;
   dirty?: boolean;
 }
@@ -59,4 +60,6 @@ export interface FormProps {
   onError?: Function;
   strict?: boolean;
   extra?: any;
+  customValidation?: Function;
+  constructParams?: Function;
 }
