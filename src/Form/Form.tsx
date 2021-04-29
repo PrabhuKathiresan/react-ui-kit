@@ -71,9 +71,9 @@ export default class Form extends Component<FormProps, FormState> {
     e.preventDefault()
     let formdata = this.getNormalizedData(true, false)
     let { customValidation } = this.props
-    let validationMethod = typeof customValidation === 'function' ? customValidation : this.formValidation.validate
-    let validation = validationMethod(formdata)
-    if (!validation.isValid) return this.setState({ errors: validation.errors, genericError: validation.genericError })
+    let validation = typeof customValidation === 'function' ? customValidation(formdata) : this.formValidation.validate(formdata)
+
+    if (!validation.isValid) return this.setState({ errors: validation.errors, genericError: validation.genericError || null })
 
     this.setState({ errors: {}, genericError: null })
 

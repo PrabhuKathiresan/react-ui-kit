@@ -125,15 +125,15 @@ export const ToastElement = (props: SingleToastProp & TransitionProps) => {
         }}
       >
         <div className='ui-kit-toast-title'>
-          <span className='mr-auto'>
-            <span className='mr-8'><Icon /></span>
+          <span className='mr-auto element-flex'>
+            <span className='mr-8 element-flex-center'><Icon /></span>
             <span>{title}</span>
           </span>
           <span
             role='button'
             tabIndex={0}
             onClick={() => onClose()}
-            className='ui-kit-toast-close cursor-pointer d-flex-center has-hover-effect radius-circle'
+            className='ui-kit-toast-close cursor-pointer element-flex-center has-hover-effect radius-circle'
           >
             <Close width={20} height={20} />
           </span>

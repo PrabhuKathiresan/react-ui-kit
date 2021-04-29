@@ -200,7 +200,11 @@
   }
 }
 
-.d-flex-center {
+.element-flex {
+  display: flex;
+}
+
+.element-flex-center {
   display: flex;
   align-items: center;
   justify-content: center;

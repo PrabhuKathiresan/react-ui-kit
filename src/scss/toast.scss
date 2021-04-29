@@ -27,19 +27,27 @@
   }
 
   &.ui-kit-toast-top-left {
-    border-width: 0 4px 0 0;
+    border-width: 0 $toast-border-width 0 0;
   }
 
   &.ui-kit-toast-top-right {
-    border-width: 0 0 0 4px;
+    border-width: 0 0 0 $toast-border-width;
+  }
+
+  &.ui-kit-toast-top-center {
+    border-width: $toast-border-width 0 0 0;
   }
 
   &.ui-kit-toast-bottom-left {
-    border-width: 0 4px 0 0;
+    border-width: 0 $toast-border-width 0 0;
   }
 
   &.ui-kit-toast-bottom-right {
-    border-width: 0 0 0 4px;
+    border-width: 0 0 0 $toast-border-width;
+  }
+
+  &.ui-kit-toast-bottom-center {
+    border-width: $toast-border-width 0 0 0;
   }
 
   &-title {

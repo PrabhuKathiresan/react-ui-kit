@@ -42,14 +42,14 @@ export default function Alert(props: AlertProps) {
         (transitionState) => (
           <div className={cx('ui-kit-alert', `ui-kit-alert-${type} ui-kit-alert-${transitionState}`, className)}>
             {
-              showIcon && <span className='d-flex-center mr-16'><Icon /></span>
+              showIcon && <span className='element-flex-center mr-16'><Icon /></span>
             }
             <div className='ui-kit-alert-content'>
               {title && <div className='ui-kit-alert-title'>{title}</div>}
               <div className='ui-kit-alert-description'>{description}</div>
             </div>
             {
-              dismissable && <span className='d-flex-center clickable' onClick={() => setOpen(false)} role='button' tabIndex={0}><Close /></span>
+              dismissable && <span className='cursor-pointer element-flex-center has-hover-effect radius-circle' onClick={() => setOpen(false)} role='button' tabIndex={0}><Close /></span>
             }
           </div>
         )

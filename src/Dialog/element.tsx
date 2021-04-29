@@ -93,7 +93,7 @@ export default function Dialog(props: DialogProps) {
             role='button'
             tabIndex={0}
             onClick={() => onClose()}
-            className='ui-kit-dialog-close cursor-pointer d-flex-center has-hover-effect radius-circle'
+            className='ui-kit-dialog-close cursor-pointer element-flex-center has-hover-effect radius-circle'
           >
             <Close width={20} height={20} />
           </span>
