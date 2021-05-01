@@ -1,5 +1,3 @@
-// @flow
-
 import React, { Component } from 'react'
 import { noop } from '../utils'
 import { ToastProps as Props, TransitionProps } from './props'
@@ -78,7 +76,7 @@ export default class ToastController extends Component<Props & ControllerProps, 
 
     if (!autoDismiss || confirm) return
 
-    // this.setState({ isRunning: true })
+    this.setState({ isRunning: true })
     this.timeout = new Timer(onClose, duration)
   }
 
@@ -86,16 +84,16 @@ export default class ToastController extends Component<Props & ControllerProps, 
     if (this.timeout) this.timeout.clear()
   }
 
-  // onMouseEnter = () => {
-  //   this.setState({ isRunning: false }, () => {
-  //     if (this.timeout) this.timeout.pause()
-  //   })
-  // }
-  // onMouseLeave = () => {
-  //   this.setState({ isRunning: true }, () => {
-  //     if (this.timeout) this.timeout.resume()
-  //   })
-  // }
+  onMouseEnter = () => {
+    this.setState({ isRunning: false }, () => {
+      if (this.timeout) this.timeout.pause()
+    })
+  }
+  onMouseLeave = () => {
+    this.setState({ isRunning: true }, () => {
+      if (this.timeout) this.timeout.resume()
+    })
+  }
 
   render() {
     let {
@@ -104,16 +102,17 @@ export default class ToastController extends Component<Props & ControllerProps, 
       component: Toast,
       ...props
     } = this.props
-    // let { isRunning } = this.state
 
-    // // NOTE: conditions here so methods can be clean
-    // let handleMouseEnter = autoDismiss ? this.onMouseEnter : noop
-    // let handleMouseLeave = autoDismiss ? this.onMouseLeave : noop
+    // NOTE: conditions here so methods can be clean
+    let handleMouseEnter = autoDismiss ? this.onMouseEnter : noop
+    let handleMouseLeave = autoDismiss ? this.onMouseLeave : noop
 
     return (
       <Toast
         autoDismiss={autoDismiss}
         autoDismissTimeout={duration}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         {...props}
       />
     )

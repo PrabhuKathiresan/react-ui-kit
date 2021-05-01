@@ -74,34 +74,38 @@ export default function Dialog(props: DialogProps) {
     onClose = noop,
     position = 'right',
     transitionState,
-    showBackdrop = false
+    showBackdrop = false,
+    id
   } = props
   return (
     <>
       {showBackdrop && <div className='ui-kit-dialog-mask' style={{ ...backDropTransistion[transitionState] }} />}
       <div
         className='ui-kit-dialog'
+        id={id}
+        data-testid={id}
         style={{
           ...dialogStates(position)[transitionState],
           transition: `transform 220ms, opacity 220ms`,
           ...getGutter(position)
         }}
       >
-        <div className='ui-kit-dialog-title'>
+        <div className='ui-kit-dialog-title' data-testid={`${id}-title`}>
           <span className='mr-auto'>{title}</span>
           <span
             role='button'
             tabIndex={0}
             onClick={() => onClose()}
+            data-testid={`close-${id}`}
             className='ui-kit-dialog-close cursor-pointer element-flex-center has-hover-effect radius-circle'
           >
             <Close width={20} height={20} />
           </span>
         </div>
-        <div className='ui-kit-dialog-content'>{content}</div>
+        <div className='ui-kit-dialog-content' data-testid={`${id}-content`}>{content}</div>
         {
           showFooter && (
-            <div className='ui-kit-dialog-footer'>
+            <div className='ui-kit-dialog-footer' data-testid={`${id}-footer`}>
               {
                 actions.map(action => (
                   <Button theme={action.theme} onClick={() => action.onClick()}>{action.text}</Button>

@@ -274,7 +274,6 @@ export default class Form extends Component<FormProps, FormState> {
       name,
       disabled,
       loading,
-      isNewForm,
       extra = null
     } = this.props
     let {
@@ -283,7 +282,6 @@ export default class Form extends Component<FormProps, FormState> {
       genericError
     } = this.state
 
-    let formType = isNewForm ? 'create' : 'update'
     let renderableFields = fields.filter(f => !f.hidden)
     let disableSubmit = disabled || loading || submitting || !dirty
     return (
@@ -291,7 +289,7 @@ export default class Form extends Component<FormProps, FormState> {
         {
           genericError && <Alert type='error' className='mb-16' dismissable onClose={() => this.setState({ genericError: null })}>{genericError}</Alert>
         }
-        <form name={name} data-testid={`${formType}-${name}`} noValidate className={cx('ui-kit-form', { 'form-with-fixed-action': stickyFooter })} onSubmit={this.handleSubmit}>
+        <form name={name} data-testid={name} noValidate className={cx('ui-kit-form', { 'form-with-fixed-action': stickyFooter })} onSubmit={this.handleSubmit}>
           <div className='form-fields'>
             {
               renderableFields.map(field => (

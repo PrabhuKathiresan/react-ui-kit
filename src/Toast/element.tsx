@@ -10,6 +10,7 @@ import InfoCircle from '../icons/info-circle'
 import Error from '../icons/error'
 
 interface SingleToastProp {
+  id: string;
   title?: string;
   type: string,
   autoDismiss: boolean, // may be inherited from ToastProvider
@@ -22,6 +23,8 @@ interface SingleToastProp {
   onCancel?: Function;
   confirmText?: string;
   cancelText?: string;
+  onMouseEnter: Function;
+  onMouseLeave: Function;
 }
 
 interface TransitionProps {
@@ -71,7 +74,10 @@ export const ToastElement = (props: SingleToastProp & TransitionProps) => {
     onConfirm = noop,
     onCancel = noop,
     confirmText = 'Confirm',
-    cancelText = 'Cancel'
+    cancelText = 'Cancel',
+    id,
+    onMouseEnter,
+    onMouseLeave
   } = props
 
   let [confirming, setConfirming] = useState(false)
@@ -115,6 +121,10 @@ export const ToastElement = (props: SingleToastProp & TransitionProps) => {
         height,
         transition: `height ${transitionDuration - 100}ms 100ms`,
       }}
+      onMouseEnter={() => onMouseEnter()}
+      onMouseLeave={() => onMouseLeave()}
+      id={id}
+      data-testid={`${id}-toast`}
     >
       <div
         className={cx('ui-kit-toast', `ui-kit-toast-${type}`, `ui-kit-toast-${position}`)}
