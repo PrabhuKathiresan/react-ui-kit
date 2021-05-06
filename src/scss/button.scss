@@ -107,6 +107,7 @@
     opacity: 0.65;
     cursor: not-allowed;
     border-color: transparent !important;
+    background-image: none !important;
   }
 
   &.ui-btn-block {
@@ -162,7 +163,6 @@
 
     &:disabled {
       background-color: $primary-dark;
-      background-image: none;
     }
 
     &:hover,

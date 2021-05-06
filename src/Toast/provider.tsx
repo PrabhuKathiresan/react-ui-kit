@@ -50,8 +50,8 @@ export class ToastProvider extends Component<Props, ToastState> {
     // update the toast stack
     this.setState(state => {
       let newToast = {
-        description: content,
-        ...options
+        ...options,
+        message: content
       }
       let toasts = []
       if (position.startsWith('top')) {

@@ -11,7 +11,7 @@ import Error from '../icons/error'
 
 interface SingleToastProp {
   id: string;
-  title?: string;
+  message?: string;
   type: string,
   autoDismiss: boolean, // may be inherited from ToastProvider
   duration: number, // inherited from ToastProvider
@@ -65,7 +65,7 @@ export const ToastElement = (props: SingleToastProp & TransitionProps) => {
   let {
     type,
     position,
-    title,
+    message,
     children,
     onClose = noop,
     transitionDuration,
@@ -137,7 +137,7 @@ export const ToastElement = (props: SingleToastProp & TransitionProps) => {
         <div className='ui-kit-toast-title'>
           <span className='mr-auto element-flex'>
             <span className='mr-8 element-flex-center'><Icon /></span>
-            <span>{title}</span>
+            <span>{message}</span>
           </span>
           <span
             role='button'

@@ -6,9 +6,8 @@ const { useToasts } = Toast
 export default function ToastComponent() {
   let { addToast } = useToasts()
 
-  let handleClick = (type, desc, options = {}) => {
-    addToast(desc, {
-      title: 'Success toast',
+  let handleClick = (type, message, options = {}) => {
+    addToast(message, {
       type,
       ...options
     })
@@ -19,7 +18,7 @@ export default function ToastComponent() {
       <div className='example-btn-block'>
         <h4>Toast component</h4>
         <hr />
-        <Button onClick={() => handleClick('success', 'Hello everyone! Hooray its a success toast, This will have more content to display and lets see how it works')}>
+        <Button onClick={() => handleClick('success', 'Success Toast', { description: 'Hello everyone! Hooray its a success toast, This will have more content to display and lets see how it works' })}>
           Success
         </Button>
         <Button onClick={() => handleClick('info', 'Hello everyone! Hooray its a success toast')}>

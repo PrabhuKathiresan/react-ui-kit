@@ -4,11 +4,10 @@ import { Button, Toast } from '@pk-design/react-ui-kit'
 const { withToastManager } = Toast
 
 class ToastClassComponent extends Component {
-  handleClick = (type, desc, options = {}) => {
+  handleClick = (type, message, options = {}) => {
     let { toastManager } = this.props
 
-    toastManager.add(desc, {
-      title: 'Success toast',
+    toastManager.add(message, {
       type,
       ...options
     })
@@ -37,7 +36,7 @@ class ToastClassComponent extends Component {
         <div className='example-btn-block'>
           <h4>Toast component - withToastManager</h4>
           <hr />
-          <Button onClick={() => this.handleClick('success', 'Hello everyone! Hooray its a success toast')}>
+          <Button onClick={() => this.handleClick('success', 'Success toast', { description: 'Hello everyone! Hooray its a success toast' })}>
             Success
           </Button>
           <Button onClick={() => this.handleClick('info', 'Hello everyone! Hooray its a success toast')}>

@@ -10,7 +10,7 @@ export interface ToastProps {
   duration?: number;
   type?: ToastType;
   description?: any;
-  title: any;
+  message?: any;
   closable?: boolean;
   icon?: any;
   position?: Positions;
