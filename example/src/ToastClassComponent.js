@@ -6,8 +6,9 @@ const { withToastManager } = Toast
 class ToastClassComponent extends Component {
   handleClick = (type, message, options = {}) => {
     let { toastManager } = this.props
+    console.log(toastManager)
 
-    toastManager.add(message, {
+    toastManager.addToast(message, {
       type,
       ...options
     })
@@ -21,8 +22,7 @@ class ToastClassComponent extends Component {
     if (confirmed) {
       let { toastManager } = this.props
 
-      toastManager.add('', {
-        title: 'Confirmed your action',
+      toastManager.addToast('Confirmed your action', {
         type: 'success',
         autoDismiss: true,
         duration: 5000

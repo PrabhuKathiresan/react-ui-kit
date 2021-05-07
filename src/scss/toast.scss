@@ -7,23 +7,43 @@
   background-color: $white;
 
   &.ui-kit-toast-success {
-    color: $text-success;
     border: 0px solid #439446;
+
+    .ui-kit-toast-title {
+      &-icon {
+        color: $text-success;
+      }
+    }
   }
 
   &.ui-kit-toast-error {
-    color: $text-error;
     border: 0px solid #e60017;
+
+    .ui-kit-toast-title {
+      &-icon {
+        color: $text-error;
+      }
+    }
   }
 
   &.ui-kit-toast-warning {
-    color: $text-warning;
     border: 0px solid #d9a300;
+    
+    .ui-kit-toast-title {
+      &-icon {
+        color: $text-warning;
+      }
+    }
   }
 
   &.ui-kit-toast-info {
     border: 0px solid #0891cf;
-    color: $text-info;
+
+    .ui-kit-toast-title {
+      &-icon {
+        color: $text-info;
+      }
+    }
   }
 
   &.ui-kit-toast-top-left {
@@ -54,7 +74,7 @@
     display: flex;
     align-items: center;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
 
     .ui-kit-toast-close {
       width: 24px;
@@ -65,6 +85,7 @@
   &-description {
     font-size: 13px;
     padding-top: 8px;
+    font-weight: 400;
   }
 
   &-action {

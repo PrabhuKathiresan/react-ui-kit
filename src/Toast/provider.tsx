@@ -173,8 +173,8 @@ export class ToastProvider extends Component<Props, ToastState> {
               portalTarget
             )
           ) : (
-              <ToastContainer position={position} hasToasts={hasToasts} /> // keep ReactDOM.hydrate happy
-            )
+            <ToastContainer position={position} hasToasts={hasToasts} /> // keep ReactDOM.hydrate happy
+          )
         }
       </Provider>
     )
@@ -188,7 +188,12 @@ export const ToastConsumer = ({ children }: { children: any }) => (
 export const withToastManager = (Comp: any) => (
   React.forwardRef((props: any, ref: any) => (
     <ToastConsumer>
-      {(context: any) => <Comp toastManager={context} {...props} ref={ref} />}
+      {(context: any) => <Comp toastManager={{
+        addToast: context.add,
+        removeToast: context.remove,
+        removeAllToasts: context.removeAll,
+        updateToast: context.update
+      }} {...props} ref={ref} />}
     </ToastConsumer>
   ))
 )

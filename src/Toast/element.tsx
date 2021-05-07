@@ -136,7 +136,7 @@ export const ToastElement = (props: SingleToastProp & TransitionProps) => {
       >
         <div className='ui-kit-toast-title'>
           <span className='mr-auto element-flex'>
-            <span className='mr-8 element-flex-center'><Icon /></span>
+            <span className='mr-8 element-flex-center ui-kit-toast-title-icon'><Icon /></span>
             <span>{message}</span>
           </span>
           <span

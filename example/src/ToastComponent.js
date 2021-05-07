@@ -33,7 +33,7 @@ export default function ToastComponent() {
         <Button onClick={() => handleClick('success', 'Hello everyone! I will close in 5 seconds', { autoDismiss: true, duration: 5000 })}>
           Auto dismissed in 5 secs
         </Button>
-        <Button onClick={() => handleClick('success', '', { title: 'Profile creation success' })}>
+        <Button onClick={() => handleClick('success', 'Profile creation success')}>
           Without description
         </Button>
       </div>
