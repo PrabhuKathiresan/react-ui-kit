@@ -10,6 +10,7 @@ class ToastClassComponent extends Component {
 
     toastManager.addToast(message, {
       type,
+      iconType: 'default',
       ...options
     })
   }

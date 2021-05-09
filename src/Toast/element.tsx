@@ -8,6 +8,10 @@ import Warning from '../icons/warning'
 import Success from '../icons/success'
 import InfoCircle from '../icons/info-circle'
 import Error from '../icons/error'
+import WarningFilled from '../icons/warning-filled'
+import SuccessFilled from '../icons/success-filled'
+import InfoCircleFilled from '../icons/info-circle-filled'
+import ErrorFilled from '../icons/error-filled'
 
 interface SingleToastProp {
   id: string;
@@ -25,6 +29,7 @@ interface SingleToastProp {
   cancelText?: string;
   onMouseEnter: Function;
   onMouseLeave: Function;
+  iconType?: 'default' | 'filled'
 }
 
 interface TransitionProps {
@@ -35,10 +40,22 @@ interface TransitionProps {
 const gutter = 16
 
 const ICONSMAP = {
-  warning: Warning,
-  success: Success,
-  info: InfoCircle,
-  error: Error
+  warning: {
+    default: Warning,
+    filled: WarningFilled
+  },
+  success: {
+    default: Success,
+    filled: SuccessFilled
+  },
+  info: {
+    default: InfoCircle,
+    filled: InfoCircleFilled
+  },
+  error: {
+    default: Error,
+    filled: ErrorFilled
+  }
 }
 
 function getTranslate(placement: string) {
@@ -77,7 +94,8 @@ export const ToastElement = (props: SingleToastProp & TransitionProps) => {
     cancelText = 'Cancel',
     id,
     onMouseEnter,
-    onMouseLeave
+    onMouseLeave,
+    iconType = 'filled'
   } = props
 
   let [confirming, setConfirming] = useState(false)
@@ -112,7 +130,7 @@ export const ToastElement = (props: SingleToastProp & TransitionProps) => {
     }
   }
 
-  let Icon = ICONSMAP[type]
+  let Icon = ICONSMAP[type][iconType]
 
   return (
     <div

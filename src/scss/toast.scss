@@ -3,45 +3,46 @@
   padding: 12px 16px;
   box-shadow: rgba(18, 52, 77, 0.16) 0px 2px 18px 0px, rgba(18, 52, 77, 0.06) 0px 2px 4px 0px;
   border-radius: 4px;
-  width: 320px;
+  max-width: 384px;
+  width: 100%;
   background-color: $white;
 
   &.ui-kit-toast-success {
-    border: 0px solid #439446;
+    border: 0px solid $icon-success;
 
     .ui-kit-toast-title {
       &-icon {
-        color: $text-success;
+        color: $icon-success;
       }
     }
   }
 
   &.ui-kit-toast-error {
-    border: 0px solid #e60017;
+    border: 0px solid $icon-error;
 
     .ui-kit-toast-title {
       &-icon {
-        color: $text-error;
+        color: $icon-error;
       }
     }
   }
 
   &.ui-kit-toast-warning {
-    border: 0px solid #d9a300;
+    border: 0px solid $icon-warning;
     
     .ui-kit-toast-title {
       &-icon {
-        color: $text-warning;
+        color: $icon-warning;
       }
     }
   }
 
   &.ui-kit-toast-info {
-    border: 0px solid #0891cf;
+    border: 0px solid $icon-info;
 
     .ui-kit-toast-title {
       &-icon {
-        color: $text-info;
+        color: $icon-info;
       }
     }
   }
