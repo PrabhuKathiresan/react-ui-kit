@@ -183,7 +183,13 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
 
   _getMenuPosition = () => {
     if (!this.input) {
-      return
+      return {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        width: '100%',
+        dropup: false
+      }
     }
     let { maxDropdownHeight = MAXIMUM_DROPDOWN_HEIGHT, dropup, searchable = false } = this.props
     let { results } = this.state

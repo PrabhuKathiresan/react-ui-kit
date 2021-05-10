@@ -40,7 +40,7 @@ class ToastClassComponent extends Component {
           <Button onClick={() => this.handleClick('success', 'Success toast', { description: 'Hello everyone! Hooray its a success toast' })}>
             Success
           </Button>
-          <Button onClick={() => this.handleClick('info', 'Hello everyone! Hooray its a success toast')}>
+          <Button onClick={() => this.handleClick('info', 'Hello everyone!')}>
             Info
           </Button>
           <Button onClick={() => this.handleClick('error', 'Hello everyone! Hooray its a error toast')}>
