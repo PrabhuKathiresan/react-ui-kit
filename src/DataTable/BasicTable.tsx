@@ -254,6 +254,7 @@ export default class BasicTable extends Component<TableProps, TableState> {
       columns = [],
       onColumnChange = noop,
       emptyText,
+      emptyIcon = null,
       selectable,
       fixedWidth,
       variant = 'bordered',
@@ -323,7 +324,7 @@ export default class BasicTable extends Component<TableProps, TableState> {
         }
         {
           (!loading && isEmpty) ?
-            <EmptyBox headerHeight={headerHeight} footerHeight={footerHeight} emptyText={emptyText} />
+            <EmptyBox emptyText={emptyText} emptyIcon={emptyIcon} />
             :
             null
         }

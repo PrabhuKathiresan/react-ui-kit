@@ -297,6 +297,7 @@ class AsyncTable extends Component<AsyncProps, AsyncTableState> {
       showColumnSelection,
       paginate = false,
       emptyText,
+      emptyIcon = null,
       selectable = false,
       fixedWidth = false,
       variant = 'bordered',
@@ -358,7 +359,7 @@ class AsyncTable extends Component<AsyncProps, AsyncTableState> {
         }
         {
           isEmpty ?
-            <EmptyBox headerHeight={headerHeight} footerHeight={footerHeight} emptyText={emptyText} />
+            <EmptyBox emptyIcon={emptyIcon} emptyText={emptyText} />
             :
             null
         }
