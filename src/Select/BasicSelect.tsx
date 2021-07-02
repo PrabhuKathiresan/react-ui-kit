@@ -291,24 +291,13 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
     }
   }
 
-  _onClick = (e: React.MouseEvent) => {
-    e.persist()
-    let { onInputClick = noop } = this.props
-
-    if (this._hasFocus() && !this._isMenuOpen()) {
-      this._openMenu()
-    }
-
-    onInputClick()
-  }
-
   _onFocus = (e: React.FocusEvent) => {
     e.persist()
     if (!this._hasFocus()) {
       this._setFocus(true)
       this._openMenu()
     } else {
-      !this._isMenuOpen() && this._openMenu()
+      !this._isMenuOpen() ? this._openMenu() : this._closeMenu()
     }
     let { onInputFocus = noop } = this.props;
     onInputFocus(e)
@@ -574,8 +563,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
     let containerStyle = multiple ? { minHeight: height, height: 'auto', width } : { height, width }
 
     let extraProps: ExtraInputProps = searchable ? {} : {
-      onKeyDown: this._handleKeyDown,
-      onClick: this._onFocus
+      onKeyDown: this._handleKeyDown
     }
 
     let portalTarget = canUseDOM && container ? document.querySelector(container) : null

@@ -21,7 +21,8 @@ export default function ButtonExample() {
         <Button plain>
           Plain button
         </Button>
-        <a onClick={() => { }} className='ui-btn as-link' href='#'>Anchor Link</a>
+        <a onClick={() => { }} className='ui-btn as-link' href='#'>Anchor link</a>
+        <Button plain className='is-accent'>Accent button</Button>
         <Button disabled>Disabled button</Button>
         <Button theme='primary' disabled>Disabled button</Button>
         <Button theme='secondary' disabled>Disabled button</Button>

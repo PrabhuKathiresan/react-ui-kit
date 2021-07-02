@@ -15,6 +15,7 @@ code {
 :root {
   --primary-color: #007bff;
   --primary-dark: #2758e2;
+  --accent-color: #ff5969;
   --danger-color: #f44336;
   --danger-dark: #dc3545;
   --border-color: #d8d8d8;
@@ -25,4 +26,5 @@ code {
   --table-header-bg: #f5f5f5;
   --table-header-text-color: #444444;
   --table-selected-bg: aliceblue;
+  --border-radius: 4px;
 }
