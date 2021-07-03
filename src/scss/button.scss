@@ -263,7 +263,7 @@
     &:active,
     &:focus {
       outline: none;
-      box-shadow: 0px 0px 0px 1.2px $accent;
+      box-shadow: 0px 0px 1px 2px $accent;
       transform: scale(0.98);
     }
   }
@@ -275,7 +275,7 @@
     &:focus {
       outline: none;
       border-color: $danger;
-      box-shadow: 0px 0px 0px 0.75px $danger;
+      box-shadow: 0px 0px 1px 2px $danger;
       transform: scale(0.98);
     }
   }
@@ -287,7 +287,7 @@
     &:focus {
       outline: none;
       border-color: $primary;
-      box-shadow: 0px 0px 0px 0.75px $primary;
+      box-shadow: 0px 0px 1px 2px $primary;
       transform: scale(0.98);
     }
   }
@@ -349,8 +349,11 @@
     &:active,
     &:focus {
       outline: none;
-      box-shadow: 0px 0px 1px 2px $primary;
       transform: scale(0.98);
+
+      &:not(.is-accent) {
+        box-shadow: 0px 0px 1px 2px $primary;
+      }
     }
   }
 

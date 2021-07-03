@@ -86,6 +86,12 @@ $translateY: 50%;
         @include input-box-shadow($primary)
       }
 
+      &:not(.ui-kit-select-has-focus) {
+        &:hover {
+          border-color: $hover-border-color;
+        }
+      }
+
       &.is-small {
         height: 30px;
       }
