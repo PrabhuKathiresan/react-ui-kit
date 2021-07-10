@@ -52,4 +52,5 @@ export interface DropdownProps {
   offsetTop?: number;
   maxHeight?: number | 'auto';
   container?: string;
+  floatOffset?: number;
 }

@@ -9,12 +9,18 @@ export default function TextInputExample() {
       <TextInput
         label='User name'
         hintPosition='top'
-        hint='I will show the hint.'
+        hint='I will show the hint on top.'
         id='normal'
       />
       <TextInput
-        label='I am error input'
+        label='Left hint that will show on left side'
         hintPosition='left'
+        hint='I will show the hint on left.'
+        id='left-hint'
+      />
+      <TextInput
+        label='I am error input'
+        hintPosition='right'
         hint='I will show some helper text'
         error='This field is required'
         id='error'

@@ -1,48 +1,40 @@
-@keyframes slide-in-down {
+@keyframes ui-kit-slide-in-down {
   from {
-    opacity: 0;
     transform: translateY(-24px);
   }
   to {
-    opacity: 1;
     transform: translateY(0);
   }
 }
 
-@keyframes slide-out-down {
+@keyframes ui-kit-slide-out-down {
   from {
-    opacity: 1;
     transform: translateY(0);
   }
   to {
-    opacity: 0;
     transform: translateY(-24px);
   }
 }
 
-@keyframes slide-in-up {
+@keyframes ui-kit-slide-in-up {
   from {
-    opacity: 0;
-    transform: translateY(24px);
+    transform: translateX(inherit) translateY(24px);
   }
   to {
-    opacity: 1;
-    transform: translateY(0);
+    transform: translateX(inherit) translateY(0);
   }
 }
 
-@keyframes slide-out-up {
+@keyframes ui-kit-slide-out-up {
   from {
-    opacity: 1;
     transform: translateY(0);
   }
   to {
-    opacity: 0;
     transform: translateY(24px);
   }
 }
 
-@keyframes slide-in-right {
+@keyframes ui-kit-slide-in-right {
   from {
     transform: translateX(0);
   }
@@ -51,7 +43,7 @@
   }
 }
 
-@keyframes slide-out-right {
+@keyframes ui-kit-slide-out-right {
   from {
     transform: translateX(-24px);
   }
@@ -60,7 +52,7 @@
   }
 }
 
-@keyframes slide-in-left {
+@keyframes ui-kit-slide-in-left {
   from {
     transform: translateX(0);
   }
@@ -69,7 +61,7 @@
   }
 }
 
-@keyframes slide-out-left {
+@keyframes ui-kit-slide-out-left {
   from {
     transform: translateX(24px);
   }

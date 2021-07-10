@@ -12,37 +12,39 @@ const canUseDOM = !!(
   window.document &&
   window.document.createElement
 )
-const floatingPositionMap = (elem: HTMLUListElement & HTMLDivElement | null) => ({
+const floatingPositionMap = (elem: HTMLUListElement & HTMLDivElement | null, floatOffset: number = 10) => ({
   'top-left': (rect: any) => {
     let width = elem?.clientWidth || 0
     return {
       top: rect.top,
-      left: rect.left - (width + 10),
-      marginTop: 0
+      left: rect.left - (width + floatOffset),
+      marginTop: 0,
+      marginLeft: 10
     }
   },
   'bottom-left': (rect: any) => {
     let width = elem?.clientWidth || 0
-    let height = elem?.clientHeight || 0
     return {
-      top: rect.bottom - height,
-      left: rect.left - (width + 10),
-      marginTop: 0
+      bottom: rect.bottom,
+      left: rect.left - (width + floatOffset),
+      marginTop: 0,
+      marginLeft: 10
     }
   },
   'top-right': (rect: any) => {
     return {
       top: rect.top,
-      left: rect.right + 10,
-      marginTop: 0
+      left: rect.right + floatOffset,
+      marginTop: 0,
+      marginRight: 10
     }
   },
   'bottom-right': (rect: any) => {
-    let height = elem?.clientHeight || 0
     return {
-      top: rect.bottom - height,
-      left: rect.right + 10,
-      marginTop: 0
+      bottom: rect.bottom,
+      left: rect.right + floatOffset,
+      marginTop: 0,
+      marginRight: 10
     }
   }
 })
@@ -50,27 +52,27 @@ const floatPositions = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
 const transitionClassMap = (type: string = 'dropdown', state: string) => {
   let classMap = {
     dropdown: {
-      'entering': 'slide-in-down',
-      'entered': 'open slide-in-down',
+      'entering': 'ui-kit-slide-in-down',
+      'entered': 'open ui-kit-slide-in-down',
       'exiting': 'hidden slide-out-down',
       'exited': ''
     },
     dropup: {
-      'entering': 'slide-in-up',
-      'entered': 'open slide-in-up',
-      'exiting': 'hidden slide-out-up',
+      'entering': 'ui-kit-slide-in-up',
+      'entered': 'open ui-kit-slide-in-up',
+      'exiting': 'hidden ui-kit-slide-out-up',
       'exited': ''
     },
     slideleft: {
-      'entering': 'slide-out-left',
-      'entered': 'open slide-out-left',
-      'exiting': 'hidden slide-in-left',
+      'entering': 'ui-kit-slide-out-left',
+      'entered': 'open ui-kit-slide-out-left',
+      'exiting': 'hidden ui-kit-slide-in-left',
       'exited': ''
     },
     slideright: {
-      'entering': 'slide-out-right',
-      'entered': 'open slide-out-right',
-      'exiting': 'hidden slide-in-right',
+      'entering': 'ui-kit-slide-out-right',
+      'entered': 'open ui-kit-slide-out-right',
+      'exiting': 'hidden ui-kit-slide-in-right',
       'exited': ''
     }
   };
@@ -82,7 +84,8 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
   let {
     options = [], onClick, additionalClass = '', loading = false, container = 'body', float = false,
     dropdownClass = '', textContent, icon = {}, children, hasTriggerComponent, id = uniqueId(),
-    position = 'right', additionalTriggerClass = '', size = 'sm', offsetTop = 0, maxHeight = 'auto'
+    position = 'right', additionalTriggerClass = '', size = 'sm', offsetTop = 0, maxHeight = 'auto',
+    floatOffset
   } = props
   let [_position, _setPosition] = useState(position);
 
@@ -126,7 +129,7 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
     let rect = trigger.current.getBoundingClientRect()
     let pos: DropdownPosition = {}
     if (float) {
-      pos = floatingPositionMap(dropdown.current)[_position](rect);
+      pos = floatingPositionMap(dropdown.current, floatOffset)[_position](rect);
     } else {
       let body = document.documentElement || document.body
       let offset = Math.max(body.scrollTop, (body.scrollHeight - window.innerHeight))

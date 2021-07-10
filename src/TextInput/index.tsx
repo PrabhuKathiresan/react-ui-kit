@@ -53,7 +53,7 @@ const TextInput = (props: InputHTMLAttributes<HTMLInputElement | HTMLTextAreaEle
           {
             hint &&
             <span className='ml-8 ui-kit-input-hint-icon'>
-              <Tooltip position={hintPosition} content={hint} wrapperClass='d-flex'>
+              <Tooltip direction={hintPosition} content={hint} wrapperClass='d-flex'>
                 <InfoCircle width={14} height={14} />
               </Tooltip>
             </span>
