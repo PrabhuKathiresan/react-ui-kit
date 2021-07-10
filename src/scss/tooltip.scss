@@ -1,19 +1,17 @@
-/* Wrapping */
 .ui-kit-tooltip-Wrapper {
   position: relative;
 }
 
-/* Absolute positioning */
 .ui-kit-tooltip-Tip {
   position: fixed;
   border-radius: 4px;
-  padding: 10px 12px;
+  padding: var(--ui-kit-tooltip-padding, 8px 12px);
   color: var(--ui-kit-tooltip-text-color, #ffffff);
   background: $primary;
-  font-size: 14px;
+  font-size: var(--ui-kit-tooltip-font-size, 12px);
   font-family: sans-serif;
   line-height: 1;
-  z-index: 100;
+  z-index: var(--ui-kit-tooltip-z-index, 122);
   white-space: normal;
   max-width: 250px;
   opacity: 1;
