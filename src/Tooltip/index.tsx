@@ -99,9 +99,9 @@ export default function Tooltip(props: TooltipProps) {
       left: style.left
     }}>
       <span className={cx('ui-kit-tooltip-arrow', position)} />
-      <div className='ui-kit-tooltip-content'>
+      <span className='ui-kit-tooltip-content'>
         {content}
-      </div>
+      </span>
     </div>
   )
 

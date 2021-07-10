@@ -16,6 +16,8 @@ export { default as Button } from './Button'
 
 export { default as Dropdown } from './Dropdown'
 
+export { default as ToolTip } from './Tooltip';
+
 export * as Toast from './Toast'
 
 export * as Dialog from './Dialog'

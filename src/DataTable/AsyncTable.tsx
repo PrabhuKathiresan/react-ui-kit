@@ -302,7 +302,8 @@ class AsyncTable extends Component<AsyncProps, AsyncTableState> {
       fixedWidth = false,
       variant = 'bordered',
       showProgress,
-      id = new Date().getTime().toString()
+      id = new Date().getTime().toString(),
+      hideFooterText = false
     } = this.props
 
     let isEmpty = !loading && total === 0
@@ -342,6 +343,7 @@ class AsyncTable extends Component<AsyncProps, AsyncTableState> {
           gotoPreviousPage={this.gotoPreviousPage}
           refreshTable={this.fetchRecord}
           id={id}
+          hideFooterText={hideFooterText}
         />
         <Loader loading={loading} />
         {

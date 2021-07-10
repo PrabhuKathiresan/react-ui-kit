@@ -51,10 +51,12 @@
     color: $white;
     padding: 4px 12px;
     font-size: 13px;
+    font-weight: 500;
     line-height: 1.5;
-    word-break: break-all;
     max-width: 250px;
     border-radius: 3px;
+    display: block;
+    white-space: normal;
   }
 
   &-arrow {

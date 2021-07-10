@@ -47,6 +47,9 @@ export default function DropdownExample() {
           textContent='Dropdown action'
           id='my-dropdown'
           ref={contentDropdown}
+          maxHeight={150}
+          float
+          position='bottom-right'
         >
           <ul className='dropdown-menu show position-relative border-0 pa-0'>
             {

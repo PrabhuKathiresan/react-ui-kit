@@ -259,7 +259,8 @@ export default class BasicTable extends Component<TableProps, TableState> {
       fixedWidth,
       variant = 'bordered',
       onRefresh = noop,
-      id = new Date().getTime().toString()
+      id = new Date().getTime().toString(),
+      hideFooterText = false
     } = this.props
 
     let { showSettings, sortedColumns } = this.state
@@ -306,6 +307,7 @@ export default class BasicTable extends Component<TableProps, TableState> {
           gotoNextPage={this.gotoNextPage}
           gotoPreviousPage={this.gotoPreviousPage}
           refreshTable={onRefresh}
+          hideFooterText={hideFooterText}
           id={id}
         />
         <Loader loading={loading} />

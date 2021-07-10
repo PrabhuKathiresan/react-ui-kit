@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 import NextIcon from '../icons/next';
 import PreviousIcon from '../icons/previous';
 
@@ -8,7 +9,8 @@ const Pager = ({
   paginationOptions = { currentPage: 1, limit: 10 },
   itemsCount = 0,
   gotoPreviousPage = noop,
-  gotoNextPage = noop
+  gotoNextPage = noop,
+  hideFooterText = false
 }) => {
   const {
     currentPage,
@@ -27,7 +29,7 @@ const Pager = ({
   const endingRecord = () => Math.min((currentPage * Math.min(limit, itemsCount)), itemsCount);
   return (
     <div className='ui-kit-table-pagination'>
-      <div className='ui-kit-table-pagination-item hide-md'>
+      <div className={cx('ui-kit-table-pagination-item ui-kit-hide-md', { 'ui-kit-hide': hideFooterText })}>
         Displaying
         {' '}
         {startingRecord()}
@@ -42,7 +44,7 @@ const Pager = ({
         {' '}
         records
       </div>
-      <div className='ui-kit-table-pagination-item display-md'>
+      <div className={cx('ui-kit-table-pagination-item ui-kit-display-md', { 'ui-kit-display': hideFooterText })}>
         <span>
           {startingRecord()}
           {' '}

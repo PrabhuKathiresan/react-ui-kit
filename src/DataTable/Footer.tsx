@@ -1,25 +1,27 @@
 import React, { useState } from 'react';
+import cx from 'classnames';
 import { BasicSelect } from '../Select';
 import Pager from './Pager';
 import RefreshIcon from '../icons/refresh-icon';
 import ChevronUp from '../icons/chevron-up';
 
 interface PaginationProps {
-  currentPage: number,
-  limit: number,
+  currentPage: number;
+  limit: number;
   options: Array<number>
 }
 
 interface FooterProps {
-  paginationOptions: PaginationProps,
-  setPaginationLimit: Function,
-  refreshTable: Function,
-  paginate: boolean,
-  height: number | string,
-  itemsCount: number,
-  gotoNextPage: Function,
-  gotoPreviousPage: Function,
-  id: string
+  paginationOptions: PaginationProps;
+  setPaginationLimit: Function;
+  refreshTable: Function;
+  paginate: boolean;
+  height: number | string;
+  itemsCount: number;
+  gotoNextPage: Function;
+  gotoPreviousPage: Function;
+  id: string;
+  hideFooterText: boolean;
 }
 
 export default function Footer(props: FooterProps) {
@@ -31,7 +33,8 @@ export default function Footer(props: FooterProps) {
     paginate,
     height,
     itemsCount,
-    id
+    id,
+    hideFooterText
   } = props
   let [pageLimit, setPageLimit] = useState([
     {
@@ -61,7 +64,7 @@ export default function Footer(props: FooterProps) {
           paginate ? (
             <div className='d-flex-justify-center-align-center'>
               <div className='d-flex-justify-center-align-center mr-16'>
-                <span className='hide-md mr-16'>
+                <span className={cx('ui-kit-hide-md mr-16', { 'ui-kit-hide': hideFooterText })}>
                   Rows per page
                 </span>
                 <BasicSelect
@@ -89,6 +92,7 @@ export default function Footer(props: FooterProps) {
                 paginationOptions={paginationOptions}
                 gotoNextPage={() => props.gotoNextPage(itemsCount)}
                 gotoPreviousPage={() => props.gotoPreviousPage(itemsCount)}
+                hideFooterText={hideFooterText}
               />
             </div>
           ) :

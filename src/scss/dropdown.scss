@@ -3,6 +3,7 @@
 }
 
 .ui-kit-dropdown {
+  height: auto;
   position: relative;
 
   &__trigger {
@@ -25,7 +26,7 @@
     z-index: 21;
     border: 1px solid $border-color;
     border-radius: $border-radius;
-    
+    overflow: auto;
 
     &.open {
       margin-top: 4px;
@@ -73,4 +74,20 @@
 
 .slide-out-up {
   animation: slide-out-up 0.22s ease-out;
+}
+
+.slide-in-left {
+  animation: slide-in-left 0.22s ease-in;
+}
+
+.slide-out-left {
+  animation: slide-out-left 0.22s ease-out;
+}
+
+.slide-in-right {
+  animation: slide-in-right 0.22s ease-in;
+}
+
+.slide-out-right {
+  animation: slide-out-right 0.22s ease-out;
 }

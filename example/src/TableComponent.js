@@ -193,6 +193,7 @@ export default function TableComponent() {
         headerHeight={40}
         footerHeight={40}
         showProgress
+        hideFooterText
       />
     </div>
   )

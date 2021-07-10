@@ -60,6 +60,7 @@ export interface TableProps {
   async?: boolean;
   filters?: Array<any>;
   id: string;
+  hideFooterText?: boolean;
 }
 
 export interface TableState {
