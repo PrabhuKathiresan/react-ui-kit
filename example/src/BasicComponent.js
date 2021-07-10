@@ -12,6 +12,7 @@ import DropdownExample from './DropdownExample'
 export default function BasicComponent() {
   return (
     <div className='row'>
+      <DropdownExample id='test' />
       <TextInputExample />
       <CheckboxExample />
       <RadioExample />

@@ -27,7 +27,24 @@ const options = [
   }
 ]
 
-export default function DropdownExample() {
+const dropdownOptions = {
+  test1: {
+    float: true,
+    position: 'top-right'
+  },
+  test2: {
+    float: true,
+    position: 'bottom-right'
+  },
+  lam1: {
+    position: 'left'
+  },
+  lam2: {
+    position: 'left'
+  }
+}
+
+export default function DropdownExample({ id = 'lam' }) {
   let contentDropdown = useRef()
   let onClick = (item) => {
     console.log('I have clicked on', item.name)
@@ -38,6 +55,9 @@ export default function DropdownExample() {
     contentDropdown.current?.closeDropdown()
   }
 
+  let eleId1 = `${id}1`;
+  let eleId2 = `${id}2`;
+
   return (
     <div className='col-lg-4 mb-16'>
       <h4>Dropdown Example</h4>
@@ -45,11 +65,10 @@ export default function DropdownExample() {
       <div className='d-flex flex-wrap mb-16'>
         <Dropdown
           textContent='Dropdown action'
-          id='my-dropdown'
+          id={eleId1}
           ref={contentDropdown}
           maxHeight={150}
-          float
-          position='bottom-right'
+          {...dropdownOptions[eleId1]}
         >
           <ul className='dropdown-menu show position-relative border-0 pa-0'>
             {
@@ -67,10 +86,10 @@ export default function DropdownExample() {
       <div className='d-flex flex-wrap'>
         <Dropdown
           textContent='Dropdown action with items'
-          id='my-dropdown-1'
+          id={eleId2}
           options={options}
           onClick={onClick}
-          position='left'
+          {...dropdownOptions[eleId2]}
         />
       </div>
     </div>

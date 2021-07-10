@@ -18,10 +18,10 @@
 
 @keyframes ui-kit-slide-in-up {
   from {
-    transform: translateX(inherit) translateY(24px);
+    transform: translateY(24px);
   }
   to {
-    transform: translateX(inherit) translateY(0);
+    transform: translateY(0);
   }
 }
 

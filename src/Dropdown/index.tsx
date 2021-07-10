@@ -40,8 +40,9 @@ const floatingPositionMap = (elem: HTMLUListElement & HTMLDivElement | null, flo
     }
   },
   'bottom-right': (rect: any) => {
+    let height = elem?.clientHeight || 0
     return {
-      bottom: rect.bottom,
+      top: rect.bottom - height,
       left: rect.right + floatOffset,
       marginTop: 0,
       marginRight: 10
