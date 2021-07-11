@@ -4,12 +4,13 @@
 
   .ui-kit-input-hint-icon {
     display: inline-block;
-    color: $black;
+    vertical-align: text-bottom;
   }
 
   .ui-kit-input-label {
-    display: inline-flex;
-    align-items: center;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 20px;
     color: $label-color;
     margin-bottom: 0.5rem;
 

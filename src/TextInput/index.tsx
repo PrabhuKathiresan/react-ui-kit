@@ -49,7 +49,7 @@ const TextInput = (props: InputHTMLAttributes<HTMLInputElement | HTMLTextAreaEle
       {
         label &&
         <label className={cx('ui-kit-input-label', labelClass, { 'is-required required': required })} htmlFor={disabled ? '' : id} data-testid={disabled ? `disabled-text-input-label-${id}` : `text-input-label-${id}`}>
-          {label}
+          <span>{label}</span>
           {
             hint &&
             <span className='ml-8 ui-kit-input-hint-icon'>

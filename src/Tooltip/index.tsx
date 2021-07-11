@@ -13,7 +13,7 @@ const canUseDOM = !!(
 const directionStyleMap = {
   top: (position: any) => {
     return {
-      top: position.top - 40,
+      top: position.top - 10,
       left: Math.round(position.left + (position.width / 2))
     }
   },
@@ -46,6 +46,7 @@ export default function Tooltip(props: TooltipProps) {
     delay = 200
   } = props
 
+  let timeout = useRef<any>(null)
   let [active, setActive] = useState(false)
   let [tooltipStyle, setTooltipStyle] = useState<any>({})
   let wrapper = useRef<HTMLDivElement | null>(null)
@@ -57,10 +58,16 @@ export default function Tooltip(props: TooltipProps) {
       let style = getStyle(position)
       setTooltipStyle(style)
     }
-    setActive(true);
+    timeout.current = setTimeout(() => {
+      setActive(true)
+    }, delay)
   }
 
   let onLeave = () => {
+    if (timeout.current) {
+      clearTimeout(timeout.current)
+      timeout.current = null
+    }
     setActive(false)
   }
 
@@ -92,7 +99,7 @@ export default function Tooltip(props: TooltipProps) {
   let portalTarget = canUseDOM && container ? document.querySelector(container) : null
 
   return (
-    <div
+    <span
       className='ui-kit-tooltip-Wrapper'
       // When to show the tooltip
       onMouseEnter={onEnter}
@@ -113,6 +120,6 @@ export default function Tooltip(props: TooltipProps) {
             <>{tooltipContainer}</>
           )
       }
-    </div>
+    </span>
   )
 }

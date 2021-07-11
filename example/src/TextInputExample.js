@@ -9,7 +9,7 @@ export default function TextInputExample() {
       <TextInput
         label='User name'
         hintPosition='top'
-        hint='I will show the hint on top.'
+        hint='I will show the hint on top. I will show the hint on top.'
         id='normal'
       />
       <TextInput
