@@ -12,10 +12,11 @@ $primary-light-bg: var(--primary-light, aliceblue);
 $input-icon-width: 36px;
 $input-icon-width-sm: 24px;
 $border-radius: var(--border-radius, 4px);
-$readOnly: rgba(255, 255, 255, 0.6);
-$label-color: #6c757d;
+$readOnly: var(--read-only-bg, rgba(255, 255, 255, 0.6));
+$label-color: var(--label-color, #6c757d);
 $black: #000000;
 $white: #ffffff;
+$table-header-font-size: var(--table-header-font-size, 500);
 $table-header-bg: var(--table-header-bg, #f5f5f5);
 $table-header-text-color: var(--table-header-text-color, #6c767f);
 $table-selected-bg: var(--table-selected-bg, aliceblue);
@@ -24,10 +25,11 @@ $font-size-big: 14px;
 $font-size-default: 13px;
 $font-size-small: 12px;
 $font-size-x-small: 11px;
-$btn-color: rgba(0, 0, 0, 0.87);
 
-$btn-border: #cacaca;
-$btn-bg: #dee2e6;
+$btn-color: var(--ui-kit-btn-color, rgba(0, 0, 0, 0.87));
+$btn-border: var(--ui-kit-btn-border-color, #cacaca);
+$btn-bg: var(--ui-kit-btn-bg, #dee2e6);
+
 $accent: var(--accent-color);
 $secondary: var(--secondary-color, #02afaf);
 $secondary-dark: var(--secondary-dark, #008c8c);
@@ -44,7 +46,7 @@ $icon-info: #0891cf;
 $icon-success: #439446;
 $icon-warning: #d9a300;
 
-$toast-border-width: 3px;
+$toast-border-width: var(--ui-kit-toast-border-width, 3px);
 
 // Breakpoints
 $xs: 0;

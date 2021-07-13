@@ -182,6 +182,8 @@ export default function TableComponent() {
         onSelectAll={onSelectAll}
         showColumnSelection
         onColumnChange={onColumnChange}
+        headerBorderless
+        columnSelectionIcon={<i className='material-icons-outlined fs-18'>drive_file_rename_outline</i>}
       />
       <h4 className='my-20'>Async table</h4>
       <AsyncTable

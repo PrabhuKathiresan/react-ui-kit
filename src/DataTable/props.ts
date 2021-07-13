@@ -61,6 +61,8 @@ export interface TableProps {
   filters?: Array<any>;
   id: string;
   hideFooterText?: boolean;
+  headerBorderless?: boolean;
+  columnSelectionIcon?: any;
 }
 
 export interface TableState {

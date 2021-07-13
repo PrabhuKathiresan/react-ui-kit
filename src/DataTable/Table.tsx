@@ -94,11 +94,13 @@ export default class Table extends Component<TableProps & InternalTableState, {}
       sortedColumns,
       sortColumn,
       getSelectedState,
-      toggleSelectAll
+      toggleSelectAll,
+      headerBorderless = false,
+      columnSelectionIcon
     } = this.props
 
     return (
-      <table className={cx('ui-kit-table ui-kit-table-header')} style={{ minWidth: fixedWidth ? width : 'auto' }}>
+      <table className={cx('ui-kit-table ui-kit-table-header', { 'ui-kit-table-header-borderless': headerBorderless })} style={{ minWidth: fixedWidth ? width : 'auto' }}>
         {this.renderColGroup(columns)}
         <thead>
           <tr style={{ height: headerHeight }} className={cx('ui-kit-header-row', { 'has-selection-column': showColumnSelection })}>
@@ -109,7 +111,7 @@ export default class Table extends Component<TableProps & InternalTableState, {}
                   className={cx({
                     'ui-kit-table-select-column': column.selectColumn,
                     'cursor-pointer': column.sortable,
-                    'header-selection-column': column.selectionColumn
+                    'ui-kit-table-header-selection-column': column.selectionColumn
                   })}
                   onClick={() => sortColumn(column)}
                   style={{ height: column.selectionColumn ? headerHeight : 'auto' }}
@@ -123,7 +125,7 @@ export default class Table extends Component<TableProps & InternalTableState, {}
                       column.selectionColumn ?
                         (
                           <span role='button' aria-hidden tabIndex={0} className='cursor-pointer d-flex-justify-center-align-center selection-column-icon' onClick={() => this._handleColumnSelectionClick()}>
-                            <Settings />
+                            {columnSelectionIcon || <Settings />}
                           </span>
                         )
                         :

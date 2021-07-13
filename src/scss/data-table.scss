@@ -226,7 +226,7 @@
     color: $table-header-text-color;
     border-bottom: 1px solid $border-color;
 
-    th.header-selection-column {
+    th.ui-kit-table-header-selection-column {
       position: sticky;
       right: 0;
       z-index: 3;
@@ -251,6 +251,14 @@
         
         &:hover {
           background-color: rgba($color: #000000, $alpha: .05);
+        }
+      }
+    }
+
+    &:not(.ui-kit-table-header-borderless) {
+      th {
+        &:not(:last-child):not(.ui-kit-table-select-column) {
+          border-right: 1px solid $border-color;
         }
       }
     }
@@ -286,13 +294,9 @@
     }
 
     th {
-      font-weight: 600;
+      font-weight: $table-header-font-size;
       padding: 0 0.75rem;
       vertical-align: middle;
-
-      &:not(:last-child):not(.ui-kit-table-select-column) {
-        border-right: 1px solid $border-color;
-      }
     }
 
     &.has-selection-column {
@@ -349,11 +353,11 @@
 
 @keyframes scale-in {
   from {
-    transform: scale(0, 0);
+    transform: translateY(-48px);
     opacity: 0;
   }
   to {
-    transform: scale(1, 1);
+    transform: translateY(0px);
     opacity: 1;
   }
 }

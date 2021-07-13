@@ -260,7 +260,9 @@ export default class BasicTable extends Component<TableProps, TableState> {
       variant = 'bordered',
       onRefresh = noop,
       id = new Date().getTime().toString(),
-      hideFooterText = false
+      hideFooterText = false,
+      headerBorderless = false,
+      columnSelectionIcon = null
     } = this.props
 
     let { showSettings, sortedColumns } = this.state
@@ -296,6 +298,8 @@ export default class BasicTable extends Component<TableProps, TableState> {
             toggleSelectAll={this.toggleSelectAll}
             toggleRowSelect={this.toggleRowSelect}
             id={id}
+            headerBorderless={headerBorderless}
+            columnSelectionIcon={columnSelectionIcon}
           />
         </div>
         <Footer

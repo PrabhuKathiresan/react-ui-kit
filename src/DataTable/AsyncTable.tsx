@@ -303,7 +303,9 @@ class AsyncTable extends Component<AsyncProps, AsyncTableState> {
       variant = 'bordered',
       showProgress,
       id = new Date().getTime().toString(),
-      hideFooterText = false
+      hideFooterText = false,
+      headerBorderless = false,
+      columnSelectionIcon = null
     } = this.props
 
     let isEmpty = !loading && total === 0
@@ -331,6 +333,8 @@ class AsyncTable extends Component<AsyncProps, AsyncTableState> {
             toggleSelectAll={this.toggleSelectAll}
             toggleRowSelect={this.toggleRowSelect}
             id={id}
+            headerBorderless={headerBorderless}
+            columnSelectionIcon={columnSelectionIcon}
           />
         </div>
         <Footer
