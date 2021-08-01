@@ -6,7 +6,6 @@ const { withToastManager } = Toast
 class ToastClassComponent extends Component {
   handleClick = (type, message, options = {}) => {
     let { toastManager } = this.props
-    console.log(toastManager)
 
     toastManager.addToast(message, {
       type,
