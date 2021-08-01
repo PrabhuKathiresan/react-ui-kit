@@ -2,17 +2,14 @@ import React, { useState, useImperativeHandle, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { Transition } from 'react-transition-group'
 import cx from 'classnames'
-import { DropdownProps, PositionalProps, DropdownPosition, OptionItem, TransitionState } from './props'
+import { DropdownProps, PositionalProps, DropdownPosition, OptionItem } from './props'
 import Button from '../Button'
-import { uniqueId, noop } from '../utils'
+import { uniqueId, canUseDOM } from '../utils'
+import { TransitionState } from '../constants'
 
 const transitionDuration = 220
-const canUseDOM = !!(
-  typeof window !== 'undefined' &&
-  window.document &&
-  window.document.createElement
-)
-const floatingPositionMap = (elem: HTMLUListElement & HTMLDivElement | null, floatOffset: number = 10) => ({
+const translateDistance = 24;
+const floatingPositionMap = (elem: HTMLDivElement | null, floatOffset: number = 10) => ({
   'top-left': (rect: any) => {
     let width = elem?.clientWidth || 0
     return {
@@ -50,35 +47,40 @@ const floatingPositionMap = (elem: HTMLUListElement & HTMLDivElement | null, flo
   }
 })
 const floatPositions = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
-const transitionClassMap = (type: string = 'dropdown', state: string) => {
-  let classMap = {
+
+const getDropdownStyle = (state: string, position: string = 'dropdown') => {
+  let style: any = {
+    transition: `transform ${transitionDuration}ms linear`
+  }
+  let stateTransformMap = {
     dropdown: {
-      'entering': 'ui-kit-slide-in-down',
-      'entered': 'open ui-kit-slide-in-down',
-      'exiting': 'hidden slide-out-down',
-      'exited': ''
+      entering: `translateY(-${translateDistance}px)`,
+      entered: 'translateY(0)',
+      exiting: `translateY(-${translateDistance}px)`,
+      exited: `translateY(-${translateDistance}px)`
     },
     dropup: {
-      'entering': 'ui-kit-slide-in-up',
-      'entered': 'open ui-kit-slide-in-up',
-      'exiting': 'hidden ui-kit-slide-out-up',
-      'exited': ''
-    },
-    slideleft: {
-      'entering': 'ui-kit-slide-out-left',
-      'entered': 'open ui-kit-slide-out-left',
-      'exiting': 'hidden ui-kit-slide-in-left',
-      'exited': ''
+      entering: `translateY(${translateDistance}px)`,
+      entered: 'translateY(0)',
+      exiting: `translateY(${translateDistance}px)`,
+      exited: `translateY(${translateDistance}px)`
     },
     slideright: {
-      'entering': 'ui-kit-slide-out-right',
-      'entered': 'open ui-kit-slide-out-right',
-      'exiting': 'hidden ui-kit-slide-in-right',
-      'exited': ''
+      entering: `translateX(-${translateDistance}px)`,
+      entered: 'translateX(0)',
+      exiting: `translateX(-${translateDistance}px)`,
+      exited: `translateX(-${translateDistance}px)`
+    },
+    slideleft: {
+      entering: `translateX(${translateDistance}px)`,
+      entered: 'translateX(0)',
+      exiting: `translateX(${translateDistance}px)`,
+      exited: `translateX(${translateDistance}px)`
     }
-  };
+  }
+  style.transform = stateTransformMap[position][state]
 
-  return classMap[type][state] || '';
+  return style
 }
 
 const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
@@ -97,12 +99,18 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
     }
   }, [float]);
 
+  useEffect(() => {
+    _setPosition(position)
+  }, [position])
+
   let dropdownOptions = options.filter((option) => !option.hidden)
 
   let __dropdownActive = useRef<boolean>(true)
+  let __dropup = useRef<boolean>(false)
+  let __boundingClientRect = useRef<any>({})
   let [open, setOpen] = useState<boolean>(false)
   let [dropup, setDropup] = useState<boolean>(false)
-  let dropdown = useRef<HTMLUListElement & HTMLDivElement | null>(null)
+  let dropdown = useRef<HTMLDivElement | null>(null)
   let trigger = useRef<HTMLDivElement | null>(null)
   let [dropdownPosition, setDropdownPosition] = useState<DropdownPosition>({})
 
@@ -116,18 +124,17 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
   useImperativeHandle(
     ref,
     () => ({
-      closeDropdown() {
-        if (__dropdownActive.current) {
-          setOpen(false)
-        }
-      }
+      closeDropdown
     }),
     []
   )
 
+  useEffect(() => {
+    if (trigger.current) __boundingClientRect.current = trigger.current.getBoundingClientRect()
+  }, [trigger.current])
+
   let getRelativePosition = () => {
-    if (!trigger.current) return {}
-    let rect = trigger.current.getBoundingClientRect()
+    let rect = __boundingClientRect.current
     let pos: DropdownPosition = {}
     if (float) {
       pos = floatingPositionMap(dropdown.current, floatOffset)[_position](rect);
@@ -135,7 +142,7 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
       let body = document.documentElement || document.body
       let offset = Math.max(body.scrollTop, (body.scrollHeight - window.innerHeight))
       let offsetHeight = body.scrollHeight - offset
-      let menuHeight = dropdown.current ? dropdown.current.clientHeight : 100
+      let menuHeight = dropdown.current?.clientHeight || 100
       if (_position === 'right') {
         pos.right = window.innerWidth - rect.right
       }
@@ -143,9 +150,11 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
         pos.left = rect.left
       }
       if ((rect.bottom + menuHeight) > offsetHeight) {
+        __dropup.current = true
         setDropup(true)
         pos.bottom = (offsetHeight - rect.y + 4) + offsetTop
       } else {
+        __dropup.current = false
         setDropup(false)
         pos.top = rect.bottom + offsetTop
       }
@@ -204,7 +213,8 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
 
   useEffect(() => {
     if (open) {
-      setDropdownPosition(getRelativePosition())
+      let position = getRelativePosition()
+      setDropdownPosition(position)
       addEvtListerner()
     } else {
       removeEvtListener()
@@ -213,45 +223,54 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
 
   let hasOptions = Boolean(dropdownOptions.length)
 
-  let dropdownContent = (transitionClass: string) => {
-    return (
-      hasOptions ?
-        (
-          <ul style={{ ...dropdownPosition, maxHeight }} data-testid={`${id}-dropdown`} className={cx('ui-kit-dropdown__wrapper', dropdownClass, `dropdown--${size}`, transitionClass)} ref={dropdown}>
-            {
-              dropdownOptions.map((option, index) => (
-                option.divider ?
-                  <hr className='mx-0 my-8' key={index} />
-                  :
-                  <li data-testid={option.key} className={cx('dropdown-item cursor-pointer', { 'dropdown-item-disabled': option.disabled })} onClick={option.disabled ? noop : () => onMenuClick(option)} key={option.key}>
-                    {
-                      <span>{option.name}</span>
-                    }
-                  </li>
-              ))
-            }
-          </ul>
-        )
-        :
-        (
-          <div style={{ ...dropdownPosition, maxHeight }} data-testid={`${id}-dropdown`} className={cx('ui-kit-dropdown__wrapper', dropdownClass, `dropdown--${size}`, transitionClass)} ref={dropdown}>
-            {children}
-          </div>
-        )
-    )
+  let dropdownContent = (style: any) => {
+    return hasOptions ?
+      (
+        <ul className='ui-kit-dropdown__container' style={{ ...style, maxHeight }}>
+          {
+            dropdownOptions.map((option, index) => (
+              option.divider ?
+                <hr className='mx-0 my-8' key={index} />
+                :
+                <li data-testid={option.key} className={cx('dropdown-item cursor-pointer', { 'dropdown-item-disabled': option.disabled })} onClick={() => !option.disabled && onMenuClick(option)} key={option.key}>
+                  {
+                    <span>{option.name}</span>
+                  }
+                </li>
+            ))
+          }
+        </ul>
+      )
+      :
+      (
+        <div className='ui-kit-dropdown__container' style={{ ...style, maxHeight }}>
+          {children}
+        </div>
+      )
   }
 
   let getTransitionType = (): string => {
     let type = 'dropdown';
     if (float) {
-      let [, pos] = position.split('-');
-      type = `slide${pos}`;
+      let [, pos] = position.split('-')
+      type = `slide${pos}`
     } else if (dropup) {
-      type = 'dropup';
+      type = 'dropup'
     }
 
     return type;
   }
+
+  let dropdownWrapper = (content: any) => (
+    <div
+      data-testid={`${id}-dropdown`}
+      className={cx('ui-kit-dropdown__wrapper', dropdownClass, `dropdown--${size}`)}
+      ref={dropdown}
+      style={{ ...dropdownPosition }}
+    >
+      {content}
+    </div>
+  )
 
   let dropdownContainer = (
     <Transition
@@ -266,7 +285,7 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
       }}
     >
       {
-        (transitionState: TransitionState) => dropdownContent(transitionClassMap(getTransitionType(), transitionState))
+        (transitionState: TransitionState) => dropdownWrapper(dropdownContent(getDropdownStyle(transitionState, getTransitionType())))
       }
     </Transition>
   )

@@ -140,12 +140,24 @@
   width: auto !important;
 }
 
+.h-auto {
+  height: auto !important;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+.h-100 {
+  height: 100% !important;
+}
+
 .cursor-pointer {
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 .cursor-not-allowed {
-  cursor: not-allowed;
+  cursor: not-allowed !important;
 }
 
 .text-small {
@@ -202,10 +214,54 @@
 
 .element-flex {
   display: flex;
+
+  &-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-align-center {
+    display: flex;
+    align-items: center;
+  }
+
+  &-justify-center {
+    display: flex;
+    justify-content: center;
+  }
+
+  &-justify-between {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-justify-around {
+    display: flex;
+    justify-content: space-around;
+  }
 }
 
-.element-flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.text--success {
+  color: $success;
+}
+
+.text--danger {
+  color: $danger;
+}
+
+.text--primary {
+  color: $primary;
+}
+
+.text--info {
+  color: $info;
+}
+
+.text--warning {
+  color: $warning;
+}
+
+.text--muted {
+  color: rgba(0, 0, 0, .5);
 }

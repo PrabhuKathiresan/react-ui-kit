@@ -1,3 +1,5 @@
+$toast-text-color: var(--ui-kit-toast-text-color, #183247);
+
 .ui-kit-toast {
   margin-bottom: 16px;
   padding: 12px 16px;
@@ -7,43 +9,43 @@
   min-width: 320px;
   width: 100%;
   background-color: $white;
+  color: $toast-text-color;
 
   &.ui-kit-toast-success {
-    border: 0px solid $icon-success;
+    border: 0px solid $success;
 
     .ui-kit-toast-title {
       &-icon {
-        color: $icon-success;
+        color: $success;
       }
     }
   }
 
   &.ui-kit-toast-error {
-    border: 0px solid $icon-error;
-
+    border: 0px solid $danger;
     .ui-kit-toast-title {
       &-icon {
-        color: $icon-error;
+        color: $danger;
       }
     }
   }
 
   &.ui-kit-toast-warning {
-    border: 0px solid $icon-warning;
+    border: 0px solid $warning;
     
     .ui-kit-toast-title {
       &-icon {
-        color: $icon-warning;
+        color: $warning;
       }
     }
   }
 
   &.ui-kit-toast-info {
-    border: 0px solid $icon-info;
+    border: 0px solid $info;
 
     .ui-kit-toast-title {
       &-icon {
-        color: $icon-info;
+        color: $info;
       }
     }
   }

@@ -2,8 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import NextIcon from '../icons/next';
 import PreviousIcon from '../icons/previous';
-
-const noop = () => { };
+import { noop } from '../utils';
 
 const Pager = ({
   paginationOptions = { currentPage: 1, limit: 10 },

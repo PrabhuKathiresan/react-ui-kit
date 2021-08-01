@@ -1,16 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { TextInput } from '@pk-design/react-ui-kit'
 
 export default function TextInputExample() {
+  let [success, setSuccess] = useState(false);
+  let [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    if (userName.length > 6) setSuccess(true)
+    else setSuccess(false)
+  }, [userName])
   return (
-    <div className='col-lg-4 mb-16'>
+    <div className='col-xl-4 col-lg-6 mb-16'>
       <h4>Text input</h4>
       <hr />
       <TextInput
         label='User name'
         hintPosition='top'
-        hint='I will show the hint on top. I will show the hint on top.'
+        hint='Type in 6 char to see success state'
         id='normal'
+        success={success}
+        onChange={(e) => setUserName(e.target.value)}
       />
       <TextInput
         label='Left hint that will show on left side'

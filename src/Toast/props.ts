@@ -1,8 +1,8 @@
-export declare type Positions = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center';
+import { TransitionState } from '../constants'
 
-export declare type TransitionState = 'entering' | 'entered' | 'exiting' | 'exited';
+export declare type Positions = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center'
 
-export declare type ToastType = 'success' | 'error' | 'warning' | 'info';
+export declare type ToastType = 'success' | 'error' | 'warning' | 'info'
 
 export interface ToastProps {
   id: string;
@@ -36,7 +36,7 @@ export interface ToastContainerProps {
   hasToasts: boolean;
   position: Positions;
   [k: string]: any
-};
+}
 
 export interface ProviderProps {
   add: Function,
@@ -47,5 +47,25 @@ export interface ProviderProps {
 }
 
 export interface TransitionProps {
-  transitionState: TransitionState
+  transitionState: TransitionState;
+  transitionDuration: number;
+}
+
+export interface SingleToastProp {
+  id: string;
+  message?: string;
+  type: string,
+  autoDismiss: boolean, // may be inherited from ToastProvider
+  duration: number, // inherited from ToastProvider
+  children: any,
+  onClose: Function,
+  position: Positions,
+  confirm?: boolean;
+  onConfirm?: Function;
+  onCancel?: Function;
+  confirmText?: string;
+  cancelText?: string;
+  onMouseEnter: Function;
+  onMouseLeave: Function;
+  iconType?: 'default' | 'filled'
 }

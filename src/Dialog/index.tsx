@@ -3,4 +3,4 @@ export {
   DialogProvider,
   DialogConsumer,
   withDialogManager
-} from './provider';
+} from './DialogProvider';

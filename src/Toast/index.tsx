@@ -1,5 +1,5 @@
-export { ToastContainer as DefaultToastContainer } from './container';
-export { ToastElement } from './element';
+export { ToastContainer as DefaultToastContainer } from './ToastContainer';
+export { ToastElement } from './ToastElement';
 export {
   ToastConsumer,
   ToastProvider,

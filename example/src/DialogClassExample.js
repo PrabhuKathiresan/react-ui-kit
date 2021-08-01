@@ -83,7 +83,7 @@ const DEFAULTSIZE = {
 const getSelected = (opts, s, defaultVal) => opts.find(o => o.value === s) || defaultVal
 const DIALOG = 'class-dialog'
 
-class DialogExample extends Component {
+class DialogClassExample extends Component {
   state = {
     id: DIALOG,
     title: 'Test',
@@ -117,7 +117,7 @@ class DialogExample extends Component {
       showBackdrop
     } = this.state
     return (
-      <div className='col-lg-4 mb-16'>
+      <div className='col-xl-4 col-lg-6 mb-16'>
         <h4>Dialog (withDialogManager)</h4>
         <hr />
         <h6>Options</h6>
@@ -148,4 +148,4 @@ class DialogExample extends Component {
   }
 }
 
-export default withDialogManager(DialogExample)
+export default withDialogManager(DialogClassExample)

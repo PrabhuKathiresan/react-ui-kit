@@ -1,29 +1,28 @@
-interface IconProps {
-  left: any,
-  right: any
+import { Ref } from "react";
+import { InputProps } from "../constants";
+
+export interface IconProps {
+  left?: any,
+  right?: any
 }
 
-interface InputActionItem {
+export interface InputActionItem {
   show: boolean,
   label: string,
   onClick: Function
 }
 
-interface InputProps {
+export interface TextInputProps extends InputProps {
   icon?: IconProps,
-  label?: any,
-  labelClass?: string,
-  size?: 'small' | 'default' | 'large',
   containerClass?: string,
-  message?: string,
-  hint?: string,
-  hintPosition?: 'top' | 'left' | 'bottom' | 'right',
-  id?: string,
   actionItem?: InputActionItem,
   error?: boolean | string,
+  success?: boolean;
+  warning?: boolean;
   charLeft?: any,
   component?: 'input' | 'textarea';
-  maxLength?: any
+  maxLength?: any;
+  containerRef?: Ref<any>;
+  labelRef?: Ref<any>;
+  onRightIconClick?: Function;
 }
-
-export default InputProps;

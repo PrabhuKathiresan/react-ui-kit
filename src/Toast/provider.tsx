@@ -1,20 +1,15 @@
 import React, { Component, useContext } from 'react'
 import { createPortal } from 'react-dom'
 import { TransitionGroup, Transition } from 'react-transition-group'
-import { noop, generateUEID } from '../utils'
-import { Props, ToastProps, ToastState, ProviderProps, TransitionState } from './props'
-import { ToastContainer } from './container'
-import ToastController from './contoller'
-import { ToastElement } from './element'
+import { noop, generateUEID, canUseDOM } from '../utils'
+import { Props, ToastProps, ToastState, ProviderProps } from './props'
+import { ToastContainer } from './ToastContainer'
+import { ToastElement } from './ToastElement'
+import ToastController from './ToastController'
+import { TransitionState } from '../constants'
 
 const ToastContext = React.createContext<ProviderProps | null>(null);
 const { Consumer, Provider } = ToastContext;
-
-const canUseDOM = !!(
-  typeof window !== 'undefined' &&
-  window.document &&
-  window.document.createElement
-)
 
 export class ToastProvider extends Component<Props, ToastState> {
   state: ToastState = { toasts: [] }
@@ -27,7 +22,7 @@ export class ToastProvider extends Component<Props, ToastState> {
     return Boolean(this.state.toasts.filter(t => t.id === id).length)
   }
 
-  onDismiss = (id: string, cb: Function = noop, ctx: any) => {
+  onDismiss = (id: string, ctx: any, cb: Function = noop) => {
     cb(id, ctx)
     this.remove(id)
   }
@@ -105,11 +100,21 @@ export class ToastProvider extends Component<Props, ToastState> {
     }, callback)
   }
 
+  _getPortalTarget = () => {
+    let {
+      container
+    } = this.props
+    let target = null
+    if (canUseDOM) {
+      target = container ? document.querySelector(container) : document.body
+    }
+    return target
+  }
+
   render() {
     let { add, remove, removeAll, update, props, state } = this;
     let {
       children,
-      container,
       position = 'top-right',
       autoDismiss: inheritedAutoDismiss = true,
       duration = 5000,
@@ -117,7 +122,7 @@ export class ToastProvider extends Component<Props, ToastState> {
     } = props
     let { toasts } = state
     let hasToasts = Boolean(toasts.length)
-    let portalTarget = canUseDOM ? container ? document.querySelector(container) : document.body : null
+    let portalTarget = this._getPortalTarget()
     return (
       <Provider value={{ add, remove, removeAll, update }}>
         {children}
@@ -154,7 +159,7 @@ export class ToastProvider extends Component<Props, ToastState> {
                                 duration={duration}
                                 component={ToastElement}
                                 key={id}
-                                onClose={(ctx: any) => this.onDismiss(id, onClose, ctx)}
+                                onClose={(ctx: any) => this.onDismiss(id, ctx, onClose)}
                                 position={position}
                                 transitionDuration={transitionDuration}
                                 transitionState={transitionState}

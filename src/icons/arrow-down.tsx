@@ -1,9 +1,10 @@
-import React from 'react';
+import React from 'react'
+import { IconProps } from './props'
 
-export default function ArrowDown() {
+export default function ArrowDown(props: IconProps) {
+  let { height = 16, width = 16, viewBox = '0 0 24 24', fill = 'currentColor' } = props
   return (
-    // eslint-disable-next-line react/jsx-filename-extension
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="gray" width="16px" height="16px">
+    <svg xmlns="http://www.w3.org/2000/svg" height={height} viewBox={viewBox} width={width} fill={fill}>
       <path d="M0 0h24v24H0V0z" fill="none" />
       <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z" />
     </svg>

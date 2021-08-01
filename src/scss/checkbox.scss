@@ -4,9 +4,9 @@
   padding: 0;
   font-variant: tabular-nums;
   font-feature-settings: "tnum";
-  display: inline-block;
-  vertical-align: text-top;
+  display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;
   cursor: pointer;
 
   .ui-kit-checkbox {
@@ -152,7 +152,7 @@
 
   .ui-kit-checkbox-label {
     padding: 0 8px;
-    line-height: 20px;
+    line-height: 24px;
   }
 
   .ui-kit-checkbox-subtitle {
@@ -160,6 +160,7 @@
     padding-left: 24px;
     padding-top: 4px;
     color: $label-color;
+    width: 100%;
   }
 
   &:not(.ui-kit-checkbox-wrapper-disabled):hover {

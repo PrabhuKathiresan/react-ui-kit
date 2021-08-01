@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import Dialog from './element'
-import { DialogProps, DialogPositions, TransitionState } from './props'
+import Dialog from './Dialog'
+import { DialogProps, DialogPositions } from './props'
+import { TransitionState } from '../constants'
 
 const sizeMap = {
   xs: 360,

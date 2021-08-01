@@ -1,12 +1,14 @@
 import React from 'react';
-import { Link, NavLink, Route } from 'react-router-dom';
-import BasicComponent from './BasicComponent';
+import { Link, NavLink, Redirect, Route, Switch } from 'react-router-dom';
+// import BasicComponent from './BasicComponent';
 import SelectComponent from './SelectComponent';
 import TableComponent from './TableComponent';
 import FormComponent from './FormComponent';
 import CustomFormComponent from './CustomFormComponent';
+import DatepickerComponent from './DatepickerComponent';
 
 import './App.css';
+import BaseRoute from './BasicRoute';
 
 function App() {
   return (
@@ -19,21 +21,27 @@ function App() {
           </button>
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav">
-              <NavLink className='nav-link' exact activeClassName='active' aria-current='page' to='/'>Basic</NavLink>
+              <NavLink className='nav-link' activeClassName='active' aria-current='page' to='/basic'>Basic</NavLink>
               <NavLink className='nav-link' activeClassName='active' aria-current='page' to='/select'>Select</NavLink>
               <NavLink className='nav-link' activeClassName='active' aria-current='page' to='/form'>Form</NavLink>
               <NavLink className='nav-link' activeClassName='active' aria-current='page' to='/custom-form'>Custom Form</NavLink>
               <NavLink className='nav-link' activeClassName='active' aria-current='page' to='/data-table'>Data table</NavLink>
+              <NavLink className='nav-link' activeClassName='active' aria-current='page' to='/date-picker'>Date picker</NavLink>
             </div>
           </div>
         </div>
       </nav>
       <div className="container py-40 text-default">
-        <Route exact path='/' component={BasicComponent} />
-        <Route exact path='/select' component={SelectComponent} />
-        <Route exact path='/form' component={FormComponent} />
-        <Route exact path='/custom-form' component={CustomFormComponent} />
-        <Route exact path='/data-table' component={TableComponent} />
+        <Switch>
+          <Route path='/basic/:componentName' component={BaseRoute} />
+          <Route exact path='/select' component={SelectComponent} />
+          <Route exact path='/form' component={FormComponent} />
+          <Route exact path='/custom-form' component={CustomFormComponent} />
+          <Route exact path='/data-table' component={TableComponent} />
+          <Route exact path='/date-picker' component={DatepickerComponent} />
+          <Redirect from='/' to='/basic/alert' exact />
+          <Redirect to='/' />
+        </Switch>
       </div>
     </div>
   );

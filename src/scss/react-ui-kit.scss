@@ -1,6 +1,6 @@
-@import './constants.scss';
-@import './common.scss';
+@import './variables';
 @import './mixin.scss';
+@import './common.scss';
 @import './select.scss';
 @import './input.scss';
 @import './data-table.scss';
@@ -14,3 +14,6 @@
 @import './animation.scss';
 @import './utils.scss';
 @import './alert.scss';
+@import './date-picker.scss';
+@import './loader.scss';
+@import './progress-bar.scss';

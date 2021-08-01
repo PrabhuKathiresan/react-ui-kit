@@ -1,0 +1,77 @@
+.ui-kit-progress-bar {
+  display: flex;
+  width: 100%;
+  background-color: #e4e4e4;
+  position: relative;
+
+  &-outer {
+    width: 100%;
+  }
+
+  &-inner {
+    position: absolute;
+    height: 100%;
+    z-index: 2;
+    flex: 0 auto;
+
+    transition: width 0.4s linear;
+
+    &:hover {
+      background-image: none !important;
+    }
+  }
+
+  &.ui-kit-progress-bar-small {
+    height: 4px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+
+    .ui-kit-progress-bar-inner {
+      border-radius: 4px;
+    }
+  }
+
+  &.ui-kit-progress-bar-default {
+    height: 8px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+
+    .ui-kit-progress-bar-inner {
+      border-radius: 6px;
+    }
+  }
+
+  &.ui-kit-progress-bar-large {
+    height: 12px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+
+    .ui-kit-progress-bar-inner {
+      border-radius: 8px;
+    }
+  }
+
+  &.ui-kit-progress-bar-primary {
+    .ui-kit-progress-bar-inner {
+      @include gradient($primary, $primary-dark);
+    }
+  }
+
+  &.ui-kit-progress-bar-success {
+    .ui-kit-progress-bar-inner {
+      @include gradient($success, $success-dark);
+    }
+  }
+
+  &.ui-kit-progress-bar-warning {
+    .ui-kit-progress-bar-inner {
+      @include gradient($warning, $warning-dark);
+    }
+  }
+
+  &.ui-kit-progress-bar-danger {
+    .ui-kit-progress-bar-inner {
+      @include gradient($danger, $danger-dark);
+    }
+  }
+}

@@ -27,6 +27,7 @@ export function RadioGroup(props: RadioGroupProps) {
                 label={option.label}
                 checked={option.value === value}
                 value={option.value}
+                disabled={option.disabled}
                 onChange={(e: Event) => onChange(e)}
               />
             ))

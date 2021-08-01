@@ -271,6 +271,23 @@ const AGENT_FIELDS = [
     value: ''
   },
   {
+    name: 'dob',
+    label: 'Date of birth',
+    required: true,
+    type: 'date',
+    component: 'DatePicker',
+    min: new Date(1980, 0),
+    max: new Date()
+  },
+  {
+    name: 'monthOfJoining',
+    label: 'Month joined',
+    required: true,
+    type: 'date',
+    component: 'MonthPicker',
+    
+  },
+  {
     name: 'role',
     label: 'Agent role',
     type: 'text',
@@ -399,6 +416,7 @@ class Service {
   }
 
   update = (id, data) => {
+    console.log('Update data', data)
     return Promise.resolve({ success: true });
   }
 }
@@ -414,6 +432,7 @@ export default function FormComponent({ stickyFooter = true, onError = () => { }
       name: 'Admin',
       value: 'admin'
     },
+    dob: new Date(1993, 10, 30),
     manageAllBrands: true,
     managedBrands: []
   });

@@ -1,13 +1,20 @@
-import createSorter from './sorter'
+import createSorter from './create-sorter'
 import { PaginationOption, TableProps, TableState } from '../DataTable/props'
+import * as typeCheck from './type-check'
 
-export const noop = () => {}
+export const {
+  isString,
+  isObject,
+  isFunction,
+  isDefined,
+  isUnDefined
+} = typeCheck 
+
+export const noop = () => {
+  // this is intentional
+}
 
 export const uniqueId = () => new Date().getTime()
-
-export const isString = (str: any) => typeof str === 'string'
-
-export const isObject = (obj: any) => typeof obj === 'object'
 
 export const isEqual = (val1: any, val2: any) => {
   let v1 = typeof val1 === 'object' ? JSON.stringify(val1) : val1
@@ -15,22 +22,39 @@ export const isEqual = (val1: any, val2: any) => {
   return `${v1}` === `${v2}`
 }
 
-export const isFunction = (v: any) => typeof v === 'function';
-
-export const isDefined = (v: any) => typeof v !== 'undefined';
-
 export const toLowerCase = (str: any) => String(str).toString().toLowerCase();
 
 export const sortData = (data: any, sortedColumns: any) => data.sort(createSorter(...sortedColumns));
 
-export const filterData = (data: any, filters: any) => {
+const getFilteredData = (filter: any, filterFunc: Function) => {
+  let {
+    value, accessor, useFilter, type,
+  } = filter;
+  return (data: any) => {
+    let accessData = typeof accessor === 'function' ? accessor(data) : data[accessor];
+    if (typeof useFilter === 'function') {
+      accessData = useFilter(data);
+    }
+    if (type === 'string') {
+      accessData = toLowerCase(accessData);
+      value = toLowerCase(value);
+    }
+    if (type === 'date') {
+      accessData = new Date(accessData);
+      value = new Date(value);
+    }
+    return filterFunc(accessData, value);
+  }
+}
+
+export const filterData = (data: any, filters: any = []) => {
   let filteredData = [...data];
-  if (filters.length === 0) return filteredData;
+
   filters.forEach((filter: any) => {
     let {
-      condition, value, accessor, useFilter, type,
+      condition, value
     } = filter;
-    let filterFunc: any;
+    let filterFunc: Function;
     switch (condition) {
       case 'eq':
         filterFunc = (d: any, k: any) => d === k;
@@ -63,21 +87,7 @@ export const filterData = (data: any, filters: any) => {
         filterFunc = (d: any, k: any) => d === k;
     }
     if (value) {
-      filteredData = filteredData.filter((d) => {
-        let accessData = typeof accessor === 'function' ? accessor(d) : d[accessor];
-        if (typeof useFilter === 'function') {
-          accessData = useFilter(d);
-        }
-        if (type === 'string') {
-          accessData = toLowerCase(accessData);
-          value = toLowerCase(value);
-        }
-        if (type === 'date') {
-          accessData = new Date(accessData);
-          value = new Date(value);
-        }
-        return filterFunc(accessData, value);
-      });
+      filteredData = filteredData.filter(getFilteredData(filter, filterFunc));
     }
   });
 
@@ -110,13 +120,13 @@ export const getProcessedData = (data: Array<any>, props: TableProps & TableStat
     let { paginationOptions, selectedPages } = props;
     let { limit, currentPage } = paginationOptions;
     let page = `${currentPage}::${limit}`;
-    let selected = !!selectedPages[page];
+    let _selected = !!selectedPages[page];
     total = filteredData.length;
     let start = (currentPage - 1) * limit;
     let end = Math.min(currentPage * limit, total);
     processedData = filteredData.map((d) => ({
       ...d,
-      selected: selected || !!d.selected
+      selected: _selected || !!d.selected
     })).slice(start, end);
   } else {
     let { selectAll } = props;
@@ -183,4 +193,23 @@ export function generateUEID() {
   first = ('000' + first.toString(36)).slice(-3);
   second = ('000' + second.toString(36)).slice(-3);
   return first + second;
+}
+
+export const canUseDOM = !!(
+  typeof window !== 'undefined' &&
+  window.document &&
+  window.document.createElement
+)
+
+export const getPortalTarget = (container: any) => canUseDOM && Boolean(container) && document.querySelector(container)
+
+export const getOffset = (el: HTMLDivElement) => {
+  let rect = el.getBoundingClientRect().toJSON()
+  let scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
+  let scrollTop = window.pageYOffset || document.documentElement.scrollTop
+  return {
+    ...rect,
+    top: rect.top + scrollTop,
+    left: rect.left + scrollLeft
+  }
 }

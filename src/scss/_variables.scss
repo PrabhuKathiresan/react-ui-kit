@@ -1,0 +1,96 @@
+$primary: #1266f1;
+$primary-dark: darken($primary, 10%);
+$primary-light: lighten($primary, 10%);
+$primary-300: lighten($primary, 94% - lightness($primary));
+$primary-200: lighten($primary, 96% - lightness($primary));
+$primary-100: lighten($primary, 98% - lightness($primary));
+
+$danger: #f93154;
+$danger-dark: darken($danger, 10%);
+$danger-light: lighten($danger, 10%);
+$danger-300: lighten($danger, 94% - lightness($danger));
+$danger-100: lighten($danger, 98% - lightness($danger));
+
+$warning: #ffa900;
+$warning-dark: darken($warning, 10%);
+$warning-light: lighten($warning, 10%);
+$warning-300: lighten($warning, 94% - lightness($warning));
+$warning-100: lighten($warning, 98% - lightness($warning));
+
+$success: #00b74a;
+$success-dark: darken($success, 10%);
+$success-light: lighten($success, 10%);
+$success-300: lighten($success, 94% - lightness($success));
+$success-100: lighten($success, 98% - lightness($success));
+
+$info: #39c0ed;
+$info-dark: darken($info, 10%);
+$info-light: lighten($info, 10%);
+$info-300: lighten($info, 94% - lightness($info));
+$info-100: lighten($info, 98% - lightness($info));
+
+$border-color: var(--border-color, #d8d8d8);
+$hover-border-color: var(--hover-border-color, #e8e8e8);
+$hover-bg: var(--hover-bg, rgb(243, 245, 247));
+$disabled: var(--disabled-bg, #f4f7fb);
+$disabled-text: var(--disabled-text, lighten(#000, 70%));
+$input-icon-width: 36px;
+$input-icon-width-sm: 24px;
+$border-radius: var(--border-radius, 4px);
+$readOnly: var(--read-only-bg, rgba(255, 255, 255, 0.6));
+$label-color: var(--label-color, #6c757d);
+$black: #000000;
+$white: #ffffff;
+$table-header-font-size: var(--table-header-font-size, 500);
+$table-header-bg: var(--table-header-bg, #f5f5f5);
+$table-header-text-color: var(--table-header-text-color, #6c767f);
+$table-selected-bg: var(--table-selected-bg, aliceblue);
+
+$font-size-big: 14px;
+$font-size-default: 13px;
+$font-size-small: 12px;
+$font-size-x-small: 11px;
+
+$btn-color: var(--ui-kit-btn-color, #183247);
+$btn-border: var(--ui-kit-btn-border-color, #cfd7df);
+$btn-bg: var(--ui-kit-btn-bg, #f3f5f7);
+
+$accent: var(--accent-color, #00a090);
+$accent-dark: var(--accent-dark, #008372);
+
+$dialog-header-height: 60px;
+
+$toast-border-width: var(--ui-kit-toast-border-width, 3px);
+
+$alert-text-color: var(--ui-kit-alert-text-color, #183247);
+
+$shodow: rgba(18, 52, 77, 0.16) 0px 2px 18px 0px, rgba(18, 52, 77, 0.06) 0px 2px 4px 0px;
+
+// Breakpoints
+$xs: 0;
+$sm: 576px;
+$md: 768px;
+$lg: 1024px;
+$xl: 1200px;
+
+:root {
+  --primary-color: #{$primary};
+  --primary-dark: #{$primary-dark};
+  --primary-light: #{$primary-light};
+
+  --success-color: #{$success};
+  --success-dark: #{$success-dark};
+  --success-light: #{$success-light};
+
+  --danger-color: #{$danger};
+  --danger-dark: #{$danger-dark};
+  --danger-light: #{$danger-light};
+
+  --warning-color: #{$warning};
+  --warning-dark: #{$warning-dark};
+  --warning-light: #{$warning-light};
+
+  --info-color: #{$info};
+  --info-dark: #{$info-dark};
+  --info-light: #{$info-light};
+}

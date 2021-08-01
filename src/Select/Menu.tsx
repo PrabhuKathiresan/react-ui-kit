@@ -15,16 +15,9 @@ function getTranslate(placement: string) {
 const transformStyle = (placement: string) => ({
   entering: { transform: getTranslate(placement) },
   entered: { transform: 'translate3d(0,0,0)' },
-  exiting: { transform: getTranslate(placement)},
+  exiting: { transform: getTranslate(placement) },
   exited: { transform: getTranslate(placement) },
 })
-
-const overflowSyle = {
-  entering: 'hidden',
-  entered: 'visible',
-  exiting: 'hidden',
-  exited: 'hidden'
-}
 
 const Menu = (props: MenuProps) => {
   let displayName = 'menu-item'
@@ -58,13 +51,40 @@ const Menu = (props: MenuProps) => {
     disableAutoScroll()
   }
 
+  let emptyStateText = (isDirty || !searchable) ? 'No result found' : 'Type to search...'
+
+  let renderOptions = () => (options.length === 0 ?
+    (
+      <div className='ui-kit-select--dropdown_item item-as-plain-text' data-testid={`${id}-options-empty`}>
+        {emptyStateText}
+      </div>
+    )
+    :
+    (
+      options.map((option, i) => (
+        <MenuItem
+          key={`${displayName}-${i}`}
+          label={option.__label}
+          activeIndex={activeIndex}
+          position={i}
+          selected={isSelected(option) || false}
+          menuContainer={menu}
+          onClick={() => onMenuClick(option, i)}
+          autoScroll={autoScroll}
+          id={`${id}-options-${i}`}
+          disabled={option.disabled || false}
+        />
+      ))
+    )
+  )
+
   return (
     <div
       className={cx('ui-kit-select--dropdown')}
       style={{
         width: menuPositionStyle.width,
-        margin: dropup ? '16px 16px 2px' : '2px 16px 16px',
-        overflow: overflowSyle[transitionState]
+        margin: dropup ? '16px 16px 4px' : '4px 16px 16px',
+        overflow: 'visible'
       }}
       ref={menuRef}
       data-testid={`${id}-dropdown`}
@@ -72,8 +92,9 @@ const Menu = (props: MenuProps) => {
       <div
         className={cx('ui-kit-select--transition')}
         style={{
-          transition: `transform ${transitionDuration}ms cubic-bezier(0.2, 0, 0, 1), opacity ${transitionDuration}ms`,
-          ...transformStyle(dropup ? 'bottom' : 'top')[transitionState]
+          transition: `transform ${transitionDuration}ms linear`,
+          ...transformStyle(dropup ? 'bottom' : 'top')[transitionState],
+          boxShadow: ['entering', 'exiting'].includes(transitionState) ? 'rgba(18, 52, 77, 0.16) 0px 0px 4px 0px' : ''
         }}
       >
         <div className={cx('ui-kit-select--popup', { 'pt-4': !searchable || dropup, 'pb-4': !searchable || !dropup, 'column-reverse': dropup })}>
@@ -105,29 +126,9 @@ const Menu = (props: MenuProps) => {
           >
             {
               loading ?
-                <div className='ui-kit-select--dropdown_item item-disabled'>Searching...</div>
+                <div className='ui-kit-select--dropdown_item item-as-plain-text'>Searching...</div>
                 :
-                options.length === 0 ? (
-                  <div className='ui-kit-select--dropdown_item item-disabled' data-testid={`${id}-options-empty`}>
-                    {
-                      (isDirty || !searchable) ? 'No result found' : 'Type to search...'
-                    }
-                  </div>
-                )
-                  :
-                  options.map((option, i) => (
-                    <MenuItem
-                      key={`${displayName}-${i}`}
-                      label={option.__label}
-                      activeIndex={activeIndex}
-                      position={i}
-                      selected={isSelected(option) || false}
-                      menuContainer={menu}
-                      onClick={() => onMenuClick(option, i)}
-                      autoScroll={autoScroll}
-                      id={`${id}-options-${i}`}
-                    />
-                  ))
+                renderOptions()
             }
           </div>
         </div>

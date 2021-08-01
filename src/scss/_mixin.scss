@@ -1,0 +1,72 @@
+@mixin gradient($from, $to) {
+  /* fallback/image non-cover color */
+  background-color: $to;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background-image: -webkit-linear-gradient(bottom, from($from), to($to));
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-image: linear-gradient(to bottom, $from, $to);
+}
+
+@mixin input-box-shadow($color) {
+  -o-box-shadow: 0 0 0 1px $color !important;
+  box-shadow: 0 0 0 1px $color !important;
+}
+
+@mixin btn-variant($color, $color-dark, $color-light, $color-100) {
+  &.ui-kit-btn__filled {
+    color: $white;
+    border-color: $color;
+    background-color: $color;
+    text-shadow: 0 2px 4px rgba($color: #000000, $alpha: .05);
+
+    &:not(:disabled):hover {
+      border-color: $color-dark;
+      background-color: $color-dark;
+    }
+
+    &:not(:disabled):focus {
+      background-color: $color-dark;
+    }
+
+    &:disabled {
+      background-color: $color-light;
+    }
+  }
+
+  &.ui-kit-btn__plain {
+    color: $color;
+    background-color: transparent;
+    border-color: transparent;
+
+    &:not(:disabled):hover {
+      background-color: $color-100;
+    }
+
+    &:not(:disabled):focus {
+      box-shadow: 0 0 0 2px $color;
+    }
+    
+    &:disabled {
+      color: $color-light;
+    }
+  }
+
+  &.ui-kit-btn__outlined {
+    color: $color;
+    border-color: $color;
+    background-color: $white;
+
+    &:not(:disabled):hover {
+      background-color: $color-100;
+    }
+
+    &:not(:disabled):focus {
+      border-color: $color;
+      box-shadow: 0 0 0 1px $color;
+    }
+
+    &:disabled {
+      color: $color-light;
+    }
+  }
+}

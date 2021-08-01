@@ -4,10 +4,13 @@ import data from './countries.json';
 
 const { BasicSelect, AsyncSelect } = Select;
 
+const Fruits = ['Apple', 'Banana', 'Grapes', 'Jack fruit', 'Kiwi', 'Lemon', 'Mango'];
+
 export default function SelectComponent() {
   let [selected, setSelected] = useState([]);
   let [asyncSelected, setAsyncSelected] = useState([]);
   let [countries,] = useState([...data]);
+  let [favFruit, setFavFruit] = useState([]);
   let [options, setOptions] = useState({
     defaultFirstItemSelected: false,
     searchable: false,
@@ -35,7 +38,7 @@ export default function SelectComponent() {
   let handleSearch = (searchTerm) => {
     return new Promise(resolve => {
       setTimeout(() => {
-        resolve([...countries].filter(country => JSON.stringify(country).toLowerCase().includes(searchTerm)))
+        resolve([...countries].filter(country => JSON.stringify(country).toLowerCase().includes(`${searchTerm}`.toLowerCase())))
       }, 100);
     })
   }
@@ -91,7 +94,7 @@ export default function SelectComponent() {
           <BasicSelect
             onChange={(s) => setSelected(s)}
             selected={selected}
-            id='demo-select'
+            id='demo'
             {...options}
             options={[...countries]}
             icons={{
@@ -104,11 +107,21 @@ export default function SelectComponent() {
           <AsyncSelect
             onChange={(s) => setAsyncSelected(s)}
             selected={asyncSelected}
-            id='demo-async-select'
+            id='demo-async'
             {...asyncOptions}
             searchable
             label={`${options.label} - Async version`}
             onSearch={handleSearch}
+          />
+        </div>
+        <div className='col-lg-3'>
+          <BasicSelect
+            {...options}
+            options={[...Fruits]}
+            id='fruits'
+            label='Select favourite fruit'
+            selected={favFruit}
+            onChange={(s) => setFavFruit(s)}
           />
         </div>
       </div>

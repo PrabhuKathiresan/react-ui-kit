@@ -6,7 +6,7 @@ export interface FormFields {
   disabled?: boolean;
   hidden?: boolean;
   type?: string;
-  component?: 'TextInput' | 'TextArea' | 'Checkbox' | 'Checkbox.Group' | 'Select' | 'Radio' | 'Radio.Group' | 'Custom';
+  component?: 'TextInput' | 'TextArea' | 'Checkbox' | 'Checkbox.Group' | 'Select' | 'Radio' | 'Radio.Group' | 'DatePicker' | 'MonthPicker' | 'Custom';
   customComponent?: any;
   componentProps?: object;
   disabledIf?: Function;
@@ -62,4 +62,13 @@ export interface FormProps {
   extra?: any;
   customValidation?: Function;
   constructParams?: Function;
+}
+
+export interface FieldRules {
+  name: string;
+  method?: any;
+  message?: any;
+  validationProps: object;
+  formatter?: Function;
+  ctx?: any;
 }

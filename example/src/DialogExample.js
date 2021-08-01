@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Dialog, Select, Checkbox } from '@pk-design/react-ui-kit'
 import FormComponent from './FormComponent'
+import DialogClassExample from './DialogClassExample'
 
 const { useDialog } = Dialog
 const { BasicSelect } = Select
@@ -127,37 +128,40 @@ export default function DialogExample() {
   }, [useNew]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className='col-lg-4 mb-16'>
-      <h4>Dialog (useDialog)</h4>
-      <hr />
-      <h6>Options</h6>
-      <div className='d-flex flex-wrap'>
-        <BasicSelect
-          labelKey='name'
-          label='Select position'
-          containerClass='mr-8'
-          closeOnOutsideClick={true}
-          options={POSITIONS}
-          selected={[getSelected(POSITIONS, options.position, DEFAULTPOSITION)]}
-          onChange={selected => {
-            setOptions(options => ({ ...options, position: selected[0]?.value || 'right' }))
-          }}
-        />
-        <BasicSelect
-          labelKey='name'
-          label='Select size'
-          containerClass='mr-8'
-          closeOnOutsideClick={true}
-          options={SIZES}
-          selected={[getSelected(SIZES, options.size, DEFAULTSIZE)]}
-          onChange={selected => {
-            setOptions(options => ({ ...options, size: selected[0]?.value || 'sm' }))
-          }}
-        />
-        <Checkbox className='mr-8 mb-16' checked={options.showBackdrop} onChange={e => setOptions(options => ({ ...options, showBackdrop: e.target.checked }))}>Show backdrop</Checkbox>
+    <>
+      <div className='col-xl-4 col-lg-6 mb-16'>
+        <h4>Dialog (useDialog)</h4>
+        <hr />
+        <h6>Options</h6>
+        <div className='d-flex flex-wrap'>
+          <BasicSelect
+            labelKey='name'
+            label='Select position'
+            containerClass='mr-8'
+            closeOnOutsideClick={true}
+            options={POSITIONS}
+            selected={[getSelected(POSITIONS, options.position, DEFAULTPOSITION)]}
+            onChange={selected => {
+              setOptions(options => ({ ...options, position: selected[0]?.value || 'right' }))
+            }}
+          />
+          <BasicSelect
+            labelKey='name'
+            label='Select size'
+            containerClass='mr-8'
+            closeOnOutsideClick={true}
+            options={SIZES}
+            selected={[getSelected(SIZES, options.size, DEFAULTSIZE)]}
+            onChange={selected => {
+              setOptions(options => ({ ...options, size: selected[0]?.value || 'sm' }))
+            }}
+          />
+          <Checkbox className='mr-8 mb-16' checked={options.showBackdrop} onChange={e => setOptions(options => ({ ...options, showBackdrop: e.target.checked }))}>Show backdrop</Checkbox>
+        </div>
+        <Button onClick={() => handleClick()} className='mr-16'>Show Dialog</Button>
+        <Button onClick={() => openWithUpdate()}>Updatable Dialog</Button>
       </div>
-      <Button onClick={() => handleClick()} className='mr-16'>Show Dialog</Button>
-      <Button onClick={() => openWithUpdate()}>Updatable Dialog</Button>
-    </div>
+      <DialogClassExample />
+    </>
   )
 }

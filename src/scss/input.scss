@@ -68,7 +68,7 @@
     padding: 0 12px;
     display: flex;
     align-items: center;
-    transition: box-shadow .15s ease-out;
+    transition: box-shadow .25s ease-in-out;
 
     &:focus, &:active {
       outline: none;
@@ -106,6 +106,7 @@
     }
 
     &:read-only {
+      cursor: default;
       background-color: $readOnly;
     }
   }
@@ -135,16 +136,15 @@
 }
 
 .has-error {
-  .ui-kit-select-input,
   .ui-kit-input {
-    border-color: $danger !important;
+    border-color: $danger;
 
-    &.ui-kit-select-has-focus,
-    &:focus {
-      @include input-box-shadow($danger);
+    &:hover{
+      border-color: $danger;
     }
 
-    &.pk-select-has-focus {
+    &:focus {
+      border-color: $danger;
       @include input-box-shadow($danger);
     }
   }

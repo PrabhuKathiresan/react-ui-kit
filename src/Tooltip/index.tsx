@@ -1,15 +1,10 @@
 import React, { useState, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { Transition } from 'react-transition-group'
+import { canUseDOM } from '../utils';
 import { TooltipProps } from './props'
+import { TransitionState } from '../constants'
 
-export type TransitionState = 'entering' | 'entered' | 'exiting' | 'exited';
-
-const canUseDOM = !!(
-  typeof window !== 'undefined' &&
-  window.document &&
-  window.document.createElement
-)
 const directionStyleMap = {
   top: (position: any) => {
     return {
@@ -71,12 +66,45 @@ export default function Tooltip(props: TooltipProps) {
     setActive(false)
   }
 
-  let tooltipContent = (transitionState: string) => (
-    <div className={`ui-kit-tooltip-Tip ${direction} ui-kit-tooltip-${transitionState}`} style={{ ...tooltipStyle, transitionDuration: `${delay}ms` }}>
-      {/* Content */}
-      {content}
-    </div>
-  );
+  let tooltipContent = (transitionState: string) => {
+    let transitionMap = {
+      top: {
+        entering: `translateX(-50%) translateY(-75%)`,
+        entered: `translateX(-50%) translateY(-100%)`,
+        exiting: `translateX(-50%) translateY(-75%)`,
+        exited: `translateX(-50%) translateY(-75%)`,
+      },
+      bottom: {
+        entering: `translateX(-50%) translateY(-25%)`,
+        entered: `translateX(-50%) translateY(0)`,
+        exiting: `translateX(-50%) translateY(-25%)`,
+        exited: `translateX(-50%) translateY(-25%)`,
+      },
+      left: {
+        entering: `translateX(-90%) translateY(-50%)`,
+        entered: `translateX(-100%) translateY(-50%)`,
+        exiting: `translateX(-90%) translateY(-50%)`,
+        exited: `translateX(-90%) translateY(-50%)`,
+      },
+      right: {
+        entering: `translateX(-10%) translateY(-50%)`,
+        entered: `translateX(0) translateY(-50%)`,
+        exiting: `translateX(-10%) translateY(-50%)`,
+        exited: `translateX(-10%) translateY(-50%)`,
+      }
+    }
+    let transitionStyle = {
+      transform: transitionMap[direction][transitionState],
+      transition: 'transform linear',
+      transitionDuration: `${delay}ms`,
+    }
+    return (
+      <div className={`ui-kit-tooltip-Tip ${direction}`} style={{ ...tooltipStyle, ...transitionStyle }}>
+        {/* Content */}
+        {content}
+      </div>
+    )
+  };
 
   let tooltipContainer = (
     <Transition

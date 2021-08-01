@@ -81,10 +81,9 @@ export default function Footer(props: FooterProps) {
                   animate={false}
                   closeOnOutsideClick
                   containerClass='mb-0 w-auto'
-                  height={28}
                   textOnly
                   inputClass='text-center pl-4'
-                  size='sm'
+                  inputSize='small'
                 />
               </div>
               <Pager

@@ -1,61 +1,6 @@
-.ui-btn-group {
-  display: flex;
-  align-items: center;
+$btn-font-weight: var(--ui-kit-btn-font-weight, 500);
 
-  &.left-align {
-    justify-content: flex-start;
-
-    .ui-btn {
-      margin-right: 12px;
-
-      &.is-small {
-        margin-right: 6px;
-      }
-
-      &.is-very-small {
-        margin-right: 4px;
-      }
-    }
-  }
-
-  &.right-align {
-    justify-content: flex-end;
-  
-    .ui-btn {
-      margin-left: 12px;
-
-      &.is-small {
-        margin-left: 6px;
-      }
-
-      &.is-very-small {
-        margin-left: 4px;
-      }
-    }
-  }
-
-  &.bottom-spaced {
-    .ui-btn {
-      margin-bottom: 12px;
-
-      &.is-small {
-        margin-bottom: 6px;
-      }
-    }
-  }
-
-  &.top-spaced {
-    .ui-btn {
-      margin-top: 12px;
-
-      &.is-small {
-        margin-top: 6px;
-      }
-    }
-  }
-}
-
-.ui-btn {
+.ui-kit-btn {
   display: -ms-inline-flexbox;
   display: -webkit-inline-flex;
   display: inline-flex;
@@ -65,7 +10,6 @@
   -ms-flex-pack: center;
   -webkit-justify-content: center;
   justify-content: center;
-  position: relative;
   box-sizing: border-box;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
@@ -78,349 +22,176 @@
   -webkit-user-select: none;
   user-select: none;
   cursor: pointer;
-  z-index: 0;
-  padding: 0rem 0.75rem;
   -webkit-font-smoothing: antialiased;
-  border: 1px solid $btn-border;
   transition: all 0.3s ease-in-out;
   height: 32px;
+  padding: 0 1rem;
   color: $btn-color;
+  border: 1px solid;
+  font-weight: $btn-font-weight;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
 
-  @include gradient($white, $btn-bg);
-
-  ion-icon {
-    font-size: 17px;
-
-    &.left {
-      margin-right: 6px;
-    }
-    &.right {
-      margin-left: 6px;
-    }
-
-    @media screen and (max-width: $sm) {
-      margin: 0 !important;
+  span {
+    &.ripple {
+      position: absolute; /* The absolute position we mentioned earlier */
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple 600ms linear;
+      background-color: rgba(255, 255, 255, 0.7);
     }
   }
 
-  &:disabled {
-    opacity: 0.65;
-    cursor: not-allowed;
-    border-color: transparent !important;
-    background-image: none !important;
+  
+  &.ui-kit-btn-raised {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2), 0 2px 10px 0 rgba(0, 0, 0, .1);
   }
 
-  &.ui-btn-block {
+  &.ui-kit-btn-block {
     width: 100%;
   }
 
-  &:hover {
-    background-image: none;
+  &:not(:disabled):hover {
+    background-image: none !important;
+    box-shadow: none;
   }
 
-  &:active,
-  &:focus {
-    outline: none;
-    border-color: $primary;
-    box-shadow: 0 0 0 1px $primary;
-    transform: scale(0.98);
-    background-image: none;
+  &:not(:disabled):focus {
+    outline: 0;
+    box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.6), 0 2px 8px 0px rgba(0, 0, 0, 0.3), 0 0px 0px 2px rgba(0, 0, 0, 0.05);
   }
 
-  &.has-less-padding,
-  &.ui-btn-less-padding {
-    padding: 0 0.5rem;
+  &:disabled {
+    background-image: none !important;
+    cursor: not-allowed;
+    border-color: transparent !important;
+    opacity: 0.5;
   }
 
-  .ui-btn-loader {
-    border: 2px solid $primary;
-    border-radius: 50%;
-    border-top: 2px solid transparent;
-    width: 16px;
-    height: 16px;
-    -webkit-animation: spin 1s linear infinite; /* Safari */
-    animation: spin 1s linear infinite;
-    margin-right: 6px;
-  }
+  &.ui-kit-btn-default {
+    @include gradient($white, $btn-bg);
+    border-color: $border-color;
 
-  &.as-text-input {
-    padding: 0 8px;
-    background-image: none;
-    background-color: $white;
-    
-    .ui-btn-content {
-      color: $disabled-text;
-    }
-  }
-
-  &.ui-btn-primary {
-    color: #ffffff !important;
-    border: 1px solid $primary;
-
-    &:not(:disabled) {
-      @include gradient($primary, $primary-dark);
-    }
-
-    &:disabled {
-      background-color: $primary-dark;
-    }
-
-    &:hover,
-    &:active,
-    &:focus {
-      outline: none;
-      box-shadow: none;
-      background-image: none;
-      border-color: $primary-dark;
-    }
-
-    &:focus {
-      box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);
-      transform: scale(0.98);
-    }
-
-    .ui-btn-loader {
-      border: 2px solid $white;
-      border-top: 2px solid transparent;
-    }
-  }
-
-  &.ui-btn-secondary {
-    color: #ffffff;
-    border: 1px solid $secondary-dark;
-
-    &:not(:disabled) {
-      @include gradient($secondary, $secondary-dark);
-    }
-
-    &:disabled {
-      background-color: $secondary-dark;
-      background-image: none;
-    }
-
-    &:hover,
-    &:active,
-    &:focus {
-      outline: none;
-      box-shadow: none;
-      background-image: none;
-      border-color: $secondary-dark;
-    }
-
-    .ui-btn-loader {
-      border: 2px solid $white;
-      border-top: 2px solid transparent;
-    }
-  }
-
-  &.ui-btn-danger {
-    color: $white;
-    border: 1px solid $danger-dark;
-
-    &:not(:disabled) {
-      @include gradient($danger, $danger-dark);
-    }
-
-    &:disabled {
-      background-color: $danger-dark;
-      background-image: none;
-    }
-
-    &:hover,
-    &:active,
-    &:focus {
-      outline: none;
-      box-shadow: none;
-      background-image: none;
-      border-color: $danger-dark;
-    }
-
-    .ui-btn-loader {
-      border: 2px solid $white;
-      border-top: 2px solid transparent;
-    }
-  }
-
-  .ui-btn-text {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    line-height: $font-size-default;
-
-    .ui-btn-icon-left {
-      margin-right: 4px;
-    }
-
-    .ui-btn-icon-right {
-      margin-left: 4px;
-    }
-  }
-
-  &.is-accent {
-    color: $accent;
-    border-color: $accent;
-
-    &:active,
-    &:focus {
-      outline: none;
-      box-shadow: 0px 0px 1px 2px $accent;
-      transform: scale(0.98);
-    }
-  }
-
-  &.is-danger {
-    color: $danger;
-
-    &:active,
-    &:focus {
-      outline: none;
-      border-color: $danger;
-      box-shadow: 0px 0px 1px 2px $danger;
-      transform: scale(0.98);
-    }
-  }
-
-  &.is-primary {
-    color: $primary;
-
-    &:active,
-    &:focus {
-      outline: none;
+    &:not(:disabled):focus {
       border-color: $primary;
-      box-shadow: 0px 0px 1px 2px $primary;
-      transform: scale(0.98);
+      box-shadow: 0 0 0 1px $primary;
+    }
+
+    &.ui-kit-btn__plain {
+      border-color: transparent;
+      background-color: transparent;
+      background-image: none;
+
+      &:not(:disabled):hover {
+        background-color: rgba($color: #000000, $alpha: .05);
+      }
     }
   }
 
-  &.is-large {
-    height: 36px;
-    font-size: $font-size-big;
-
-    .ui-btn-text {
-      line-height: 20px;
-    }
-
-    ion-icon {
-      font-size: 18px;
-    }
+  &.ui-kit-btn-primary {
+    @include btn-variant($primary, $primary-dark, $primary-light, $primary-300);
   }
 
-  &.is-small {
-    height: 28px;
-    font-size: $font-size-small;
-
-    .ui-btn-text {
-      line-height: 14px;
-    }
-
-    ion-icon {
-      font-size: 15px;
-    }
+  &.ui-kit-btn-danger {
+    @include btn-variant($danger, $danger-dark, $danger-light, $danger-300);
   }
 
-  &.is-very-small {
+  &.ui-kit-btn-warning {
+    @include btn-variant($warning, $warning-dark, $warning-light, $warning-300);
+  }
+
+  &.ui-kit-btn-success {
+    @include btn-variant($success, $success-dark, $success-light, $success-300);
+  }
+
+  &.ui-kit-btn-size-tiny {
     height: 24px;
-    font-size: $font-size-x-small;
+    font-size: 11px;
+    padding: 0 .5rem;
 
-    .ui-btn-text {
-      line-height: 12px;
+    .ui-kit-btn-icon-left {
+      padding-right: 4px;
     }
 
-    .ui-btn-loader {
-      width: 12px;
-      height: 12px;
+    .ui-kit-btn-icon-right {
+      padding-left: 4px;
     }
 
-    ion-icon {
-      font-size: 12px;
-    }
-  }
-
-  &.as-link,
-  &.is-plain {
-    border: none;
-    box-shadow: none;
-    background-image: none;
-    background-color: transparent;
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.05);
-    }
-    &:active,
-    &:focus {
-      outline: none;
-      transform: scale(0.98);
-
-      &:not(.is-accent) {
-        box-shadow: 0px 0px 1px 2px $primary;
-      }
+    &.icon-only {
+      padding: 0 4px;
     }
   }
 
-  &.as-link {
-    font-weight: 400;
-    text-transform: none;
-  }
+  &.ui-kit-btn-size-small {
+    height: 28px;
+    font-size: 12px;
+    padding: 0 .75rem;
 
-  &.is-flat {
-    box-shadow: none;
-  }
-
-  &.has-icon {
-    .ui-btn-content {
-      @media screen and (max-width: $sm) {
-        margin-left: 0;
-      }
-    }
-  }
-}
-
-.ui-btn-radio-group {
-  display: flex;
-
-  .ui-btn {
-    margin: 0 !important;
-    border-radius: 0;
-    border-left-width: 0;
-    border-right-width: 0;
-
-    &:first-child {
-      border-radius: $border-radius;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-      border-left-width: 1px;
+    .ui-kit-btn-icon-left {
+      padding-right: 4px;
     }
 
-    &:last-child {
-      border-radius: $border-radius;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      border-right-width: 1px;
+    .ui-kit-btn-icon-right {
+      padding-left: 4px;
     }
-  }
-}
 
-a.ui-btn {
-  &:not(.ui-btn-primary) {
-    &:hover {
-      color: inherit;
+    &.icon-only {
+      padding: 0 5px;
     }
   }
 
-  &.as-link {
-    &:hover {
-      color: $primary-dark;
+  &.ui-kit-btn-size-default {
+    height: 32px;
+    font-size: 13px;
+    padding: 0 1rem;
+
+    .ui-kit-btn-icon-left {
+      padding-right: 6px;
+    }
+
+    .ui-kit-btn-icon-right {
+      padding-left: 6px;
+    }
+
+    &.icon-only {
+      padding: 0 6px;
     }
   }
-}
 
-/* Safari */
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
+  &.ui-kit-btn-size-medium {
+    height: 36px;
+    font-size: 14px;
+    padding: 0 1.25rem;
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+    .ui-kit-btn-icon-left {
+      padding-right: 6px;
+    }
+
+    .ui-kit-btn-icon-right {
+      padding-left: 6px;
+    }
+
+    &.icon-only {
+      padding: 0 7px;
+    }
+  }
+
+  &.ui-kit-btn-size-large {
+    height: 42px;
+    font-size: 16px;
+    padding: 0 1.25rem;
+
+    .ui-kit-btn-icon-left {
+      padding-right: 6px;
+    }
+
+    .ui-kit-btn-icon-right {
+      padding-left: 6px;
+    }
+
+    &.icon-only {
+      padding: 0 8px;
+    }
+  }
 }

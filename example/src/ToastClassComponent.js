@@ -33,7 +33,7 @@ class ToastClassComponent extends Component {
 
   render() {
     return (
-      <div className='col-lg-4 mb-16'>
+      <div className='col-lg-6 mb-16'>
         <div className='example-btn-block'>
           <h4>Toast component - withToastManager</h4>
           <hr />

@@ -3,8 +3,6 @@ interface IconProps {
   right?: any
 }
 
-export type TransitionState = 'entering' | 'entered' | 'exiting' | 'exited';
-
 export interface OptionItem {
   name: string;
   disabled?: boolean;
@@ -15,10 +13,10 @@ export interface OptionItem {
 }
 
 export interface DropdownPosition {
-  right?: undefined | number;
-  left?: undefined | number;
-  bottom?: undefined | string | number;
-  top?: undefined | string | number;
+  right?: number;
+  left?: number;
+  bottom?: string | number;
+  top?: string | number;
 }
 
 export type PositionalProps =
@@ -29,7 +27,7 @@ export type PositionalProps =
   }
 |
   {
-    float?: false | undefined | null;
+    float?: false | null;
     position?: 'right' | 'left';
   };
 

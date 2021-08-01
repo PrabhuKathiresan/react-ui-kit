@@ -22,6 +22,7 @@ export interface ColumnProps {
   hidden?: boolean;
   hideDisabled?: boolean;
   selectColumn?: boolean;
+  selectionColumn?: boolean;
   selected?: Function;
   [k: string]: any;
 }

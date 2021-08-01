@@ -85,18 +85,45 @@ export default class Table extends Component<TableProps & InternalTableState, {}
     </colgroup>
   )
 
+  renderHeaderColumn = (column: ColumnProps) => {
+    let _column = null;
+    let {
+      getSelectedState,
+      toggleSelectAll,
+      columnSelectionIcon,
+      sortedColumns
+    } = this.props
+
+    if (column.selectColumn) {
+      _column = <SelectColumn selected={getSelectedState()} header onChange={(checked: boolean) => toggleSelectAll(checked)} />
+    }
+
+    if (column.selectionColumn) {
+      _column = (
+        <span role='button' aria-hidden tabIndex={0} className='cursor-pointer d-flex-justify-center-align-center selection-column-icon' onClick={() => this._handleColumnSelectionClick()}>
+          {columnSelectionIcon || <Settings />}
+        </span>
+      )
+    } else {
+      _column = (
+        <>
+          <span className='ui-kit-table-content'>{column.name}</span>
+          <SortedColumn sortedColumns={sortedColumns || []} column={column} />
+        </>
+      )
+    }
+
+    return _column;
+  }
+
   renderHeader = (width: number) => {
     let columns = this.renderableColumns(true)
     let {
       showColumnSelection,
       fixedWidth,
       headerHeight,
-      sortedColumns,
       sortColumn,
-      getSelectedState,
-      toggleSelectAll,
       headerBorderless = false,
-      columnSelectionIcon
     } = this.props
 
     return (
@@ -116,26 +143,7 @@ export default class Table extends Component<TableProps & InternalTableState, {}
                   onClick={() => sortColumn(column)}
                   style={{ height: column.selectionColumn ? headerHeight : 'auto' }}
                 >
-                  {
-                    column.selectColumn ?
-                      (
-                        <SelectColumn selected={getSelectedState()} header onChange={(checked: boolean) => toggleSelectAll(checked)} />
-                      )
-                      :
-                      column.selectionColumn ?
-                        (
-                          <span role='button' aria-hidden tabIndex={0} className='cursor-pointer d-flex-justify-center-align-center selection-column-icon' onClick={() => this._handleColumnSelectionClick()}>
-                            {columnSelectionIcon || <Settings />}
-                          </span>
-                        )
-                        :
-                        (
-                          <span>
-                            <span className='ui-kit-table-content'>{column.name}</span>
-                            <SortedColumn sortedColumns={sortedColumns || []} column={column} />
-                          </span>
-                        )
-                  }
+                  {this.renderHeaderColumn(column)}
                 </th>
               ))
             }
@@ -145,12 +153,27 @@ export default class Table extends Component<TableProps & InternalTableState, {}
     )
   }
 
+  renderBodyColumn = (column: ColumnProps, row: any) => {
+    let _column = null;
+    let {
+      toggleRowSelect = noop
+    } = this.props
+    if (column.selectColumn) {
+      _column = <SelectColumn selected={column.selected && column.selected(row)} header={false} onChange={(checked: boolean) => toggleRowSelect(row, row.index, checked)} />
+    }
+
+    if (!column.selectionColumn) {
+      _column = <span className='ui-kit-table-content'>{getCellData(row, column)}</span>
+    }
+
+    return _column;
+  }
+
   renderBody = (width: number, rows: Array<any>) => {
     let columns = this.renderableColumns()
     let {
       variant,
-      fixedWidth,
-      toggleRowSelect = noop
+      fixedWidth
     } = this.props
     return (
       <table className={cx('ui-kit-table ui-kit-table-body', `ui-kit-table-${variant}`)} style={{ minWidth: fixedWidth ? width : 'auto' }}>
@@ -169,15 +192,7 @@ export default class Table extends Component<TableProps & InternalTableState, {}
                           'selection-column': column.selectionColumn
                         })}
                       >
-                        {
-                          column.selectColumn ?
-                            (
-                              <SelectColumn selected={column.selected && column.selected(row)} header={false} onChange={(checked: boolean) => toggleRowSelect(row, row.index, checked)} />
-                            )
-                            :
-                            column.selectionColumn ?
-                              null : <span className='pk-table-content'>{getCellData(row, column)}</span>
-                        }
+                        {this.renderBodyColumn(column, row)}
                       </td>
                     ))
                   }

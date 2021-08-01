@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react'
 import cx from 'classnames'
 import Button from '../Button'
 import { noop } from '../utils'
-import { Positions, TransitionState  } from './props'
 import Close from '../icons/close'
 import Warning from '../icons/warning'
 import Success from '../icons/success'
@@ -12,30 +11,7 @@ import WarningFilled from '../icons/warning-filled'
 import SuccessFilled from '../icons/success-filled'
 import InfoCircleFilled from '../icons/info-circle-filled'
 import ErrorFilled from '../icons/error-filled'
-
-interface SingleToastProp {
-  id: string;
-  message?: string;
-  type: string,
-  autoDismiss: boolean, // may be inherited from ToastProvider
-  duration: number, // inherited from ToastProvider
-  children: any,
-  onClose: Function,
-  position: Positions,
-  confirm?: boolean;
-  onConfirm?: Function;
-  onCancel?: Function;
-  confirmText?: string;
-  cancelText?: string;
-  onMouseEnter: Function;
-  onMouseLeave: Function;
-  iconType?: 'default' | 'filled'
-}
-
-interface TransitionProps {
-  transitionDuration: number;
-  transitionState: TransitionState;
-}
+import { SingleToastProp, TransitionProps } from './props'
 
 const gutter = 16
 
@@ -176,10 +152,10 @@ export const ToastElement = (props: SingleToastProp & TransitionProps) => {
         {
           confirm && (
             <div className='ui-kit-toast-action'>
-              <Button small plain onClick={() => cancelAction()}>
+              <Button size='small' variant='plain'  onClick={() => cancelAction()}>
                 {cancelText}
               </Button>
-              <Button small plain className='is-primary' disabled={confirming} loading={confirming} onClick={() => confirmAction()}>
+              <Button size='small' variant='plain' className='is-primary' disabled={confirming} loading={confirming} onClick={() => confirmAction()}>
                 {confirmText}
               </Button>
             </div>

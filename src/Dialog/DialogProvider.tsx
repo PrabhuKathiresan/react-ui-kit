@@ -1,20 +1,16 @@
 import React, { Component, useContext } from 'react'
 import { createPortal } from 'react-dom'
 import { Transition, TransitionGroup } from 'react-transition-group'
-import { generateUEID, noop } from '../utils'
-import DialogContainer from './container'
-import DialogController from './controller'
-import { DialogState, TransitionState, ProviderProps, Props, DialogProps } from './props'
+import { canUseDOM, generateUEID, noop } from '../utils'
+import DialogContainer from './DialogContainer'
+import DialogController from './DialogController'
+import { DialogState, ProviderProps, Props, DialogProps } from './props'
+import { TransitionState } from '../constants'
 
 const DialogContext = React.createContext<ProviderProps | null>(null);
 const { Provider, Consumer } = DialogContext;
 
 const ANIMATION_DURATION = 200
-const canUseDOM = !!(
-  typeof window !== 'undefined' &&
-  window.document &&
-  window.document.createElement
-)
 
 export class DialogProvider extends Component<Props, DialogState> {
   state: DialogState = { modals: [] }
@@ -101,7 +97,10 @@ export class DialogProvider extends Component<Props, DialogState> {
 
     let hasModal = Boolean(modals.length)
 
-    let portalTarget = canUseDOM ? container ? document.querySelector(container) : document.body : null
+    let portalTarget = null
+    if (canUseDOM) {
+      portalTarget = container ? document.querySelector(container) : document.body
+    }
 
     return (
       <Provider value={{ show: this.show, hide: this.hide, update: this.update }}>

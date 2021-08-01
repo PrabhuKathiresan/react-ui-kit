@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
+import cx from 'classnames'
 import { findDOMNode } from 'react-dom'
 import scrollIntoView from 'dom-scroll-into-view'
 import { MenuItemProps } from './props'
+import Check from '../icons/check'
 
 class MenuItem extends Component<MenuItemProps, {}> {
   componentDidUpdate() {
@@ -26,7 +28,7 @@ class MenuItem extends Component<MenuItemProps, {}> {
 
   beforeItemClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault() 
-    this.props.onClick()
+    if (!this.props.disabled) this.props.onClick()
   }
 
   render() {
@@ -34,6 +36,7 @@ class MenuItem extends Component<MenuItemProps, {}> {
       position,
       activeIndex,
       selected,
+      disabled,
       label,
       id
     } = this.props
@@ -41,11 +44,16 @@ class MenuItem extends Component<MenuItemProps, {}> {
       <div
         role='button'
         tabIndex={0}
-        className={`ui-kit-select--dropdown_item has-hover-effect${(activeIndex === position) ? ' item-active' : ''}${selected ? ' item-selected' : ''}`}
+        className={cx('ui-kit-select--dropdown_item has-hover-effect', {
+          'item-active': activeIndex === position,
+          'item-selected': selected,
+          'item-disabled': disabled
+        })}
         onClick={this.beforeItemClick}
         data-testid={id}
       >
         <span className='ui-kit-select--dropdown_item-text'>{label}</span>
+        {selected && <Check width={12} height={12} />}
       </div>
     )
   }

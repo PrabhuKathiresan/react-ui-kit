@@ -3,16 +3,17 @@ import cx from 'classnames'
 import isEmpty from 'is-empty'
 import Tag from './Tag'
 import Close from '../icons/close'
-import { noop } from './utils'
-import { SelectProps, SelectedValueProps, SelectInputProps } from './props'
+import { SelectedValueProps, SelectInputProps } from './props'
+import { noop } from '../utils'
+import Loader from '../Loader'
 
 const getSelectedValue = (input: SelectedValueProps) => {
-  let { selected, multiple, key } = input
-  if (multiple) return ''
+  let { selected = [], multiple, key } = input
+  if (multiple || isEmpty(selected)) return ''
   return selected[0][key] || ''
 }
 
-const Input = (props: SelectInputProps & SelectProps) => {
+const Input = (props: SelectInputProps) => {
   let {
     disabled,
     inputClass,
@@ -21,7 +22,7 @@ const Input = (props: SelectInputProps & SelectProps) => {
     multiple,
     labelKey,
     inputRef,
-    placeHolder,
+    placeholder,
     onFocus = noop,
     onInputChange = noop,
     id,
@@ -30,13 +31,15 @@ const Input = (props: SelectInputProps & SelectProps) => {
     open,
     textOnly,
     inputProps,
-    size = 'default'
+    inputSize = 'default',
+    borderless
   } = props
 
-  let isSmallInput = size === 'sm'
+  let isSmallInput = inputSize === 'small'
+  let isLargeInput = inputSize === 'large'
   let hasLeftIcon = !isEmpty(icons.left.component)
   let hasRightIcon = !isEmpty(icons.right.component) && !disabled
-  let value = isEmpty(selected) ? '' : getSelectedValue({ selected, multiple, key: labelKey })
+  let value = getSelectedValue({ selected, multiple, key: labelKey })
   let showClearIcon = (allowClear && !disabled) && (multiple ? !isEmpty(selected) : !isEmpty(value))
 
   let inputClassHash = {
@@ -45,7 +48,10 @@ const Input = (props: SelectInputProps & SelectProps) => {
     'has-clear-icon': showClearIcon,
     'text-only': textOnly,
     'has-less-padding': isSmallInput,
-    'ui-kit-select-has-focus': open
+    'ui-kit-select-has-focus': open,
+    'ui-kit-select-input__borderless': borderless,
+    'ui-kit-select-input_sm': isSmallInput,
+    'ui-kit-select-input_lg': isLargeInput
   }
 
   if (disabled) {
@@ -55,7 +61,7 @@ const Input = (props: SelectInputProps & SelectProps) => {
         defaultValue={value}
         disabled
         data-testid={`${id}-input-disabled`}
-        placeholder={placeHolder}
+        placeholder={placeholder}
       />
     )
   }
@@ -67,7 +73,7 @@ const Input = (props: SelectInputProps & SelectProps) => {
       className={cx('ui-kit-select-input read-only', inputClass, inputClassHash)}
       value={value}
       ref={(input) => inputRef(input)}
-      placeholder={placeHolder}
+      placeholder={placeholder}
       onFocus={(e) => onFocus(e)}
       readOnly
       id={id}
@@ -77,13 +83,13 @@ const Input = (props: SelectInputProps & SelectProps) => {
   );
 }
 
-const InputWrapper = (props: SelectProps & SelectInputProps) => {
+const InputWrapper = (props: SelectInputProps) => {
   let {
     onFocus = noop,
     inputClass = '',
     icons = {},
     inputRef,
-    placeHolder,
+    placeholder,
     disabled,
     loading,
     multiple,
@@ -96,21 +102,99 @@ const InputWrapper = (props: SelectProps & SelectInputProps) => {
     onInputChange = noop,
     onChange = noop,
     allowClear = false,
-    size = 'default',
-    inputProps
+    inputSize = 'default',
+    inputProps,
+    borderless
   } = props
 
-  let isSmallInput = size === 'sm'
+  let isSmallInput = inputSize === 'small'
+  let isLargeInput = inputSize === 'large'
 
   let hasLeftIcon = !isEmpty(icons.left.component)
   let hasRightIcon = !isEmpty(icons.right.component) && !disabled
-  let iconClass = isSmallInput ? 'ui-kit-select-input-icon-sm' : '';
+  let iconClass = '';
+
+  if (isSmallInput) {
+    iconClass = 'ui-kit-select-input-icon-sm';
+  } else if (isLargeInput) {
+    iconClass = 'ui-kit-select-input-icon-lg';
+  }
 
   let value = isEmpty(selected) ? '' : getSelectedValue({ selected, multiple, key: labelKey })
 
   let onRightIconClick = (disabled || !hasRightIcon) ? noop : () => icons.right.onClick()
 
   let showClearIcon = (allowClear && !disabled) && (multiple ? !isEmpty(selected) : !isEmpty(value))
+
+  let renderRightIcon = () => {
+    if (loading) {
+      return (
+        <div className='ui-kit-select-loader-wrapper'>
+          <Loader strokeWidth={4} size={16} />
+        </div>
+      )
+    }
+
+    return hasRightIcon ? (
+      <span role='button' tabIndex={-1} className={cx('ui-kit-select-input-icon icon-right', iconClass, icons.right.additionalClasses)} onClick={onRightIconClick} ref={icons.right.iconRef}>
+        {icons.right.component}
+      </span>
+    ) : null
+  }
+
+  let renderTags = () => selected.map((_selected, i) => (
+    <Tag id={`${id}-selected-input-${i}`} closeable={!disabled} disabled={disabled} onClose={() => onRemove(_selected)} key={i}>
+      {_selected.__label}
+    </Tag>
+  ))
+
+  let renderMultipleInput = () => {
+    if (disabled) {
+      return (
+        <input
+          className='ui-kit-select-multiple-input cursor-not-allowed'
+          disabled
+          placeholder={placeholder}
+          id={`${id}`}
+          data-testid={`${id}-input-disabled`}
+        />
+      )
+    }
+
+    return (
+      <input
+        className='ui-kit-select-multiple-input cursor-pointer'
+        onFocus={e => onFocus(e)}
+        placeholder={placeholder}
+        readOnly
+        id={id}
+        data-testid={`${id}-input`}
+        onChange={e => onInputChange(e)}
+        {...inputProps}
+        {...extraProps}
+      />
+    )
+  }
+
+  let renderInput = () => multiple ? (
+    <div
+      ref={inputRef}
+      className={cx('ui-kit-select-input', inputClass, {
+        'ui-kit-select-has-focus': open,
+        'has-left-icon': hasLeftIcon,
+        'has-right-icon': hasRightIcon,
+        'has-clear-icon': showClearIcon,
+        'has-less-padding': isSmallInput,
+        'disabled': disabled,
+        'ui-kit-select-input__borderless': borderless,
+        'ui-kit-select-input_sm': isSmallInput,
+        'ui-kit-select-input_lg': isLargeInput
+      })}
+    >
+      {renderTags()}
+      {renderMultipleInput()}
+    </div>
+  ) : <Input {...props} />
 
   return (
     <div className='ui-kit-select-input-wrapper'>
@@ -123,58 +207,7 @@ const InputWrapper = (props: SelectProps & SelectInputProps) => {
           :
           null
       }
-      {
-        !multiple ? (
-          <Input {...props} />
-        )
-          : (
-            <div
-              ref={inputRef}
-              className={cx('ui-kit-select-input', inputClass, {
-                'ui-kit-select-has-focus': open,
-                'has-left-icon': hasLeftIcon,
-                'has-right-icon': hasRightIcon,
-                'has-clear-icon': showClearIcon,
-                'has-less-padding': isSmallInput,
-                'disabled': disabled
-              })}
-            >
-              {
-                selected.map((_selected, i) => (
-                  <Tag id={`${id}-selected-input-${i}`} closeable={!disabled} disabled={disabled} onClose={() => onRemove(_selected)} key={i}>
-                    {_selected.__label}
-                  </Tag>
-                ))
-              }
-              {
-                disabled ?
-                (
-                  <input
-                    className='ui-kit-select-multiple-input cursor-not-allowed'
-                    disabled
-                    placeholder={placeHolder}
-                    id={`${id}`}
-                    data-testid={`${id}-input-disabled`}
-                  />
-                )
-                :
-                (
-                  <input
-                    className='ui-kit-select-multiple-input cursor-pointer'
-                    onFocus={e => onFocus(e)}
-                    placeholder={placeHolder}
-                    readOnly
-                    id={id}
-                    data-testid={`${id}-input`}
-                    onChange={e => onInputChange(e)}
-                    {...inputProps}
-                    {...extraProps}
-                  />
-                )
-              }
-            </div>
-          )
-      }
+      {renderInput()}
       <>
         {
           showClearIcon && (
@@ -183,27 +216,7 @@ const InputWrapper = (props: SelectProps & SelectInputProps) => {
             </span>
           )
         }
-        {
-          loading ?
-            (
-              <div className='ui-kit-select-loader-wrapper'>
-                <div className='ui-kit-select-loader'>
-                  <svg viewBox='22 22 44 44'>
-                    <circle className='path' cx='44' cy='44' r='19.5' fill='none' strokeWidth='4' />
-                  </svg>
-                </div>
-              </div>
-            )
-            :
-            hasRightIcon ?
-              (
-                <span role='button' tabIndex={-1} className={cx('ui-kit-select-input-icon icon-right', iconClass, icons.right.additionalClasses)} onClick={onRightIconClick} ref={icons.right.iconRef}>
-                  {icons.right.component}
-                </span>
-              )
-              :
-              null
-        }
+        {renderRightIcon()}
       </>
     </div>
   )

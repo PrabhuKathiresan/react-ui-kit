@@ -1,6 +1,6 @@
-export type DialogPositions = 'top' | 'bottom' | 'left' | 'right' | 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'center-center';
-export type DialogSizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-export type TransitionState = 'entering' | 'entered' | 'exiting' | 'exited';
+import { TransitionState } from '../constants'
+export type DialogPositions = 'top' | 'bottom' | 'left' | 'right' | 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'center-center'
+export type DialogSizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 export interface ModalProps {
   title: any;

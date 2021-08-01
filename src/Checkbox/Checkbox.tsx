@@ -59,7 +59,7 @@ export default function (props: CheckboxProps) {
       {
         children &&
         (
-          <span>
+          <>
             <span className={cx('ui-kit-checkbox-label')}>{children}</span>
             {
               subTitle &&
@@ -67,7 +67,7 @@ export default function (props: CheckboxProps) {
                 <span className='ui-kit-checkbox-subtitle'>{subTitle}</span>
               )
             }
-          </span>
+          </>
         )
       }
     </label>

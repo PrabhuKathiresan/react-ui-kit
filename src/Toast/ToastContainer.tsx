@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { ToastContainerProps } from './props';
+import React from 'react'
+import { ToastContainerProps } from './props'
 
 const positions = {
   'top-left': { top: 0, left: 0 },
@@ -38,4 +38,3 @@ export const ToastContainer = ({
     </div>
   )
 }
-

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import BasicSelect from './BasicSelect'
 import { OptionProps, SelectProps } from './props'
 import { debounce } from './helpers'
-import { noop } from './utils'
+import { noop } from '../utils'
 
 export default class AsyncSelect extends Component<SelectProps, { loading: boolean, options: Array<OptionProps> }> {
   cancelled = false;

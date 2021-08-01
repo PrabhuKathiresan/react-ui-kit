@@ -26,7 +26,7 @@ export function Radio(props: RadioProps) {
       <span
         className={cx('ui-kit-radio', { 'ui-kit-radio-disabled': disabled, 'ui-kit-radio-checked': checked })}
       >
-        <input type='radio' id={id} name={name} onChange={(e) => handleChange(e)} className='ui-kit-radio-input' value={value} checked={checked} />
+        <input type='radio' id={id} name={name} disabled={disabled} onChange={(e) => handleChange(e)} className='ui-kit-radio-input' value={value} checked={checked} />
         <span className='ui-kit-radio-inner' />
       </span>
       {label && <span className='ui-kit-radio-label'>{label}</span>}

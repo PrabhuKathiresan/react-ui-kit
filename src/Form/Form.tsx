@@ -5,13 +5,15 @@ import set from 'lodash.set'
 import isEmpty from 'is-empty'
 import Button from '../Button'
 import TextInput from '../TextInput'
+import DatePicker from '../DatePicker'
+import MonthPicker from '../MonthPicker'
 import { BasicSelect } from '../Select'
 import Checkbox from '../Checkbox'
 import Radio from '../Radio'
 import Alert from '../Alert';
 import { isDefined, isEqual, isFunction, noop } from '../utils'
 import { FormFields, FormProps, FormState } from './props'
-import { FormValidation, FormData } from './utils'
+import { FormValidation, FormData, isDateField } from './utils'
 
 const MULTI_VALUE_FIELDS = ['Select', 'Checkbox.Group']
 const SERVICE_METHOD_NOT_AVAILABLE = 'Service method is not configured'
@@ -23,8 +25,15 @@ const getFormData = (props: FormProps) => {
     let value = getter && isFunction(getter) ? getter(data) : get(data, name)
     let defaultValue: any = ''
     if (MULTI_VALUE_FIELDS.includes(component)) {
-      value = value ? Array.isArray(value) ? value : [value] : []
+      if (value && !Array.isArray(value)) {
+        value = [value]
+      } else {
+        value = []
+      }
       defaultValue = []
+    }
+    if (isDateField(component)) {
+      value = value instanceof Date ? value : new Date()
     }
     set(formData, name, value || defaultValue)
     set(formData, `__previous_${name}`, value || defaultValue)
@@ -35,6 +44,7 @@ const getFormData = (props: FormProps) => {
 export default class Form extends Component<FormProps, FormState> {
   formValidation: FormValidation
   fieldsHash: any
+  _changedAttributes: any = {}
   constructor(props: FormProps) {
     super(props)
     this.state = {
@@ -64,7 +74,11 @@ export default class Form extends Component<FormProps, FormState> {
     let { formData } = this.state
     let { fields } = this.props
 
-    return new FormData(fields).toJSON(formData, { includeAll, strict })
+    return new FormData(fields).toJSON(formData, {
+      includeAll,
+      strict,
+      changedAttributes: this._changedAttributes
+    })
   }
 
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -146,28 +160,31 @@ export default class Form extends Component<FormProps, FormState> {
       let { type, ...data } = updates
       if (type === 'update') {
         this.setState((state: FormState) => {
-          let { formData } = state
+          let _formData = state.formData
           Object.keys(data).forEach(key => {
-            set(formData, key, data[key])
+            set(_formData, key, data[key])
           })
-          return { formData: { ...formData } }
+          return { formData: { ..._formData } }
         })
       }
     }
     let { formData } = this.state
-    let { fields } = this.props
-    let dirty = false
-    for (let f of fields) {
-      let { name } = f
-      let previousValue = get(formData, `__previous_${name}`)
-      let currentValue = get(formData, name)
-
+    if (this._changedAttributes[fieldName]) {
+      let [previousValue] = this._changedAttributes[fieldName]
+      let currentValue = get(formData, fieldName)
+      if (isEqual(previousValue, currentValue)) delete this._changedAttributes[fieldName]
+      else this._changedAttributes[fieldName] = [previousValue, currentValue]
+    } else {
+      let previousValue = get(formData, `__previous_${fieldName}`)
+      let currentValue = get(formData, fieldName)
       if (!isEqual(previousValue, currentValue)) {
-        dirty = true
-        break
+        this._changedAttributes = {
+          ...this._changedAttributes,
+          [fieldName]: [previousValue, currentValue]
+        }
       }
     }
-    this.setState({ dirty })
+    this.setState({ dirty: !isEmpty(this._changedAttributes) })
   }
 
   renderField = (field: FormFields) => {
@@ -213,7 +230,7 @@ export default class Form extends Component<FormProps, FormState> {
       error
     }
 
-    let Component: any = TextInput
+    let FormComponent: any = TextInput
 
     switch (component) {
       case 'TextArea':
@@ -229,13 +246,13 @@ export default class Form extends Component<FormProps, FormState> {
         inputProps.onChange = (s: Array<any>) => this.handleInputChange(name, s)
         inputProps.container = 'body'
         delete inputProps.value
-        Component = BasicSelect
+        FormComponent = BasicSelect
         break;
       case 'Radio':
-        Component = Radio
+        FormComponent = Radio
         break;
       case 'Radio.Group':
-        Component = Radio.Group
+        FormComponent = Radio.Group
         break;
       case 'Checkbox':
         inputProps.type = 'checkbox'
@@ -243,14 +260,24 @@ export default class Form extends Component<FormProps, FormState> {
         inputProps.checked = Boolean(inputProps.value)
         delete inputProps.value
         inputProps.onChange = (e: any) => this.handleInputChange(name, e.target.checked)
-        Component = Checkbox
+        FormComponent = Checkbox
         break;
       case 'Checkbox.Group':
         inputProps.onChange = (e: any) => this.handleCheckboxChange(name, e)
-        Component = Checkbox.Group
+        FormComponent = Checkbox.Group
+        break;
+      case 'DatePicker':
+        inputProps.onChange = (date: any) => this.handleInputChange(name, date)
+        inputProps.container = 'body'
+        FormComponent = DatePicker
+        break;
+      case 'MonthPicker':
+        inputProps.onChange = (date: any) => this.handleInputChange(name, date)
+        inputProps.container = 'body'
+        FormComponent = MonthPicker
         break;
       case 'Custom':
-        Component = customComponent
+        FormComponent = customComponent
         inputProps.onChange = (value: any) => this.handleInputChange(name, value)
         break;
       case 'TextInput':
@@ -258,7 +285,7 @@ export default class Form extends Component<FormProps, FormState> {
         break;
     }
 
-    return <Component {...inputProps} />
+    return <FormComponent {...inputProps} />
   }
 
   render() {

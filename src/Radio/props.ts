@@ -15,6 +15,7 @@ export interface RadioProps extends InputProps {
 export interface Radio {
   label: any;
   value: any;
+  disabled?: boolean;
 }
 
 export interface RadioGroupProps {

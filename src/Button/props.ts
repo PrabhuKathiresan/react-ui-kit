@@ -3,20 +3,26 @@ export interface IconProps {
   right?: any;
 }
 
+export type ButtonTheme = 'primary' | 'danger' | 'success' | 'warning' | 'default';
+export type ButtonVariant = 'plain' | 'outlined' | 'filled';
+export type ButtonSize = 'tiny' | 'small' | 'default' | 'medium' | 'large';
+export type ButtonIconTheme = 'primary' | 'danger' | 'warning';
+
 export interface ButtonProps {
   icon?: IconProps;
   loading?: boolean;
   loadingText?: string;
   disabled?: boolean;
   className?: string;
-  theme?: 'primary' | 'secondary' | 'danger';
+  theme?: ButtonTheme
+  variant?: ButtonVariant;
   ref?: any;
   block?: boolean;
-  large?: boolean;
   bold?: boolean;
   children: any;
-  plain?: boolean;
+  size?: ButtonSize;
   link?: boolean;
-  small?: boolean;
-  tiny?: boolean;
+  iconOnly?: boolean;
+  iconTheme?: ButtonIconTheme;
+  raised?: boolean;
 }

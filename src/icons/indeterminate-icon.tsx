@@ -1,9 +1,10 @@
-/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
+import { IconProps } from './props';
 
-const IndeterminateIcon = () => {
+const IndeterminateIcon = (props: IconProps) => {
+  let { height = 18, width = 18, viewBox = '0 0 24 24', fill = 'currentColor' } = props
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" viewBox="0 0 24 24" className="ui-kit-table-icon" width="18px" height="18px">
+    <svg xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" className="ui-kit-table-icon" height={height} viewBox={viewBox} width={width} fill={fill}>
       <g>
         <rect fill="none" height="24" width="24" />
       </g>

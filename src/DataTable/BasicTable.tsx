@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Footer from './Footer'
-import Loader from './Loader'
+import DataTableLoader from './DataTableLoader'
 import ColumnSettings from './ColumnSettings'
 import EmptyBox from '../icons/empty-box'
 import {
@@ -63,32 +63,34 @@ export default class BasicTable extends Component<TableProps, TableState> {
 
   toggleRowSelect = (row: any, index: number, checked: boolean) => {
     let { paginate, onSelect = noop } = this.props
-    if (paginate) {
-      let { selectedPages, partiallySelectedPages } = this.state
-      let page = this.getCurrentPageKey()
-      partiallySelectedPages[page] = true
-      if (this.currentPageSelected()) {
-        delete selectedPages[page]
+    paginate && this.handleRowSelectOnPaginateTable(checked)
+    onSelect(row, index, checked)
+  }
+
+  handleRowSelectOnPaginateTable = (checked: boolean) => {
+    let { selectedPages, partiallySelectedPages } = this.state
+    let page = this.getCurrentPageKey()
+    partiallySelectedPages[page] = true
+    if (this.currentPageSelected()) {
+      delete selectedPages[page]
+    } else {
+      let selectedRecords = this.records.filter(record => record.selected)
+      if (checked) {
+        // Since this current record haven't been selected in actual state, adding 1
+        if (selectedRecords.length + 1 === this.getPageLimit()) {
+          delete partiallySelectedPages[page]
+          selectedPages[page] = true
+        }
       } else {
-        let selectedRecords = this.records.filter(record => record.selected)
-        if (checked) {
-          // Since this current record haven't been selected in actual state, adding 1
-          if (selectedRecords.length + 1 === this.getPageLimit()) {
-            delete partiallySelectedPages[page]
-            selectedPages[page] = true
-          }
-        } else {
-          if (!(selectedRecords.length - 1)) {
-            delete partiallySelectedPages[page]
-          }
+        if (!(selectedRecords.length - 1)) {
+          delete partiallySelectedPages[page]
         }
       }
-      this.setState({
-        selectedPages: { ...selectedPages },
-        partiallySelectedPages: { ...partiallySelectedPages }
-      })
     }
-    onSelect(row, index, checked)
+    this.setState({
+      selectedPages: { ...selectedPages },
+      partiallySelectedPages: { ...partiallySelectedPages }
+    })
   }
 
   toggleSelectAll = (checked: boolean) => {
@@ -314,7 +316,7 @@ export default class BasicTable extends Component<TableProps, TableState> {
           hideFooterText={hideFooterText}
           id={id}
         />
-        <Loader loading={loading} />
+        <DataTableLoader loading={loading} />
         {
           showColumnSelection && showSettings && (
             <ColumnSettings

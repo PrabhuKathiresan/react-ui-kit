@@ -1,4 +1,4 @@
-export const isUnDefined = (val: any) => typeof val === 'undefined';
+import { isUnDefined } from './type-check'
 
 const dirMap = {
   // greater-than

@@ -2,7 +2,25 @@
   margin: auto;
 }
 
-.example-btn-block .ui-btn {
+.example-btn-block .ui-kit-btn {
   margin-right: 8px;
   margin-bottom: 8px;
+}
+
+.custom-datepicker-size {
+  --ui-kit-datepicker-btn-size: 42px;
+  --ui-kit-datepicker-btn-font-size: 14px;
+}
+
+.list-group-item {
+  border-width: 0;
+}
+
+.list-group-item a {
+  text-decoration: none;
+  color: #888;
+}
+
+.list-group-item a.active {
+  color: #0d6efd;
 }

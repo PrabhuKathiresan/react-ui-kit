@@ -1,6 +1,4 @@
-
 import React from 'react';
-// import { ToastContainerProps } from './props';
 
 interface PositionProps {
   top?: number | string;
@@ -18,7 +16,7 @@ interface MenuContainerProps {
 }
 
 const Container = ({
-  position,
+  position = {},
   children,
   ...props
 }: MenuContainerProps, ref: any) => {
@@ -47,4 +45,4 @@ const Container = ({
   )
 }
 
-export const MenuContainer = React.forwardRef(Container)
+export default React.forwardRef(Container)

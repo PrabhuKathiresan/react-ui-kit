@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import Table from './Table'
 import Footer from './Footer'
-import Loader from './Loader'
+import DataTableLoader from './DataTableLoader'
 import ProgressBar from './ProgressBar'
 import ColumnSettings from './ColumnSettings'
 import EmptyBox from '../icons/empty-box'
-import { getPaginationOptions } from './constants'
+import {
+  DEFAULT_FOOTER_HEIGHT,
+  DEFAULT_HEADER_HEIGHT,
+  getPaginationOptions
+} from './constants'
 import {
   getNextPage,
   getPreviousPage,
@@ -20,10 +24,6 @@ import {
   AsyncTableState,
   ServiceResponseProps
 } from './props'
-import {
-  DEFAULT_FOOTER_HEIGHT,
-  DEFAULT_HEADER_HEIGHT
-} from './constants'
 
 class AsyncTable extends Component<AsyncProps, AsyncTableState> {
   scrollableArea = React.createRef<HTMLDivElement>()
@@ -349,7 +349,7 @@ class AsyncTable extends Component<AsyncProps, AsyncTableState> {
           id={id}
           hideFooterText={hideFooterText}
         />
-        <Loader loading={loading} />
+        <DataTableLoader loading={loading} />
         {
           showColumnSelection && showSettings && (
             <ColumnSettings

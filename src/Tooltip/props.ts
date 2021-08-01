@@ -1,5 +1,7 @@
+export declare type TooltipDirection = 'top' | 'bottom' | 'left' | 'right'
+
 export interface TooltipProps {
-  direction: 'top' | 'bottom' | 'left' | 'right',
+  direction: TooltipDirection,
   overlayClass?: string,
   wrapperClass?: string,
   container?: string,

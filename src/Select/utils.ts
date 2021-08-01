@@ -1,25 +1,25 @@
+import isEmpty from 'is-empty'
 import {
-  defaultFilterBy
+  defaultFilterBy,
 } from './helpers'
 import {
   MAXIMUM_DROPDOWN_HEIGHT,
   UP,
-  ACTUAL_VALUE
+  ACTUAL_VALUE,
+  DROPDOWN_ITEM_HEIGHT
 } from './constants'
 import {
   OptionProps,
   SelectProps,
   SelectState
 } from './props'
-import { generateUEID } from '../utils'
-
-export const noop = () => { }
+import { generateUEID, noop } from '../utils'
 
 export const getLabelKey = (labelKey: Function) => labelKey()
 
 export const getInputValue = (option: OptionProps = {}) => option.__label
 
-export const filterResultsFromOptions = (options: Array<OptionProps>, props: SelectProps & SelectState) => {
+export const filterResultsFromOptions = (options: Array<OptionProps>, props: any): Array<OptionProps> => {
   let {
     filterBy = [],
     searchable = false,
@@ -34,7 +34,7 @@ export const filterResultsFromOptions = (options: Array<OptionProps>, props: Sel
   return results
 }
 
-export const getStateFromProps = (props: SelectProps) => {
+export const getStateFromProps = (props: SelectProps): SelectState => {
   let {
     options = [],
     selected = [],
@@ -47,17 +47,21 @@ export const getStateFromProps = (props: SelectProps) => {
 
   let value = ''
 
-  selected = optionsMap([...selected], props)
+  let stateSelected = optionsMap([...selected], props)
 
-  if (!multiple && selected && selected.length) {
-    let _selected = [...selected].shift() || {}
-    value = _selected[labelKey]
+  // selected = optionsMap([...selected], props)
+
+  if (!multiple && stateSelected && stateSelected.length) {
+    // selected = [...selected].shift() || {}
+    let [first] = selected
+    value = first[labelKey]
   }
 
   let _options = optionsMap([...options], props)
 
   let results = filterResultsFromOptions(_options, {
     ...props,
+    id,
     results: [],
     value,
     activeIndex: -1
@@ -71,7 +75,7 @@ export const getStateFromProps = (props: SelectProps) => {
     focus: props.autoFocus || false,
     value,
     results,
-    selected,
+    selected: stateSelected,
     menuPosition: {},
     autoScroll: false,
     isDirty: false,
@@ -81,7 +85,7 @@ export const getStateFromProps = (props: SelectProps) => {
   }
 }
 
-export const constructMenuProps = (props: SelectProps & SelectState) => {
+export const constructMenuProps = (props: any) => {
   let options = props.results ? [...props.results] : []
   return {
     options,
@@ -97,15 +101,23 @@ export const constructMenuProps = (props: SelectProps & SelectState) => {
   }
 }
 
-export const optionsMap = (options: Array<OptionProps>, props: SelectProps) => {
+export const optionsMap = (options: Array<OptionProps | string>, props: SelectProps): Array<OptionProps> => {
   let { labelKey, onMenuItemRender } = props
   return options.map(option => {
-    return {
-      ...option,
-      [labelKey]: option[labelKey],
-      __label: onMenuItemRender ? onMenuItemRender(option) : option[labelKey],
-      [ACTUAL_VALUE]: {
-        ...option
+    if (typeof option === 'string') {
+      return {
+        [labelKey]: option,
+        __label: onMenuItemRender ? onMenuItemRender(option) : option,
+        [ACTUAL_VALUE]: option
+      }
+    } else {
+      return {
+        ...option,
+        [labelKey]: option[labelKey],
+        __label: onMenuItemRender ? onMenuItemRender(option) : option[labelKey],
+        [ACTUAL_VALUE]: {
+          ...option
+        }
       }
     }
   })
@@ -113,7 +125,7 @@ export const optionsMap = (options: Array<OptionProps>, props: SelectProps) => {
 
 function skipDisabledOptions(
   currentIndex: number,
-  keyCode: number,
+  keyCode: string,
   items: Array<OptionProps>
 ){
   let newIndex = currentIndex
@@ -127,7 +139,7 @@ function skipDisabledOptions(
 
 export function getUpdatedActiveIndex(
   currentIndex: number,
-  keyCode: number,
+  keyCode: string,
   items: Array<OptionProps>
 ) {
   let newIndex = currentIndex
@@ -151,11 +163,36 @@ export function getUpdatedActiveIndex(
   return newIndex
 }
 
-// export function debounce(callback, interval) {
-//   let debounceTimeoutId
+export const getMenuHeight = (maxDropdownHeight: number, length: number, searchable: boolean) => {
+  let height = DROPDOWN_ITEM_HEIGHT;
+  if (length) {
+    height = (length * DROPDOWN_ITEM_HEIGHT) + 15
+  } else if (searchable) {
+    height = DROPDOWN_ITEM_HEIGHT + 12
+  }
+  return Math.min(maxDropdownHeight, height)
+}
 
-//   return function (...args) {
-//     clearTimeout(debounceTimeoutId)
-//     debounceTimeoutId = setTimeout(() => callback.apply(this, args), interval)
-//   }
-// }
+export const getOffset = (el: HTMLDivElement) => {
+  let rect = el.getBoundingClientRect().toJSON()
+  let scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
+  let scrollTop = window.pageYOffset || document.documentElement.scrollTop
+  return {
+    ...rect,
+    top: rect.top + scrollTop,
+    left: rect.left + scrollLeft
+  }
+}
+
+export const getActiveIndex = (options: Array<OptionProps | string>, selected: Array<OptionProps | string>, props: SelectProps) => {
+  let { defaultFirstItemSelected, async, labelKey } = props
+  if (isEmpty(selected)) {
+    return defaultFirstItemSelected && options.length ? 0 : -1
+  }
+  if (async || props.multiple) {
+    return defaultFirstItemSelected ? 0 : -1
+  }
+  let selectedOption = [...selected].shift() || {};
+  let value = selectedOption[labelKey]
+  return options.findIndex(option => option[labelKey] === value)
+}
