@@ -94,11 +94,11 @@ export default class Table extends Component<TableProps & InternalTableState, {}
       sortedColumns
     } = this.props
 
+    console.log(column)
+
     if (column.selectColumn) {
       _column = <SelectColumn selected={getSelectedState()} header onChange={(checked: boolean) => toggleSelectAll(checked)} />
-    }
-
-    if (column.selectionColumn) {
+    } else if (column.selectionColumn) {
       _column = (
         <span role='button' aria-hidden tabIndex={0} className='cursor-pointer d-flex-justify-center-align-center selection-column-icon' onClick={() => this._handleColumnSelectionClick()}>
           {columnSelectionIcon || <Settings />}
@@ -160,9 +160,7 @@ export default class Table extends Component<TableProps & InternalTableState, {}
     } = this.props
     if (column.selectColumn) {
       _column = <SelectColumn selected={column.selected && column.selected(row)} header={false} onChange={(checked: boolean) => toggleRowSelect(row, row.index, checked)} />
-    }
-
-    if (!column.selectionColumn) {
+    } else if (!column.selectionColumn) {
       _column = <span className='ui-kit-table-content'>{getCellData(row, column)}</span>
     }
 
