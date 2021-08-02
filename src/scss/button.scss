@@ -1,5 +1,117 @@
 $btn-font-weight: var(--ui-kit-btn-font-weight, 500);
 
+.ui-kit-action-container {
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+.ui-kit-btn-group {
+  display: flex;
+
+  &::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  &.ui-kit-btn-group__align-center {
+    align-items: center;
+  }
+
+  &.ui-kit-btn-group__align-top {
+    align-items: flex-start;
+  }
+
+  &.ui-kit-btn-group__align-bottom {
+    align-items: flex-end;
+  }
+
+  &.ui-kit-btn-group__justify-center {
+    justify-content: center;
+  }
+
+  &.ui-kit-btn-group__justify-left {
+    justify-content: flex-start;
+  }
+
+  &.ui-kit-btn-group__justify-right {
+    justify-content: flex-end;
+  }
+
+  &.ui-kit-btn-group__has-gap {
+    &.gap__small {
+      .ui-kit-btn {
+        margin-right: 8px;
+        margin-bottom: 8px;
+      }
+    }
+
+    &.gap__medium {
+      .ui-kit-btn {
+        margin-right: 12px;
+        margin-bottom: 12px;
+      }
+    }
+
+    &.gap__large {
+      .ui-kit-btn {
+        margin-right: 16px;
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+  &:not(.ui-kit-btn-group__has-gap) {
+    .ui-kit-btn {
+      &:not(:focus) {
+        &:not(:first-child),
+        &:not(:last-child) {
+          border-radius: 0;
+          border-right-color: transparent;
+        } 
+
+        &:first-child {
+          border-right-color: transparent;
+          border-radius: $border-radius;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+
+        &:last-child {
+          border-radius: $border-radius;
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+          border-right-color: $border-color;
+        }
+      }
+
+      &:focus {
+        z-index: 12;
+      }
+    }
+  }
+
+  &.bottom-spaced {
+    .ui-kit-btn {
+      margin-bottom: 12px;
+
+      &.ui-kit-btn-size-small {
+        margin-bottom: 6px;
+      }
+    }
+  }
+
+  &.top-spaced {
+    .ui-kit-btn {
+      margin-top: 12px;
+
+      &.ui-kit-btn-size-small {
+        margin-top: 6px;
+      }
+    }
+  }
+}
+
 .ui-kit-btn {
   display: -ms-inline-flexbox;
   display: -webkit-inline-flex;
@@ -23,7 +135,7 @@ $btn-font-weight: var(--ui-kit-btn-font-weight, 500);
   user-select: none;
   cursor: pointer;
   -webkit-font-smoothing: antialiased;
-  transition: all 0.3s ease-in-out;
+  transition: all .25s linear;
   height: 32px;
   padding: 0 1rem;
   color: $btn-color;
@@ -193,5 +305,11 @@ $btn-font-weight: var(--ui-kit-btn-font-weight, 500);
     &.icon-only {
       padding: 0 8px;
     }
+  }
+}
+
+a.ui-kit-btn {
+  &:hover {
+    color: inherit;
   }
 }

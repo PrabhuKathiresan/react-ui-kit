@@ -107,7 +107,6 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
 
   let __dropdownActive = useRef<boolean>(true)
   let __dropup = useRef<boolean>(false)
-  let __boundingClientRect = useRef<any>({})
   let [open, setOpen] = useState<boolean>(false)
   let [dropup, setDropup] = useState<boolean>(false)
   let dropdown = useRef<HTMLDivElement | null>(null)
@@ -129,12 +128,9 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
     []
   )
 
-  useEffect(() => {
-    if (trigger.current) __boundingClientRect.current = trigger.current.getBoundingClientRect()
-  }, [trigger.current])
-
   let getRelativePosition = () => {
-    let rect = __boundingClientRect.current
+    if (!trigger.current) return {}
+    let rect = trigger.current.getBoundingClientRect()
     let pos: DropdownPosition = {}
     if (float) {
       pos = floatingPositionMap(dropdown.current, floatOffset)[_position](rect);
@@ -214,6 +210,7 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
   useEffect(() => {
     if (open) {
       let position = getRelativePosition()
+      console.log(position)
       setDropdownPosition(position)
       addEvtListerner()
     } else {
@@ -224,29 +221,35 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
   let hasOptions = Boolean(dropdownOptions.length)
 
   let dropdownContent = (style: any) => {
-    return hasOptions ?
-      (
-        <ul className='ui-kit-dropdown__container' style={{ ...style, maxHeight }}>
-          {
-            dropdownOptions.map((option, index) => (
-              option.divider ?
-                <hr className='mx-0 my-8' key={index} />
-                :
-                <li data-testid={option.key} className={cx('dropdown-item cursor-pointer', { 'dropdown-item-disabled': option.disabled })} onClick={() => !option.disabled && onMenuClick(option)} key={option.key}>
-                  {
-                    <span>{option.name}</span>
-                  }
-                </li>
-            ))
-          }
-        </ul>
-      )
-      :
-      (
-        <div className='ui-kit-dropdown__container' style={{ ...style, maxHeight }}>
-          {children}
-        </div>
-      )
+    return (
+      <div data-testid={id} className={cx('ui-kit-dropdown', additionalClass)} ref={ref}>
+        {
+          hasOptions ?
+            (
+              <ul className='ui-kit-dropdown__container' style={{ ...style, maxHeight }}>
+                {
+                  dropdownOptions.map((option, index) => (
+                    option.divider ?
+                      <hr className='mx-0 my-8' key={index} />
+                      :
+                      <li data-testid={option.key} className={cx('dropdown-item cursor-pointer', { 'dropdown-item-disabled': option.disabled })} onClick={() => !option.disabled && onMenuClick(option)} key={option.key}>
+                        {
+                          <span>{option.name}</span>
+                        }
+                      </li>
+                  ))
+                }
+              </ul>
+            )
+            :
+            (
+              <div className='ui-kit-dropdown__container' style={{ ...style, maxHeight }}>
+                {children}
+              </div>
+            )
+        }
+      </div>
+    )
   }
 
   let getTransitionType = (): string => {
@@ -293,28 +296,26 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
   let portalTarget = canUseDOM && container ? document.querySelector(container) : null
 
   return (
-    <div data-testid={id} className={cx('ui-kit-dropdown', additionalClass)} ref={ref}>
-      <div className='ui-kit-dropdown__trigger'>
-        {
-          hasTriggerComponent ?
-            <div ref={trigger} data-testid={`${id}-trigger`} onClick={toggleDropdown} className='cursor-pointer'>
-              {textContent}
-            </div>
-            :
-            <Button
-              className={additionalTriggerClass}
-              icon={icon}
-              onClick={toggleDropdown}
-              ref={trigger}
-              aria-haspopup='true'
-              aria-controls='dropdown'
-              loading={loading}
-              data-testid={`${id}-trigger`}
-            >
-              {textContent}
-            </Button>
-        }
-      </div>
+    <>
+      {
+        hasTriggerComponent ?
+          <div ref={trigger} data-testid={`${id}-trigger`} onClick={toggleDropdown} className='cursor-pointer'>
+            {textContent}
+          </div>
+          :
+          <Button
+            className={additionalTriggerClass}
+            icon={icon}
+            onClick={toggleDropdown}
+            ref={trigger}
+            aria-haspopup='true'
+            aria-controls='dropdown'
+            loading={loading}
+            data-testid={`${id}-trigger`}
+          >
+            {textContent}
+          </Button>
+      }
       {
         portalTarget ?
           (
@@ -327,7 +328,7 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
             <>{dropdownContainer}</>
           )
       }
-    </div >
+    </>
   )
 }
 
