@@ -1,3 +1,5 @@
+import { ButtonTheme, ButtonSize, ButtonVariant } from '../Button/props'
+
 interface IconProps {
   left?: any;
   right?: any
@@ -19,21 +21,29 @@ export interface DropdownPosition {
   top?: string | number;
 }
 
+export type FloatDDPosition = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+
+export type StaticDDPosition = 'right' | 'left'
+
 export type PositionalProps =
 |
   {
     float?: true,
-    position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+    position?: FloatDDPosition
   }
 |
   {
     float?: false | null;
-    position?: 'right' | 'left';
+    position?: StaticDDPosition;
   };
 
 export interface DropdownProps {
   id?: string;
   icon?: IconProps;
+  iconOnly?: boolean;
+  theme?: ButtonTheme;
+  triggerSize?: ButtonSize;
+  variant?: ButtonVariant;
   textContent?: any;
   additionalClass?: string;
   dropdownClass?: string;

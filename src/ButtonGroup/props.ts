@@ -1,6 +1,31 @@
+import { ButtonTheme, ButtonSize, ButtonVariant } from '../Button/props'
+import { OptionItem, FloatDDPosition, StaticDDPosition } from '../Dropdown/props'
+
+export declare type ButtonGroupJustify = 'right' | 'left' | 'center'
+export declare type ButtonGroupAlign = 'top' | 'bottom' | 'center'
+export declare type ButtonGroupGap = 'small' | 'medium' | 'large'
+export declare type ButtonGroupVerticalSpacing = 'top' | 'bottom' | 'both'
+export declare type ButtonGroupActionType = 'button' | 'dropdown'
+
+export interface ButtonGroupActionProps {
+  label: any;
+  onClick: Function
+  type?: ButtonGroupActionType
+  extraProps?: {
+    [k: string]: any
+  }
+  options?: Array<OptionItem>
+  dropdownPosition?: FloatDDPosition | StaticDDPosition
+}
+
 export interface ButtonGroupProps {
-  justify?: 'right' | 'left' | 'center';
-  align?: 'top' | 'bottom' | 'center';
-  gap?: 'small' | 'medium' | 'large';
-  children: any
+  justify?: ButtonGroupJustify
+  align?: ButtonGroupAlign
+  gap?: ButtonGroupGap
+  // children: any
+  verticalSpacing?: ButtonGroupVerticalSpacing
+  theme?: ButtonTheme
+  size?: ButtonSize
+  variant?: ButtonVariant
+  actions?: Array<ButtonGroupActionProps>
 }

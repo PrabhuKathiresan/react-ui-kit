@@ -86,9 +86,9 @@ const getDropdownStyle = (state: string, position: string = 'dropdown') => {
 const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
   let {
     options = [], onClick, additionalClass = '', loading = false, container = 'body', float = false,
-    dropdownClass = '', textContent, icon = {}, children, hasTriggerComponent, id = uniqueId(),
+    dropdownClass = '', textContent, icon = {}, iconOnly = false, children, hasTriggerComponent, id = uniqueId(),
     position = 'right', additionalTriggerClass = '', size = 'sm', offsetTop = 0, maxHeight = 'auto',
-    floatOffset
+    floatOffset, theme = 'default', variant = 'filled', triggerSize = 'default'
   } = props
   let [_position, _setPosition] = useState(position);
 
@@ -306,12 +306,17 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
           <Button
             className={additionalTriggerClass}
             icon={icon}
+            iconOnly={iconOnly}
             onClick={toggleDropdown}
             ref={trigger}
             aria-haspopup='true'
             aria-controls='dropdown'
             loading={loading}
             data-testid={`${id}-trigger`}
+            id={`${id}-trigger`}
+            theme={theme}
+            variant={variant}
+            size={triggerSize}
           >
             {textContent}
           </Button>

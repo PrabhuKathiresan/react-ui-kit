@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, ButtonGroup, Dropdown, Radio, Checkbox, ActionContainer } from '@pk-design/react-ui-kit'
+import { Button, ButtonGroup, Radio, Checkbox, ActionContainer } from '@pk-design/react-ui-kit'
 
 let btnSize = ['tiny', 'small', 'default', 'medium', 'large'];
 let themes = ['primary', 'danger', 'warning', 'success', 'default'];
@@ -44,9 +44,48 @@ const options = [
   }
 ]
 
+const ButtonGroupOptions = [
+  {
+    label: 'New invoice',
+    onClick: () => {},
+    type: 'button',
+    extraProps: {
+      icon: { left: <i className='material-icons-outlined' style={{ fontSize: iconSizeMap.default }}>add_circle</i> }
+    }
+  },
+  {
+    label: 'Refresh',
+    onClick: () => {},
+    type: 'button',
+    extraProps: {
+      icon: { left: <i className='material-icons-outlined' style={{ fontSize: iconSizeMap.default }}>refresh</i> }
+    }
+  },
+  {
+    label: 'Filter',
+    onClick: () => {},
+    type: 'button',
+    extraProps: {
+      icon: { left: <i className='material-icons-outlined' style={{ fontSize: iconSizeMap.default }}>filter</i> }
+    }
+  },
+  {
+    label: <i className='material-icons-outlined' style={{ fontSize: iconSizeMap.default }}>more_vert</i>,
+    onClick: () => {},
+    type: 'dropdown',
+    dropdownPosition: 'right',
+    options,
+    extraProps: {
+      id: 'dropdown',
+      offsetTop: 5,
+      iconOnly: true
+    }
+  }
+]
+
 export default function ButtonExample() {
   let [btnState, setBtnState] = useState({ size: 'default', theme: 'primary', variant: 'filled', text: '', outlined: '' });
-  let [btnCheckState, setBtnCheckState] = useState({ icon: 'noIcon', iconTheme: '', block: false, raised: false, loading: false, disabled: false }) 
+  let [btnCheckState, setBtnCheckState] = useState({ icon: 'noIcon', iconTheme: '', block: false, raised: false, loading: false, disabled: false })
   let themeOptions = themes.map(theme => ({ label: theme, value: theme }));
   let [showSubAction, setShowSubAction] = useState(false)
 
@@ -158,41 +197,33 @@ export default function ButtonExample() {
       <div className='mb-16 col-lg-6'>
         <h4>Button group</h4>
         <hr />
-        <ButtonGroup>
-          <Button
-            icon={{ left: <i className='material-icons-outlined' style={{ fontSize: iconSizeMap.default }}>add_circle</i> }}
-          >New invoice</Button>
-          <Button
-            icon={{ left: <i className='material-icons-outlined' style={{ fontSize: iconSizeMap.default }}>refresh</i> }}
-          >Refresh</Button>
-          <Button>Filter</Button>
-          <Dropdown
-            textContent='More'
-            id={'dropdown'}
-            options={options}
-            onClick={() => {}}
-            offsetTop={5}
-            position='right'
-          />
-        </ButtonGroup>
+        <ButtonGroup theme='primary' actions={[
+          {
+            label: 'New invoice',
+            onClick: () => {},
+            type: 'button'
+          },
+          {
+            label: <i className='material-icons-outlined' style={{ fontSize: iconSizeMap.default }}>more_vert</i>,
+            onClick: () => {},
+            type: 'button',
+            extraProps: {
+              iconOnly: true
+            }
+          }
+        ]} />
         <hr />
-        <ButtonGroup gap={'medium'}>
-          <Button
-            icon={{ left: <i className='material-icons-outlined' style={{ fontSize: iconSizeMap.default }}>add_circle</i> }}
-          >New invoice</Button>
-          <Button
-            icon={{ left: <i className='material-icons-outlined' style={{ fontSize: iconSizeMap.default }}>refresh</i> }}
-          >Refresh</Button>
-          <Button>Filter</Button>
-          <Dropdown
-            textContent='More'
-            id={'dropdown'}
-            options={options}
-            onClick={() => {}}
-            offsetTop={5}
-            position='right'
-          />
-        </ButtonGroup>
+        <ButtonGroup theme='primary' actions={ButtonGroupOptions} />
+        <hr />
+        <ButtonGroup actions={ButtonGroupOptions} />
+        <hr />
+        <ButtonGroup actions={ButtonGroupOptions} size='small' variant='plain' theme='danger' />
+        <hr />
+        <ButtonGroup gap={'small'} size='small' actions={ButtonGroupOptions} justify='left' />
+        <hr />
+        <ButtonGroup gap={'medium'} size='default' actions={ButtonGroupOptions} justify='center' />
+        <hr />
+        <ButtonGroup gap={'large'} size='medium' actions={ButtonGroupOptions} justify='right' />
       </div>
       <div className='mb-16 col-lg-6'>
         <h4>Action container</h4>
