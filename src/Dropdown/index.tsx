@@ -226,7 +226,7 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
         {
           hasOptions ?
             (
-              <ul className='ui-kit-dropdown__container' style={{ ...style, maxHeight }}>
+              <ul className='ui-kit-dropdown__container pa-8' style={{ ...style, maxHeight }}>
                 {
                   dropdownOptions.map((option, index) => (
                     option.divider ?

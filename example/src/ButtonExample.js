@@ -94,19 +94,38 @@ export default function ButtonExample() {
   )
 
   let mainAction = (
-    <>
+    <div className='w-100 text-center'>
       <Button className='mr-8'>Main action 1</Button>
       <Button className='mr-8'>Main action 2</Button>
       <Button className='mr-8'>Main action 3</Button>
-    </>
+    </div>
   )
 
   let subAction = (
-    <>
-      <Button className='mr-8'>Sub action 1</Button>
-      <Button className='mr-8'>Sub action 2</Button>
-      <Button className='mr-8'>Sub action 3</Button>
-    </>
+    <ButtonGroup
+      theme='default'
+      size='default'
+      variant='filled'
+      containerClass='w-100'
+      justify='center'
+      actions={[
+        {
+          label: 'Sub action 1',
+          onClick: () => {},
+          type: 'button'
+        },
+        {
+          label: 'Sub action 2',
+          onClick: () => {},
+          type: 'button'
+        },
+        {
+          label: 'Sub action 3',
+          onClick: () => {},
+          type: 'button'
+        }
+      ]}
+    />
   )
 
   return (
@@ -215,11 +234,11 @@ export default function ButtonExample() {
         <hr />
         <ButtonGroup theme='primary' actions={ButtonGroupOptions} />
         <hr />
-        <ButtonGroup actions={ButtonGroupOptions} />
+        <ButtonGroup actions={ButtonGroupOptions} verticalSpacing='both' />
         <hr />
-        <ButtonGroup actions={ButtonGroupOptions} size='small' variant='plain' theme='danger' />
+        <ButtonGroup actions={ButtonGroupOptions} size='small' variant='plain' theme='danger' verticalSpacing='top' />
         <hr />
-        <ButtonGroup gap={'small'} size='small' actions={ButtonGroupOptions} justify='left' />
+        <ButtonGroup gap={'small'} size='small' actions={ButtonGroupOptions} justify='left' verticalSpacing='bottom' />
         <hr />
         <ButtonGroup gap={'medium'} size='default' actions={ButtonGroupOptions} justify='center' />
         <hr />

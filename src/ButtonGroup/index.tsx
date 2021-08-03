@@ -14,7 +14,8 @@ export default function ButtonGroup(props: ButtonGroupProps) {
     actions = [],
     theme = 'default',
     size = 'default',
-    variant = 'filled'
+    variant = 'filled',
+    containerClass = ''
   } = props
 
   let computedGroupClass = {}
@@ -28,7 +29,7 @@ export default function ButtonGroup(props: ButtonGroupProps) {
 
   return (
     <div
-      className={cx('ui-kit-btn-group', `ui-kit-btn-group__align-${align}`, `ui-kit-btn-group__justify-${justify}`, computedGroupClass)}
+      className={cx('ui-kit-btn-group', `ui-kit-btn-group__align-${align}`, `ui-kit-btn-group__justify-${justify}`, computedGroupClass, containerClass)}
     >
       <div className={cx('element-flex-align-center', { 'element-flex--wrap': Boolean(gap) })}>
         {

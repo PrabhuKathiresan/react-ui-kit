@@ -79,7 +79,7 @@ export default function DropdownExample() {
           offsetTop={5}
           {...dropdownOptions[eleId1]}
         >
-          <ul className='dropdown-menu show position-relative border-0 pa-0'>
+          <ul className='dropdown-menu show position-relative border-0 pa-8'>
             {
               options.map((option, i) => (
                 option.divider ?

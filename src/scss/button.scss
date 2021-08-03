@@ -123,6 +123,63 @@ $btn-font-weight: var(--ui-kit-btn-font-weight, 500);
     }
   }
 
+  &.ui-kit-btn-group__space-top {
+    .ui-kit-btn {
+      margin-top: 6px;
+    }
+
+    &.gap__small {
+      .ui-kit-btn {
+        margin-top: 4px;
+      }
+    }
+
+    &.gap__large {
+      .ui-kit-btn {
+        margin-top: 8px;
+      }
+    }
+  }
+
+  &.ui-kit-btn-group__space-bottom {
+    .ui-kit-btn {
+      margin-bottom: 6px;
+    }
+
+    &.gap__small {
+      .ui-kit-btn {
+        margin-bottom: 4px;
+      }
+    }
+
+    &.gap__large {
+      .ui-kit-btn {
+        margin-bottom: 8px;
+      }
+    }
+  }
+
+  &.ui-kit-btn-group__space-both {
+    .ui-kit-btn {
+      margin-top: 6px;
+      margin-bottom: 6px;
+    }
+
+    &.gap__small {
+      .ui-kit-btn {
+        margin-top: 4px;
+        margin-bottom: 4px;
+      }
+    }
+
+    &.gap__large {
+      .ui-kit-btn {
+        margin-top: 8px;
+        margin-bottom: 8px;
+      }
+    }
+  }
+
   .ui-kit-btn {
     &:not(:disabled):focus {
       box-shadow: none;

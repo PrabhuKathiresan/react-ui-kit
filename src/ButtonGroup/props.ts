@@ -22,10 +22,10 @@ export interface ButtonGroupProps {
   justify?: ButtonGroupJustify
   align?: ButtonGroupAlign
   gap?: ButtonGroupGap
-  // children: any
   verticalSpacing?: ButtonGroupVerticalSpacing
   theme?: ButtonTheme
   size?: ButtonSize
   variant?: ButtonVariant
   actions?: Array<ButtonGroupActionProps>
+  containerClass?: string
 }
