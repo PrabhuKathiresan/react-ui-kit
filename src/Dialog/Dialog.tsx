@@ -81,7 +81,7 @@ export default function Dialog(props: DialogProps) {
     <>
       {showBackdrop && <div className='ui-kit-dialog-mask' style={{ ...backDropTransistion[transitionState] }} />}
       <div
-        className='ui-kit-dialog'
+        className='ui-kit-dialog pa-1'
         id={id}
         data-testid={id}
         style={{

@@ -94,8 +94,6 @@ export default class Table extends Component<TableProps & InternalTableState, {}
       sortedColumns
     } = this.props
 
-    console.log(column)
-
     if (column.selectColumn) {
       _column = <SelectColumn selected={getSelectedState()} header onChange={(checked: boolean) => toggleSelectAll(checked)} />
     } else if (column.selectionColumn) {

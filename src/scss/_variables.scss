@@ -1,3 +1,5 @@
+$text-color: #183247;
+
 $primary: #1266f1;
 $primary-dark: darken($primary, 10%);
 $primary-light: lighten($primary, 10%);
@@ -23,7 +25,8 @@ $success-light: lighten($success, 10%);
 $success-300: lighten($success, 94% - lightness($success));
 $success-100: lighten($success, 98% - lightness($success));
 
-$info: #39c0ed;
+// $info: #39c0ed;
+$info: #1890ff;
 $info-dark: darken($info, 10%);
 $info-light: lighten($info, 10%);
 $info-300: lighten($info, 94% - lightness($info));
@@ -46,7 +49,8 @@ $table-header-bg: var(--table-header-bg, #f5f5f5);
 $table-header-text-color: var(--table-header-text-color, #6c767f);
 $table-selected-bg: var(--table-selected-bg, aliceblue);
 
-$font-size-big: 14px;
+$font-size-large: 16px;
+$font-size-medium: 14px;
 $font-size-default: 13px;
 $font-size-small: 12px;
 $font-size-x-small: 11px;
@@ -93,4 +97,6 @@ $xl: 1200px;
   --info-color: #{$info};
   --info-dark: #{$info-dark};
   --info-light: #{$info-light};
+
+  --app-color: #{$text-color};
 }

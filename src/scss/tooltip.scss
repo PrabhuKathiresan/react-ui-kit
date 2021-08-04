@@ -1,4 +1,4 @@
-$tootip-bg: var(--ui-kit-tooltip-bg, #585d6d);
+$tootip-bg: var(--ui-kit-tooltip-bg, #0e2945);
 
 .ui-kit-tooltip-Wrapper {
   position: relative;
@@ -7,7 +7,7 @@ $tootip-bg: var(--ui-kit-tooltip-bg, #585d6d);
 .ui-kit-tooltip-Tip {
   position: fixed;
   border-radius: 4px;
-  padding: var(--ui-kit-tooltip-padding, 8px 12px);
+  padding: var(--ui-kit-tooltip-padding, 6px 10px);
   color: var(--ui-kit-tooltip-text-color, #ffffff);
   background: $tootip-bg;
   font-size: var(--ui-kit-tooltip-font-size, 13px);

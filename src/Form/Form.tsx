@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import cx from 'classnames'
 import get from 'lodash.get'
 import set from 'lodash.set'
@@ -320,11 +320,11 @@ export default class Form extends Component<FormProps, FormState> {
           <div className='form-fields'>
             {
               renderableFields.map(field => (
-                <div key={field.name}>
+                <Fragment key={field.name}>
                   {
                     this.renderField(field)
                   }
-                </div>
+                </Fragment>
               ))
             }
           </div>

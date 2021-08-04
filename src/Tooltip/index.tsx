@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, cloneElement } from 'react'
 import { createPortal } from 'react-dom'
 import { Transition } from 'react-transition-group'
 import { canUseDOM } from '../utils';
@@ -67,36 +67,45 @@ export default function Tooltip(props: TooltipProps) {
   }
 
   let tooltipContent = (transitionState: string) => {
+    let transformOriginMap = {
+      top: 'bottom',
+      bottom: 'top',
+      left: 'right',
+      right: 'left'
+    }
     let transitionMap = {
       top: {
-        entering: `translateX(-50%) translateY(-75%)`,
-        entered: `translateX(-50%) translateY(-100%)`,
-        exiting: `translateX(-50%) translateY(-75%)`,
-        exited: `translateX(-50%) translateY(-75%)`,
+        entering: `translateX(-50%) translateY(-100%) scale(.8)`,
+        entered: `translateX(-50%) translateY(-100%) scale(1)`,
+        exiting: `translateX(-50%) translateY(-100%) scale(.8)`,
+        exited: `translateX(-50%) translateY(-100%) scale(.8)`,
       },
       bottom: {
-        entering: `translateX(-50%) translateY(-25%)`,
-        entered: `translateX(-50%) translateY(0)`,
-        exiting: `translateX(-50%) translateY(-25%)`,
-        exited: `translateX(-50%) translateY(-25%)`,
+        entering: `translateX(-50%) translateY(0) scale(.8)`,
+        entered: `translateX(-50%) translateY(0) scale(1)`,
+        exiting: `translateX(-50%) translateY(0) scale(.8)`,
+        exited: `translateX(-50%) translateY(0) scale(.8)`,
       },
       left: {
-        entering: `translateX(-90%) translateY(-50%)`,
-        entered: `translateX(-100%) translateY(-50%)`,
-        exiting: `translateX(-90%) translateY(-50%)`,
-        exited: `translateX(-90%) translateY(-50%)`,
+        entering: `translateX(-100%) translateY(-50%) scale(.8)`,
+        entered: `translateX(-100%) translateY(-50%) scale(1)`,
+        exiting: `translateX(-100%) translateY(-50%) scale(.8)`,
+        exited: `translateX(-100%) translateY(-50%) scale(.8)`,
       },
       right: {
-        entering: `translateX(-10%) translateY(-50%)`,
-        entered: `translateX(0) translateY(-50%)`,
-        exiting: `translateX(-10%) translateY(-50%)`,
-        exited: `translateX(-10%) translateY(-50%)`,
+        entering: `translateX(0) translateY(-50%) scale(.8)`,
+        entered: `translateX(0) translateY(-50%) scale(1)`,
+        exiting: `translateX(0) translateY(-50%) scale(.8)`,
+        exited: `translateX(0) translateY(-50%) scale(.8)`,
       }
     }
     let transitionStyle = {
+      opacity: transitionState === 'entered' ? 1 : 0,
       transform: transitionMap[direction][transitionState],
-      transition: 'transform linear',
+      transition: 'transform, opacity',
       transitionDuration: `${delay}ms`,
+      transitionTimingFunction: 'cubic-bezier(0.075, 0.82, 0.165, 1)',
+      transformOrigin: transformOriginMap[direction]
     }
     return (
       <div className={`ui-kit-tooltip-Tip ${direction}`} style={{ ...tooltipStyle, ...transitionStyle }}>
@@ -112,11 +121,12 @@ export default function Tooltip(props: TooltipProps) {
       mountOnEnter
       unmountOnExit
       in={active}
-      timeout={{
-        appear: delay,
-        enter: 0,
-        exit: delay
-      }}
+      timeout={delay}
+      // timeout={{
+      //   appear: delay,
+      //   enter: 0,
+      //   exit: delay
+      // }}
     >
       {
         (transitionState: TransitionState) => tooltipContent(transitionState)
@@ -135,7 +145,7 @@ export default function Tooltip(props: TooltipProps) {
       ref={wrapper}
     >
       {/* Wrapping */}
-      {children}
+      {cloneElement(children)}
       {
         portalTarget ?
           (

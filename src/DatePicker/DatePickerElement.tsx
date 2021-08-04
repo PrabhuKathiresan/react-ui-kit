@@ -47,7 +47,7 @@ function DatePickerElement(props: DatePickerElementProps, ref: any) {
       className={cx('ui-kit-select--dropdown', transitionState)}
       style={{
         overflow: 'visible',
-        margin: dropup ? '16px 16px 4px' : '4px 16px 16px'
+        margin: dropup ? '16px 16px 2px' : '2px 16px 16px'
       }}
       ref={ref}
     >

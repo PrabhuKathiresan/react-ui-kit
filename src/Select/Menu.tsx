@@ -83,7 +83,7 @@ const Menu = (props: MenuProps) => {
       className={cx('ui-kit-select--dropdown')}
       style={{
         width: menuPositionStyle.width,
-        margin: dropup ? '16px 16px 4px' : '4px 16px 16px',
+        margin: dropup ? '16px 16px 2px' : '2px 16px 16px',
         overflow: 'visible'
       }}
       ref={menuRef}

@@ -29,17 +29,21 @@ const ICONSMAP = {
 
 const alertTransitionMap = {
   entering: {
-    transform: 'scale(1, 0)'
+    transform: 'scale(.8)',
+    opacity: 0
   },
   entered: {
     marginBottom: '1rem',
-    transform: 'scale(1)'
+    transform: 'scale(1)',
+    opacity: 1
   },
   exiting: {
-    transform: 'scale(1, 0)'
+    transform: 'scale(.8)',
+    opacity: 0
   },
   exited: {
-    transform: 'scale(1, 0)'
+    transform: 'scale(.8)',
+    opacity: 0
   }
 }
 
@@ -124,7 +128,7 @@ export default function Alert(props: AlertProps) {
               style={{
                 ...alertTransitionMap[transitionState],
                 transitionDuration: `${transitionDuration}ms`,
-                transformOrigin: 'top'
+                transformOrigin: 'top',
               }}
             >
               {

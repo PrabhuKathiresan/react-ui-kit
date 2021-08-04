@@ -274,6 +274,15 @@ $btn-font-weight: var(--ui-kit-btn-font-weight, 500);
         background-color: rgba($color: #000000, $alpha: .05);
       }
     }
+
+    &.as-text-input {
+      background-image: none;
+      background-color: $white;
+      
+      .ui-btn-content {
+        color: $disabled-text;
+      }
+    }
   }
 
   &.ui-kit-btn-primary {
@@ -294,7 +303,7 @@ $btn-font-weight: var(--ui-kit-btn-font-weight, 500);
 
   &.ui-kit-btn-size-tiny {
     height: 24px;
-    font-size: 11px;
+    font-size: $font-size-x-small;
     padding: 0 .5rem;
 
     .ui-kit-btn-icon-left {
@@ -312,7 +321,7 @@ $btn-font-weight: var(--ui-kit-btn-font-weight, 500);
 
   &.ui-kit-btn-size-small {
     height: 28px;
-    font-size: 12px;
+    font-size: $font-size-small;
     padding: 0 .75rem;
 
     .ui-kit-btn-icon-left {
@@ -330,7 +339,7 @@ $btn-font-weight: var(--ui-kit-btn-font-weight, 500);
 
   &.ui-kit-btn-size-default {
     height: 32px;
-    font-size: 13px;
+    font-size: $font-size-default;
     padding: 0 1rem;
 
     .ui-kit-btn-icon-left {
@@ -348,7 +357,7 @@ $btn-font-weight: var(--ui-kit-btn-font-weight, 500);
 
   &.ui-kit-btn-size-medium {
     height: 36px;
-    font-size: 14px;
+    font-size: $font-size-medium;
     padding: 0 1.25rem;
 
     .ui-kit-btn-icon-left {
@@ -366,7 +375,7 @@ $btn-font-weight: var(--ui-kit-btn-font-weight, 500);
 
   &.ui-kit-btn-size-large {
     height: 42px;
-    font-size: 16px;
+    font-size: $font-size-large;
     padding: 0 1.25rem;
 
     .ui-kit-btn-icon-left {

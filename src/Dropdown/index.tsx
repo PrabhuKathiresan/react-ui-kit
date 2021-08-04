@@ -210,12 +210,11 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
   useEffect(() => {
     if (open) {
       let position = getRelativePosition()
-      console.log(position)
       setDropdownPosition(position)
-      addEvtListerner()
-    } else {
-      removeEvtListener()
+      setTimeout(addEvtListerner, 10)
     }
+
+    return () => removeEvtListener()
   }, [open])
 
   let hasOptions = Boolean(dropdownOptions.length)
