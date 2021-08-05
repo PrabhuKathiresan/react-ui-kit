@@ -279,7 +279,7 @@ $btn-font-weight: var(--ui-kit-btn-font-weight, 500);
       background-image: none;
       background-color: $white;
       
-      .ui-btn-content {
+      .ui-kit-btn-content {
         color: $disabled-text;
       }
     }

@@ -8,41 +8,73 @@ import { uniqueId, canUseDOM } from '../utils'
 import { TransitionState } from '../constants'
 
 const transitionDuration = 220
-const translateDistance = 24;
 const floatingPositionMap = (elem: HTMLDivElement | null, floatOffset: number = 10) => ({
   'top-left': (rect: any) => {
     let width = elem?.clientWidth || 0
+    let height = elem?.clientHeight || 0
+    let top = rect.top
+    let left = (rect.left - width) - floatOffset
+    if (left < 0) {
+      left = width + left - rect.left
+    }
+    let bufferTop = window.innerHeight - top
+    if (bufferTop < height) {
+      top = top - (height - bufferTop)
+    }
     return {
-      top: rect.top,
-      left: rect.left - (width + floatOffset),
+      top,
+      left,
       marginTop: 0,
       marginLeft: 10
     }
   },
   'bottom-left': (rect: any) => {
     let width = elem?.clientWidth || 0
+    let left = (rect.left - floatOffset) - 10
+    if (left < width) {
+      left = width
+    }
     return {
-      bottom: rect.bottom,
-      left: rect.left - (width + floatOffset),
+      top: rect.bottom,
+      left,
       marginTop: 0,
-      marginLeft: 10
+      marginLeft: 10,
+      transform: 'translate(-100%, -100%)'
     }
   },
   'top-right': (rect: any) => {
+    let width = elem?.clientWidth || 0
+    let height = elem?.clientHeight || 0
+    let top = rect.top
+    let left = rect.right + floatOffset
+    let bufferWidth = document.body.clientWidth - left
+    if (bufferWidth < width) {
+      left = left - (width - bufferWidth)
+    }
+    let bufferTop = window.innerHeight - top
+    if (bufferTop < height) {
+      top = top - (height - bufferTop)
+    }
     return {
-      top: rect.top,
-      left: rect.right + floatOffset,
+      top,
+      left,
       marginTop: 0,
       marginRight: 10
     }
   },
   'bottom-right': (rect: any) => {
-    let height = elem?.clientHeight || 0
+    let width = elem?.clientWidth || 0
+    let left = rect.right + floatOffset
+    let bufferWidth = document.body.clientWidth - left
+    if (bufferWidth < width) {
+      left = left - (width - bufferWidth)
+    }
     return {
-      top: rect.bottom - height,
-      left: rect.right + floatOffset,
+      top: rect.bottom,
+      left,
       marginTop: 0,
-      marginRight: 10
+      marginRight: 10,
+      transform: 'translateY(-100%)'
     }
   }
 })
@@ -50,35 +82,25 @@ const floatPositions = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
 
 const getDropdownStyle = (state: string, position: string = 'dropdown') => {
   let style: any = {
-    transition: `transform ${transitionDuration}ms linear`
+    transition: `transform, opacity`,
+    transitionDuration: `${transitionDuration}ms, ${transitionDuration}ms`,
+    transitionTimingFunction: 'cubic-bezier(0.075, 0.82, 0.165, 1), cubic-bezier(0.075, 0.82, 0.165, 1)',
   }
   let stateTransformMap = {
-    dropdown: {
-      entering: `translateY(-${translateDistance}px)`,
-      entered: 'translateY(0)',
-      exiting: `translateY(-${translateDistance}px)`,
-      exited: `translateY(-${translateDistance}px)`
-    },
-    dropup: {
-      entering: `translateY(${translateDistance}px)`,
-      entered: 'translateY(0)',
-      exiting: `translateY(${translateDistance}px)`,
-      exited: `translateY(${translateDistance}px)`
-    },
-    slideright: {
-      entering: `translateX(-${translateDistance}px)`,
-      entered: 'translateX(0)',
-      exiting: `translateX(-${translateDistance}px)`,
-      exited: `translateX(-${translateDistance}px)`
-    },
-    slideleft: {
-      entering: `translateX(${translateDistance}px)`,
-      entered: 'translateX(0)',
-      exiting: `translateX(${translateDistance}px)`,
-      exited: `translateX(${translateDistance}px)`
-    }
+    entering: 'scale(.8)',
+    entered: 'scale(1)',
+    exiting: 'scale(.8)',
+    exited: 'scale(.8)'
   }
-  style.transform = stateTransformMap[position][state]
+  let stateTransformOriginMap = {
+    dropdown: 'top',
+    dropup: 'bottom',
+    slideright: 'left',
+    slideleft: 'right'
+  }
+  style.opacity = state === 'entered' ? 1 : 0
+  style.transform = stateTransformMap[state]
+  style.transformOrigin = stateTransformOriginMap[position]
 
   return style
 }
@@ -221,7 +243,7 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
 
   let dropdownContent = (style: any) => {
     return (
-      <div data-testid={id} className={cx('ui-kit-dropdown', additionalClass)} ref={ref}>
+      <div data-testid={id} className={cx('ui-kit-dropdown', additionalClass)}>
         {
           hasOptions ?
             (
