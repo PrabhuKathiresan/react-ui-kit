@@ -53,7 +53,7 @@ const RightIcon = forwardRef((props: TextInputProps, ref: any) => {
   )
 })
 
-const InputLabel = (props: TextInputProps) => {
+export const InputLabel = (props: TextInputProps) => {
   if (!props.label) return null
 
   let {
@@ -64,6 +64,8 @@ const InputLabel = (props: TextInputProps) => {
     disabled,
     hint,
     hintPosition = 'right',
+    hintContainer,
+    hintZIndex,
     maxLength,
     id,
     charLeft,
@@ -77,7 +79,7 @@ const InputLabel = (props: TextInputProps) => {
       {
         hint &&
         <span className='ml-8 ui-kit-input-hint-icon'>
-          <Tooltip direction={hintPosition} content={hint} wrapperClass='d-flex'>
+          <Tooltip direction={hintPosition} content={hint} wrapperClass='d-flex' container={hintContainer} zIndex={hintZIndex}>
             <InfoCircle width={14} height={14} />
           </Tooltip>
         </span>

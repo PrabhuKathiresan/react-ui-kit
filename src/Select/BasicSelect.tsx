@@ -9,6 +9,7 @@ import {
 } from './constants'
 import InputWrapper from './InputWrapper'
 import Menu from './Menu'
+import { InputLabel } from '../TextInput'
 import {
   getStateFromProps, constructMenuProps,
   getUpdatedActiveIndex, optionsMap, filterResultsFromOptions,
@@ -578,12 +579,9 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
       containerClass = '',
       allowClear = false,
       onChange,
-      label = '',
-      labelClass = '',
       error = '',
       message = '',
       inputClass = '',
-      required = false,
       textOnly = false,
       inputSize = 'default',
       borderless = false
@@ -609,9 +607,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
     return (
       <>
         <div className={cx('ui-kit-input-block', containerClass, { 'has-error': error })}>
-          {
-            label && <label className={cx('ui-kit-input-label', labelClass, { 'is-required': required })} htmlFor={`${id}`}>{label}</label>
-          }
+          <InputLabel {...this.props} />
           <div data-testid={`${id}-select`} className={cx('ui-kit-select', { 'ui-kit-select--multiple': multiple })} id={`${id}-select`} style={containerStyle}>
             <InputWrapper
               inputProps={inputProps}

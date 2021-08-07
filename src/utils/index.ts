@@ -213,3 +213,40 @@ export const getOffset = (el: HTMLDivElement) => {
     left: rect.left + scrollLeft
   }
 }
+
+function getTranslate(placement: string) {
+  const translateMap = {
+    bottom: 'translate3d(0, 120%, 0)',
+    top: 'translate3d(0, -120%, 0)',
+  };
+
+  return translateMap[placement];
+}
+
+const getTransformStyle = (placement: string) => ({
+  entering: { transform: getTranslate(placement), opacity: 0 },
+  entered: { transform: 'translate3d(0,0,0)', opacity: 1 },
+  exiting: { transform: getTranslate(placement), opacity: 0 },
+  exited: { transform: getTranslate(placement), opacity: 0 },
+})
+
+interface AnimationStyleProps {
+  transitionDuration: number
+  dropup: boolean
+  transitionState: string
+}
+
+export const getMenuAnimationStyle = (options: AnimationStyleProps) => {
+  let {
+    transitionDuration,
+    transitionState,
+    dropup
+  } = options
+  return {
+    transition: `transform, opacity`,
+    transitionDuration: `${transitionDuration}ms, ${transitionDuration}ms`,
+    transitionTimingFunction: 'cubic-bezier(0.075, 0.82, 0.165, 1), cubic-bezier(0.075, 0.82, 0.165, 1)',
+    ...getTransformStyle(dropup ? 'bottom' : 'top')[transitionState],
+    boxShadow: ['entering', 'exiting'].includes(transitionState) ? 'rgba(18, 52, 77, 0.16) 0px 0px 4px 0px' : ''
+  }
+}

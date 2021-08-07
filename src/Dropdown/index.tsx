@@ -320,7 +320,7 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
     <>
       {
         hasTriggerComponent ?
-          <div ref={trigger} data-testid={`${id}-trigger`} onClick={toggleDropdown} className='cursor-pointer'>
+          <div ref={trigger} data-testid={`${id}-trigger`} onClick={toggleDropdown} className={cx('cursor-pointer', additionalTriggerClass)}>
             {textContent}
           </div>
           :

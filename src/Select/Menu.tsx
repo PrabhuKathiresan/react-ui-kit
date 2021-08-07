@@ -2,22 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import cx from 'classnames'
 import MenuItem from './MenuItem'
 import { MenuProps, OptionProps } from './props'
-
-function getTranslate(placement: string) {
-  const translateMap = {
-    bottom: 'translate3d(0, 120%, 0)',
-    top: 'translate3d(0, -120%, 0)',
-  };
-
-  return translateMap[placement];
-}
-
-const transformStyle = (placement: string) => ({
-  entering: { transform: getTranslate(placement) },
-  entered: { transform: 'translate3d(0,0,0)' },
-  exiting: { transform: getTranslate(placement) },
-  exited: { transform: getTranslate(placement) },
-})
+import { getMenuAnimationStyle } from '../utils'
 
 const Menu = (props: MenuProps) => {
   let displayName = 'menu-item'
@@ -31,7 +16,7 @@ const Menu = (props: MenuProps) => {
     searchInputProps, searchable, scrollableAreaRef, id, transitionState, transitionDuration
   } = props
 
-  let { dropup, ...menuPositionStyle } = style
+  let { dropup = false, ...menuPositionStyle } = style
 
   useEffect(() => {
     if (transitionState === 'entered') {
@@ -91,11 +76,7 @@ const Menu = (props: MenuProps) => {
     >
       <div
         className={cx('ui-kit-select--transition')}
-        style={{
-          transition: `transform ${transitionDuration}ms linear`,
-          ...transformStyle(dropup ? 'bottom' : 'top')[transitionState],
-          boxShadow: ['entering', 'exiting'].includes(transitionState) ? 'rgba(18, 52, 77, 0.16) 0px 0px 4px 0px' : ''
-        }}
+        style={getMenuAnimationStyle({ transitionDuration, transitionState, dropup })}
       >
         <div className={cx('ui-kit-select--popup', { 'pt-4': !searchable || dropup, 'pb-4': !searchable || !dropup, 'column-reverse': dropup })}>
           {

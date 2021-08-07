@@ -4,6 +4,7 @@ import { Transition } from 'react-transition-group'
 import { canUseDOM } from '../utils';
 import { TooltipProps } from './props'
 import { TransitionState } from '../constants'
+import { isDefined } from '../utils/type-check';
 
 const directionStyleMap = {
   top: (position: any) => {
@@ -38,7 +39,8 @@ export default function Tooltip(props: TooltipProps) {
     content,
     children,
     container = 'body',
-    delay = 200
+    delay = 200,
+    zIndex
   } = props
 
   let timeout = useRef<any>(null)
@@ -107,8 +109,13 @@ export default function Tooltip(props: TooltipProps) {
       transitionTimingFunction: 'cubic-bezier(0.075, 0.82, 0.165, 1)',
       transformOrigin: transformOriginMap[direction]
     }
+    let style = {
+      ...tooltipStyle,
+      ...transitionStyle
+    }
+    if (isDefined(zIndex)) style.zIndex = zIndex;
     return (
-      <div className={`ui-kit-tooltip-Tip ${direction}`} style={{ ...tooltipStyle, ...transitionStyle }}>
+      <div className={`ui-kit-tooltip-Tip ${direction}`} style={style}>
         {/* Content */}
         {content}
       </div>
@@ -122,11 +129,6 @@ export default function Tooltip(props: TooltipProps) {
       unmountOnExit
       in={active}
       timeout={delay}
-      // timeout={{
-      //   appear: delay,
-      //   enter: 0,
-      //   exit: delay
-      // }}
     >
       {
         (transitionState: TransitionState) => tooltipContent(transitionState)

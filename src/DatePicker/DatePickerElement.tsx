@@ -3,29 +3,14 @@ import cx from 'classnames'
 import { DatePickerElementProps } from './props'
 import DatePickerHeader from './DatePickerHeader';
 import DatePickerFooter from './DatePickerFooter';
+import { getMenuAnimationStyle } from '../utils';
 
 const DAYS_MINI = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-
-function getTranslate(placement: string) {
-  const translateMap = {
-    bottom: 'translate3d(0, 120%, 0)',
-    top: 'translate3d(0, -120%, 0)',
-  };
-
-  return translateMap[placement];
-}
-
-const transformStyle = (placement: string) => ({
-  entering: { transform: getTranslate(placement) },
-  entered: { transform: 'translate3d(0,0,0)' },
-  exiting: { transform: getTranslate(placement)},
-  exited: { transform: getTranslate(placement) },
-})
 
 function DatePickerElement(props: DatePickerElementProps, ref: any) {
   let {
     transitionState,
-    transitionDuration,
+    transitionDuration = 0,
     position = {},
     days,
     month,
@@ -53,10 +38,7 @@ function DatePickerElement(props: DatePickerElementProps, ref: any) {
     >
       <div
         className={cx('ui-kit-select--transition')}
-        style={{
-          transition: `transform ${transitionDuration}ms cubic-bezier(0.2, 0, 0, 1), opacity ${transitionDuration}ms`,
-          ...transformStyle(dropup ? 'bottom' : 'top')[transitionState]
-        }}
+        style={getMenuAnimationStyle({ transitionState, transitionDuration, dropup })}
       >
         <div className='ui-kit-select--popup ui-kit-datepicker_element--popup'>
           <DatePickerHeader

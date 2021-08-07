@@ -10,7 +10,7 @@ import MonthPicker from '../MonthPicker'
 import { BasicSelect } from '../Select'
 import Checkbox from '../Checkbox'
 import Radio from '../Radio'
-import Alert from '../Alert';
+import Alert from '../Alert'
 import { isDefined, isEqual, isFunction, noop } from '../utils'
 import { FormFields, FormProps, FormState } from './props'
 import { FormValidation, FormData, isDateField } from './utils'
@@ -97,7 +97,7 @@ export default class Form extends Component<FormProps, FormState> {
     if (typeof constructParams === 'function') data = constructParams(data)
 
     if (onSubmit && isFunction(onSubmit)) {
-      return onSubmit(data);
+      return onSubmit(data)
     }
 
     let {
@@ -110,7 +110,7 @@ export default class Form extends Component<FormProps, FormState> {
       onError = noop
     } = this.props
 
-    let serviceMethod, params;
+    let serviceMethod, params
     if (isNewForm) {
       serviceMethod = service[createMethod]
       params = [data]
@@ -120,7 +120,7 @@ export default class Form extends Component<FormProps, FormState> {
     }
 
     if (serviceMethod && isFunction(serviceMethod)) {
-      this.setState({ submitting: true });
+      this.setState({ submitting: true })
 
       return serviceMethod(...params)
         .then((response: any) => onSuccess(response))
@@ -128,7 +128,7 @@ export default class Form extends Component<FormProps, FormState> {
         .finally(() => this.setState({ submitting: false }))
     }
 
-    onError(SERVICE_METHOD_NOT_AVAILABLE);
+    onError(SERVICE_METHOD_NOT_AVAILABLE)
     this.setState({ genericError: SERVICE_METHOD_NOT_AVAILABLE })
   }
 
@@ -230,15 +230,15 @@ export default class Form extends Component<FormProps, FormState> {
       error
     }
 
-    let FormComponent: any = TextInput
+    let FieldComponent: any = TextInput
 
     switch (component) {
       case 'TextArea':
-        let charLeft = maxLength && (isEmpty(inputProps.value) ? maxLength : maxLength - inputProps.value.length);
+        let charLeft = maxLength && (isEmpty(inputProps.value) ? maxLength : maxLength - inputProps.value.length)
         inputProps.maxLength = maxLength
         inputProps.charLeft = charLeft
         inputProps.component = 'textarea'
-        break;
+        break
       case 'Select':
         inputProps.labelKey = inputProps.labelKey || 'name'
         inputProps.closeOnOutsideClick = isDefined(inputProps.closeOnOutsideClick) ? inputProps.closeOnOutsideClick : true
@@ -246,46 +246,46 @@ export default class Form extends Component<FormProps, FormState> {
         inputProps.onChange = (s: Array<any>) => this.handleInputChange(name, s)
         inputProps.container = 'body'
         delete inputProps.value
-        FormComponent = BasicSelect
-        break;
+        FieldComponent = BasicSelect
+        break
       case 'Radio':
-        FormComponent = Radio
-        break;
+        FieldComponent = Radio
+        break
       case 'Radio.Group':
-        FormComponent = Radio.Group
-        break;
+        FieldComponent = Radio.Group
+        break
       case 'Checkbox':
         inputProps.type = 'checkbox'
         inputProps.className = inputProps.className || 'mb-16'
         inputProps.checked = Boolean(inputProps.value)
         delete inputProps.value
         inputProps.onChange = (e: any) => this.handleInputChange(name, e.target.checked)
-        FormComponent = Checkbox
-        break;
+        FieldComponent = Checkbox
+        break
       case 'Checkbox.Group':
         inputProps.onChange = (e: any) => this.handleCheckboxChange(name, e)
-        FormComponent = Checkbox.Group
-        break;
+        FieldComponent = Checkbox.Group
+        break
       case 'DatePicker':
         inputProps.onChange = (date: any) => this.handleInputChange(name, date)
         inputProps.container = 'body'
-        FormComponent = DatePicker
-        break;
+        FieldComponent = DatePicker
+        break
       case 'MonthPicker':
         inputProps.onChange = (date: any) => this.handleInputChange(name, date)
         inputProps.container = 'body'
-        FormComponent = MonthPicker
-        break;
+        FieldComponent = MonthPicker
+        break
       case 'Custom':
-        FormComponent = customComponent
+        FieldComponent = customComponent
         inputProps.onChange = (value: any) => this.handleInputChange(name, value)
-        break;
+        break
       case 'TextInput':
       default:
-        break;
+        break
     }
 
-    return <FormComponent {...inputProps} />
+    return <FieldComponent {...inputProps} />
   }
 
   render() {

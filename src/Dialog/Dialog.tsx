@@ -87,6 +87,7 @@ export default function Dialog(props: DialogProps) {
         style={{
           ...dialogStates(position)[transitionState],
           transition: `transform 220ms, opacity 220ms`,
+          transitionTimingFunction: 'linear, linear',
           ...getGutter(position)
         }}
       >

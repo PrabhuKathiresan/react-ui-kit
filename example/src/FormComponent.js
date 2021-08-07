@@ -290,6 +290,8 @@ const AGENT_FIELDS = [
   {
     name: 'role',
     label: 'Agent role',
+    hint: 'Role that agent will hold',
+    hintZIndex: 1222,
     type: 'text',
     component: 'Select',
     componentProps: {
@@ -446,6 +448,8 @@ export default function FormComponent({ stickyFooter = true, onError = () => { }
     onError()
     toasts.addToast('Agent updated failed', { title: 'Update failed', type: 'error', autoDismiss: true, duration: 5000 })
   }
+
+  console.log(AGENT_FIELDS)
 
   return (
     <Form

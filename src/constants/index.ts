@@ -11,6 +11,8 @@ export interface InputProps {
   disabled?: boolean;
   hint?: any;
   hintPosition?: TooltipDirection;
+  hintContainer?: string;
+  hintZIndex?: number;
   message?: any;
   error?: any;
   placeholder?: string;
