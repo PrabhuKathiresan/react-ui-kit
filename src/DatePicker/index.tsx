@@ -497,7 +497,7 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
           readOnly
           icon={{
             right: (
-              <span className={cx('element-flex-center w-100 h-100', { 'is-clickable': !disabled })} tabIndex={-1} ref={this.iconRef  as React.RefObject<HTMLSpanElement>}>
+              <span className={cx('element-flex-center w-100 h-100', { 'is-clickable': !disabled })} ref={this.iconRef  as React.RefObject<HTMLSpanElement>}>
                 <DateIcon className='text--muted' />
               </span>
             )

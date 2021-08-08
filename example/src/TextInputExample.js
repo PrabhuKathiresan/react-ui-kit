@@ -26,6 +26,7 @@ export default function TextInputExample() {
         hintPosition='left'
         hint='I will show the hint on left.'
         id='left-hint'
+        icon={{ left: '@', right: '$' }}
       />
       <TextInput
         label='I am error input'

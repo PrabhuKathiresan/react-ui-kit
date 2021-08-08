@@ -6,6 +6,7 @@ import InfoCircle from '../icons/info-circle'
 import Error from '../icons/error'
 import { noop, isEqual, generateID } from '../utils'
 import Check from '../icons/check'
+import { isFunction } from '../utils/type-check'
 
 const INPUT_SIZE_MAP = {
   small: 'is-small',
@@ -31,8 +32,19 @@ const LeftIcon = forwardRef((props: TextInputProps, ref: any) => {
 })
 
 const RightIcon = forwardRef((props: TextInputProps, ref: any) => {
-  let { icon, error, warning, success, id, disabled, onRightIconClick = noop } = props
+  let { icon, error, warning, success, id, disabled, onRightIconClick } = props
   let rightIcon = icon?.right
+
+  let iconProps = {}
+
+  if (!disabled && onRightIconClick && isFunction(onRightIconClick)) {
+    let onClick = onRightIconClick
+    iconProps = {
+      role: 'button',
+      tabIndex: -1,
+      onClick: (e: MouseEvent) => onClick(e)
+    }
+  }
 
   useImperativeHandle(ref, () => ({
     hasIcon: Boolean(rightIcon)
@@ -47,7 +59,7 @@ const RightIcon = forwardRef((props: TextInputProps, ref: any) => {
   if (!rightIcon) return null;
 
   return (
-    <span className='ui-kit-input-icon right' data-testid={`${id}-input-right-icons`} role={disabled ? '' : 'button'} onClick={(e: MouseEvent) => !disabled && onRightIconClick(e)}>
+    <span className='ui-kit-input-icon right' data-testid={`${id}-input-right-icons`} {...iconProps}>
       {rightIcon}
     </span>
   )
@@ -191,6 +203,7 @@ const TextInput = (props: InputHTMLAttributes<HTMLInputElement | HTMLTextAreaEle
           warning={warning}
           disabled={disabled}
           onRightIconClick={onRightIconClick}
+          icon={icon}
           ref={rightIconRef}
         />
       </div>

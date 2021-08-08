@@ -50,7 +50,8 @@ const ButtonGroupOptions = [
     onClick: () => {},
     type: 'button',
     extraProps: {
-      icon: { left: <i className='material-icons-outlined' style={{ fontSize: iconSizeMap.default }}>add_circle</i> }
+      icon: { left: <i className='material-icons-outlined' style={{ fontSize: iconSizeMap.default }}>add_circle</i> },
+      'data-testid': 'new-invoice-btn'
     }
   },
   {
