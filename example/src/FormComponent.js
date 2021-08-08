@@ -242,7 +242,9 @@ const AGENT_FIELDS = [
     required: true,
     label: 'Agent name',
     autoFocus: true,
-    value: ''
+    value: '',
+    hintZIndex: 1222,
+    hint: 'Agent name'
   },
   {
     name: 'email',
@@ -417,7 +419,7 @@ class Service {
     return Promise.resolve({ success: true });
   }
 
-  update = (id, data) => {
+  update = async (id, data) => {
     console.log('Update data', data)
     return Promise.resolve({ success: true });
   }
@@ -448,8 +450,6 @@ export default function FormComponent({ stickyFooter = true, onError = () => { }
     onError()
     toasts.addToast('Agent updated failed', { title: 'Update failed', type: 'error', autoDismiss: true, duration: 5000 })
   }
-
-  console.log(AGENT_FIELDS)
 
   return (
     <Form

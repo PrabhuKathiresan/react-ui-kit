@@ -301,6 +301,7 @@ export default class Form extends Component<FormProps, FormState> {
       name,
       disabled,
       loading,
+      loadingText,
       extra = null
     } = this.props
     let {
@@ -349,6 +350,8 @@ export default class Form extends Component<FormProps, FormState> {
               type='submit'
               icon={submitBtnIcon}
               disabled={disableSubmit}
+              loading={submitting || loading}
+              loadingText={loadingText}
               data-testid={`submit-${name}`}
             >
               {submitBtnText}

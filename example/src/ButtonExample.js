@@ -240,6 +240,8 @@ export default function ButtonExample() {
         <hr />
         <ButtonGroup gap={'small'} size='small' actions={ButtonGroupOptions} justify='left' verticalSpacing='bottom' />
         <hr />
+        <ButtonGroup gap={'small'} size='small' actions={ButtonGroupOptions} justify='left' verticalSpacing='both' />
+        <hr />
         <ButtonGroup gap={'medium'} size='default' actions={ButtonGroupOptions} justify='center' />
         <hr />
         <ButtonGroup gap={'large'} size='medium' actions={ButtonGroupOptions} justify='right' />

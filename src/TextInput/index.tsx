@@ -108,6 +108,8 @@ const TextInput = (props: InputHTMLAttributes<HTMLInputElement | HTMLTextAreaEle
     message,
     hint,
     hintPosition,
+    hintZIndex,
+    hintContainer,
     id = generateID(Math.random()).toString(),
     actionItem = {
       show: false,
@@ -167,6 +169,8 @@ const TextInput = (props: InputHTMLAttributes<HTMLInputElement | HTMLTextAreaEle
         disabled={disabled}
         hint={hint}
         hintPosition={hintPosition}
+        hintContainer={hintContainer}
+        hintZIndex={hintZIndex}
         maxLength={maxLength}
         charLeft={charLeft}
         component={component}

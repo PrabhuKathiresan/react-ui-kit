@@ -46,6 +46,7 @@ export interface FormProps {
   data: object;
   stickyFooter?: boolean;
   loading?: boolean;
+  loadingText?: any;
   disabled?: boolean;
   isNewForm?: boolean;
   submitBtnText?: string;
