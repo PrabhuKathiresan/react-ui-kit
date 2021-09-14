@@ -36,18 +36,7 @@ export default function ButtonGroup(props: ButtonGroupProps) {
           actions.map((action: ButtonGroupActionProps) => (
             <Fragment key={generateUEID()}>
               {
-                action.type === 'button' ? (
-                  <Button
-                    onClick={(e: any) => action.onClick(e)}
-                    theme={theme}
-                    variant={variant}
-                    size={size}
-                    component={action.component || 'button'}
-                    {...action.extraProps}
-                  >
-                    {action.label}
-                  </Button>
-                ) : (
+                action.type === 'dropdown' ? (
                   <Dropdown
                     textContent={action.label}
                     onClick={(item: any) => action.onClick(item)}
@@ -58,6 +47,17 @@ export default function ButtonGroup(props: ButtonGroupProps) {
                     triggerSize={size}
                     {...action.extraProps}
                   />
+                ) : (
+                  <Button
+                    onClick={(e: any) => action.onClick(e)}
+                    theme={theme}
+                    variant={variant}
+                    size={size}
+                    component={action.component || 'button'}
+                    {...action.extraProps}
+                  >
+                    {action.label}
+                  </Button>
                 )
               }
             </Fragment>
