@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Button, ButtonGroup, Radio, Checkbox, ActionContainer } from '@pk-design/react-ui-kit'
+import { Link } from 'react-router-dom'
 
 let btnSize = ['tiny', 'small', 'default', 'medium', 'large'];
 let themes = ['primary', 'danger', 'warning', 'success', 'default'];
@@ -47,11 +48,13 @@ const options = [
 const ButtonGroupOptions = [
   {
     label: 'New invoice',
+    component: Link,
     onClick: () => {},
     type: 'button',
     extraProps: {
       icon: { left: <i className='material-icons-outlined' style={{ fontSize: iconSizeMap.default }}>add_circle</i> },
-      'data-testid': 'new-invoice-btn'
+      'data-testid': 'new-invoice-btn',
+      to: '/select',
     }
   },
   {
@@ -259,6 +262,17 @@ export default function ButtonExample() {
           showSecondaryAction={showSubAction}
           containerClass='border border-radius px-16'
         />
+      </div>
+      <div className='mb-16 col-lg-6'>
+        <h4>Link as Button</h4>
+        <hr />
+        <Button
+          component={Link}
+          to='/select'
+          theme='primary'
+        >
+          Go to select
+        </Button>
       </div>
     </>
   )

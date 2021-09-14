@@ -38,10 +38,11 @@ export default function ButtonGroup(props: ButtonGroupProps) {
               {
                 action.type === 'button' ? (
                   <Button
-                    onClick={(e) => action.onClick(e)}
+                    onClick={(e: any) => action.onClick(e)}
                     theme={theme}
                     variant={variant}
                     size={size}
+                    component={action.component || 'button'}
                     {...action.extraProps}
                   >
                     {action.label}

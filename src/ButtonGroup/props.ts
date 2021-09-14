@@ -13,7 +13,8 @@ export interface ButtonGroupActionProps {
   type?: ButtonGroupActionType
   extraProps?: {
     [k: string]: any
-  }
+  },
+  component?: 'button' | any
   options?: Array<OptionItem>
   dropdownPosition?: FloatDDPosition | StaticDDPosition
 }

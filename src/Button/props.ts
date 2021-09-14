@@ -25,4 +25,6 @@ export interface ButtonProps {
   iconOnly?: boolean;
   iconTheme?: ButtonIconTheme;
   raised?: boolean;
+  component?: 'button' | any;
+  [key: string]: any;
 }
