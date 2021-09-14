@@ -7,7 +7,7 @@
 ## List of component
 
 1. DataTable (Basic and Async)
-2. Select (Basic and Async) (support multi select)
+2. Select (Basic and Async) (with support for multi select)
 3. Tooltip
 4. Toast message
 5. Dialog
