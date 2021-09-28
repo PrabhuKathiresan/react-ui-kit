@@ -31,7 +31,7 @@ function Button(props: ButtonHTMLAttributes<HTMLButtonElement> & ButtonProps, re
     raised = false,
     onClick = noop,
     id = generateUEID(),
-    component = 'button',
+    component: Tag = 'button',
     ...btnProps
   } = props
 
@@ -96,16 +96,14 @@ function Button(props: ButtonHTMLAttributes<HTMLButtonElement> & ButtonProps, re
     }
   }
 
-  let BtnComponent = component;
-
   return (
-    <BtnComponent ref={ref} id={id} onClick={handleClick} className={cx('ui-kit-btn', `ui-kit-btn-${theme}`, `ui-kit-btn-size-${size}`, className, computedClassNames)} disabled={loading || disabled} {...btnProps}>
+    <Tag ref={ref} id={id} onClick={handleClick} className={cx('ui-kit-btn', `ui-kit-btn-${theme}`, `ui-kit-btn-size-${size}`, className, computedClassNames)} disabled={loading || disabled} {...btnProps}>
       {renderIcon('left')}
       <span className={cx('element-flex-center ui-kit-btn-content')}>
         {content()}
       </span>
       {renderIcon('right')}
-    </BtnComponent>
+    </Tag>
   )
 }
 

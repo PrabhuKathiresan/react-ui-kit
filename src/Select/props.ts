@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from 'react'
+import { InputHTMLAttributes, MutableRefObject, RefObject } from 'react'
 import { TransitionState, InputProps } from '../constants'
 
 interface IconProps {
@@ -80,6 +80,8 @@ export interface SelectedValueProps {
 
 export interface SelectInputProps extends SelectProps {
   onFocus?: Function;
+  onClick?: Function;
+  onBlur?: Function;
   inputClass?: string;
   inputRef?: any;
   onRemove?: Function;
@@ -128,6 +130,12 @@ export interface MenuProps {
   id: string;
   transitionState: TransitionState;
   transitionDuration: number;
+  minDropdownWidth?: number
+  closeMenu: Function
+  careOutsideClick?: boolean
+  inputContainerRef?: MutableRefObject<HTMLDivElement> | RefObject<HTMLDivElement>
+  focus?: boolean
+  containerMargin?: string
 }
 
 export interface ExtraInputProps {

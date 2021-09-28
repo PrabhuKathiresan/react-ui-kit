@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { CSSProperties, useEffect, useRef } from 'react'
 import cx from 'classnames'
 import isEmpty from 'is-empty'
 import Tag from './Tag'
@@ -8,13 +8,21 @@ import { noop } from '../utils'
 import Loader from '../Loader'
 
 const getSelectedValue = (input: SelectedValueProps) => {
-  let { selected = [], multiple, key } = input
+  const { selected = [], multiple, key } = input
   if (multiple || isEmpty(selected)) return ''
   return selected[0][key] || ''
 }
 
+const computeDynamicInputWidth = (value: string, fakeDiv: HTMLDivElement | null) => {
+  if (!fakeDiv) return `calc(56px + ${value.length}ch)`
+
+  fakeDiv.innerHTML = value.replace(/\s/g, '&' + 'nbsp;');
+  const fakeEleStyles = window.getComputedStyle(fakeDiv);
+  return `calc(${fakeEleStyles.width} + 2px)`;
+}
+
 const Input = (props: SelectInputProps) => {
-  let {
+  const {
     disabled,
     inputClass,
     icons = {},
@@ -22,8 +30,11 @@ const Input = (props: SelectInputProps) => {
     multiple,
     labelKey,
     inputRef,
-    placeholder,
+    searchable,
+    placeholder = searchable ? 'Search...' : 'Select...',
     onFocus = noop,
+    onClick = noop,
+    onBlur = noop,
     onInputChange = noop,
     id,
     extraProps,
@@ -35,14 +46,17 @@ const Input = (props: SelectInputProps) => {
     borderless
   } = props
 
-  let isSmallInput = inputSize === 'small'
-  let isLargeInput = inputSize === 'large'
-  let hasLeftIcon = !isEmpty(icons.left.component)
-  let hasRightIcon = !isEmpty(icons.right.component) && !disabled
-  let value = getSelectedValue({ selected, multiple, key: labelKey })
-  let showClearIcon = (allowClear && !disabled) && (multiple ? !isEmpty(selected) : !isEmpty(value))
+  const isSmallInput = inputSize === 'small'
+  const isLargeInput = inputSize === 'large'
+  const hasLeftIcon = !isEmpty(icons.left.component)
+  const hasRightIcon = !isEmpty(icons.right.component) && !disabled
+  const value = getSelectedValue({ selected, multiple, key: labelKey })
+  const showClearIcon = (allowClear && !disabled) && (multiple ? !isEmpty(selected) : !isEmpty(value))
+  const inputEle = useRef<HTMLInputElement | null>(null)
+  const fakeDiv = useRef<HTMLDivElement | null>(null)
+  const isTextOnlyAndBorderLess = textOnly && borderless
 
-  let inputClassHash = {
+  const inputClassHash = {
     'has-left-icon': hasLeftIcon,
     'has-right-icon': hasRightIcon,
     'has-clear-icon': showClearIcon,
@@ -54,6 +68,48 @@ const Input = (props: SelectInputProps) => {
     'ui-kit-select-input_lg': isLargeInput
   }
 
+  useEffect(() => {
+    if (!inputEle.current || !isTextOnlyAndBorderLess) return
+
+    const fakeEle = document.createElement('div');
+    // Hide it completely
+    fakeEle.style.position = 'absolute';
+    fakeEle.style.top = '0';
+    fakeEle.style.left = '-9999px';
+    fakeEle.style.overflow = 'hidden';
+    fakeEle.style.visibility = 'hidden';
+    fakeEle.style.whiteSpace = 'nowrap';
+    fakeEle.style.height = '0';
+    // We copy some styles from the textbox that effect the width
+    // const textboxEle = document.getElementById(id);
+    // Get the styles
+    const styles = window.getComputedStyle(inputEle.current);
+    // Copy font styles from the textbox
+    fakeEle.style.fontFamily = styles.fontFamily;
+    fakeEle.style.fontSize = styles.fontSize;
+    fakeEle.style.fontStyle = styles.fontStyle;
+    fakeEle.style.fontWeight = styles.fontWeight;
+    fakeEle.style.letterSpacing = styles.letterSpacing;
+    fakeEle.style.textTransform = styles.textTransform;
+    fakeEle.style.borderLeftWidth = styles.borderLeftWidth;
+    fakeEle.style.borderRightWidth = styles.borderRightWidth;
+    fakeEle.style.paddingLeft = styles.paddingLeft;
+    fakeEle.style.paddingRight = styles.paddingRight;
+    // Append the fake element to `body`
+    document.body.appendChild(fakeEle);
+    fakeDiv.current = fakeEle
+
+    return () => {
+      fakeEle && document.body.removeChild(fakeEle)
+    }
+  }, [inputEle.current, isTextOnlyAndBorderLess])
+
+  const style: CSSProperties = {}
+
+  if (isTextOnlyAndBorderLess) {
+    style.width = computeDynamicInputWidth(value || placeholder, fakeDiv.current)
+  }
+
   if (disabled) {
     return (
       <input
@@ -62,6 +118,7 @@ const Input = (props: SelectInputProps) => {
         disabled
         data-testid={`${id}-input-disabled`}
         placeholder={placeholder}
+        style={style}
       />
     )
   }
@@ -70,11 +127,17 @@ const Input = (props: SelectInputProps) => {
     <input
       {...inputProps}
       {...extraProps}
+      style={style}
       className={cx('ui-kit-select-input read-only', inputClass, inputClassHash)}
       value={value}
-      ref={(input) => inputRef(input)}
+      ref={(input: HTMLInputElement) => {
+        inputEle.current = input
+        inputRef(input)
+      }}
       placeholder={placeholder}
       onFocus={(e) => onFocus(e)}
+      onClick={e => onClick(e)}
+      onBlur={e => onBlur(e)}
       readOnly
       id={id}
       data-testid={`${id}-input`}
@@ -84,8 +147,10 @@ const Input = (props: SelectInputProps) => {
 }
 
 const InputWrapper = (props: SelectInputProps) => {
-  let {
+  const {
     onFocus = noop,
+    onClick = noop,
+    onBlur = noop,
     inputClass = '',
     icons = {},
     inputRef,
@@ -107,11 +172,11 @@ const InputWrapper = (props: SelectInputProps) => {
     borderless
   } = props
 
-  let isSmallInput = inputSize === 'small'
-  let isLargeInput = inputSize === 'large'
+  const isSmallInput = inputSize === 'small'
+  const isLargeInput = inputSize === 'large'
 
-  let hasLeftIcon = !isEmpty(icons.left.component)
-  let hasRightIcon = !isEmpty(icons.right.component) && !disabled
+  const hasLeftIcon = !isEmpty(icons.left.component)
+  const hasRightIcon = !isEmpty(icons.right.component) && !disabled
   let iconClass = '';
 
   if (isSmallInput) {
@@ -120,13 +185,13 @@ const InputWrapper = (props: SelectInputProps) => {
     iconClass = 'ui-kit-select-input-icon-lg';
   }
 
-  let value = isEmpty(selected) ? '' : getSelectedValue({ selected, multiple, key: labelKey })
+  const value = isEmpty(selected) ? '' : getSelectedValue({ selected, multiple, key: labelKey })
 
-  let onRightIconClick = (disabled || !hasRightIcon) ? noop : () => icons.right.onClick()
+  const onRightIconClick = (disabled || !hasRightIcon) ? noop : () => icons.right.onClick()
 
-  let showClearIcon = (allowClear && !disabled) && (multiple ? !isEmpty(selected) : !isEmpty(value))
+  const showClearIcon = (allowClear && !disabled) && (multiple ? !isEmpty(selected) : !isEmpty(value))
 
-  let renderRightIcon = () => {
+  const renderRightIcon = () => {
     if (loading) {
       return (
         <div className='ui-kit-select-loader-wrapper'>
@@ -142,13 +207,13 @@ const InputWrapper = (props: SelectInputProps) => {
     ) : null
   }
 
-  let renderTags = () => selected.map((_selected, i) => (
+  const renderTags = () => selected.map((_selected, i) => (
     <Tag id={`${id}-selected-input-${i}`} closeable={!disabled} disabled={disabled} onClose={() => onRemove(_selected)} key={i}>
       {_selected.__label}
     </Tag>
   ))
 
-  let renderMultipleInput = () => {
+  const renderMultipleInput = () => {
     if (disabled) {
       return (
         <input
@@ -165,6 +230,8 @@ const InputWrapper = (props: SelectInputProps) => {
       <input
         className='ui-kit-select-multiple-input cursor-pointer'
         onFocus={e => onFocus(e)}
+        onClick={e => onClick(e)}
+        onBlur={e => onBlur(e)}
         placeholder={placeholder}
         readOnly
         id={id}
@@ -176,7 +243,7 @@ const InputWrapper = (props: SelectInputProps) => {
     )
   }
 
-  let renderInput = () => multiple ? (
+  const renderInput = () => multiple ? (
     <div
       ref={inputRef}
       className={cx('ui-kit-select-input', inputClass, {

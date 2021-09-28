@@ -82,6 +82,7 @@ export default function Footer(props: FooterProps) {
                   closeOnOutsideClick
                   containerClass='mb-0 w-auto'
                   textOnly
+                  borderless
                   inputClass='text-center pl-4'
                   inputSize='small'
                 />

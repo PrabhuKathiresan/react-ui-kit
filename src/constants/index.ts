@@ -19,6 +19,7 @@ export interface InputProps {
   inputSize?: InputSize;
   width?: number | string;
   height?: number | string;
+  className?: string;
 }
 
 export const INPUT_KEY = [

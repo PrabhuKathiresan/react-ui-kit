@@ -97,7 +97,8 @@ export const constructMenuProps = (props: any) => {
     autoScroll: props.autoScroll || false,
     loading: props.loading || false,
     animate: props.animate || false,
-    dropdownState: props.dropdownState || ''
+    dropdownState: props.dropdownState || '',
+    minDropdownWidth: props.minDropdownWidth
   }
 }
 

@@ -124,6 +124,23 @@ export default function SelectComponent() {
             onChange={(s) => setFavFruit(s)}
           />
         </div>
+        <div className='col-lg-4'>
+          <BasicSelect
+            onChange={(s) => setSelected(s)}
+            selected={selected}
+            id='demo-2'
+            {...options}
+            options={[...countries]}
+            icons={{
+              right: <i className='bi-chevron-expand'></i>
+            }}
+            inputProps={{ tabIndex: 0 }}
+            borderless
+            textOnly
+            width={200}
+            minDropdownWidth={200}
+          />
+        </div>
       </div>
     </div>
   )

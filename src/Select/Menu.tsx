@@ -5,40 +5,41 @@ import { MenuProps, OptionProps } from './props'
 import { getMenuAnimationStyle } from '../utils'
 
 const Menu = (props: MenuProps) => {
-  let displayName = 'menu-item'
-  let searchInput = useRef<HTMLInputElement | null>(null)
+  const displayName = 'menu-item'
+  const searchInput = useRef<HTMLInputElement | null>(null)
 
-  let [menu, setMenu] = useState<null | HTMLDivElement>(null)
+  const [menu, setMenu] = useState<null | HTMLDivElement>(null)
 
-  let {
-    maxHeight, options, selected, activeIndex, loading, labelKey,
-    isDirty, style, menuRef, onMenuClick, autoScroll, disableAutoScroll,
-    searchInputProps, searchable, scrollableAreaRef, id, transitionState, transitionDuration
+  const {
+    selected, activeIndex, labelKey, style, menuRef, onMenuClick, autoScroll,
+    searchInputProps, searchable, id, transitionState, transitionDuration, options,
+    maxHeight, loading, isDirty, disableAutoScroll, scrollableAreaRef, minDropdownWidth,
+    containerMargin
   } = props
 
-  let { dropup = false, ...menuPositionStyle } = style
+  const { dropup = false, ...menuPositionStyle } = style
 
   useEffect(() => {
     if (transitionState === 'entered') {
-      let input = searchInput.current
+      const input = searchInput.current
       setTimeout(() => {
         input?.focus()
       }, dropup ? transitionDuration : 0);
     }
   }, [transitionState])
 
-  let isSelected = (option: OptionProps) => {
-    let _selected = [...selected].shift()
+  const isSelected = (option: OptionProps) => {
+    const _selected = [...selected].shift()
     return _selected && option[labelKey] === _selected[labelKey]
   }
 
-  let handleMenuScroll = () => {
+  const handleMenuScroll = () => {
     disableAutoScroll()
   }
 
-  let emptyStateText = (isDirty || !searchable) ? 'No result found' : 'Type to search...'
+  const emptyStateText = (isDirty || !searchable) ? 'No result found' : 'Type to search...'
 
-  let renderOptions = () => (options.length === 0 ?
+  const renderOptions = () => (options.length === 0 ?
     (
       <div className='ui-kit-select--dropdown_item item-as-plain-text' data-testid={`${id}-options-empty`}>
         {emptyStateText}
@@ -68,7 +69,8 @@ const Menu = (props: MenuProps) => {
       className={cx('ui-kit-select--dropdown')}
       style={{
         width: menuPositionStyle.width,
-        margin: dropup ? '16px 16px 2px' : '2px 16px 16px',
+        minWidth: minDropdownWidth,
+        margin: containerMargin || (dropup ? '16px 16px 2px' : '2px 16px 16px'),
         overflow: 'visible'
       }}
       ref={menuRef}

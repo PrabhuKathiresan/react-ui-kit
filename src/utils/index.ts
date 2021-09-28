@@ -183,6 +183,8 @@ export const getPreviousPage = (options: PaginationOption) => {
 
 export const stringify = (json: any) => JSON.stringify(json);
 
+export const parseJson = (jsonStr: any) => JSON.parse(jsonStr)
+
 export const generateID = (t: number) => Math.floor(Math.random() * (t * 100000));
 
 export const mapIndex = (arr: Array<any>) => arr.map((a, i) => ({ ...a, index: i }));
@@ -203,7 +205,7 @@ export const canUseDOM = !!(
 
 export const getPortalTarget = (container: any) => canUseDOM && Boolean(container) && document.querySelector(container)
 
-export const getOffset = (el: HTMLDivElement) => {
+export const getOffset = (el: HTMLDivElement | HTMLInputElement) => {
   let rect = el.getBoundingClientRect().toJSON()
   let scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
   let scrollTop = window.pageYOffset || document.documentElement.scrollTop

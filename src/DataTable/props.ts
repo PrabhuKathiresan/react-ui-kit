@@ -51,7 +51,7 @@ export interface TableProps {
   loading?: boolean;
   showColumnSelection?: boolean;
   onColumnChange?: Function;
-  emptyText?: string;
+  emptyText?: any;
   emptyIcon?: any;
   selectable?: boolean;
   fixedWidth?: boolean;
