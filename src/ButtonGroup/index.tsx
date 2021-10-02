@@ -6,7 +6,7 @@ import { ButtonGroupProps, ButtonGroupActionProps } from './props'
 import { generateUEID } from '../utils'
 
 export default function ButtonGroup(props: ButtonGroupProps) {
-  let {
+  const {
     align = 'center',
     justify = 'left',
     gap = '',
@@ -18,13 +18,46 @@ export default function ButtonGroup(props: ButtonGroupProps) {
     containerClass = ''
   } = props
 
-  let computedGroupClass = {}
+  const computedGroupClass = {}
   if (gap) {
     computedGroupClass[`ui-kit-btn-group__has-gap gap__${gap}`] = true
   }
 
   if (verticalSpacing) {
     computedGroupClass[`ui-kit-btn-group__space-${verticalSpacing}`] = true
+  }
+
+  const renderItem = (action: ButtonGroupActionProps) => {
+    if (action.type === 'dropdown') {
+      return (
+        <Dropdown
+          textContent={action.label}
+          onClick={(item: any) => action.onClick(item)}
+          options={action.options || []}
+          position={action.dropdownPosition || 'right'}
+          theme={theme}
+          variant={variant}
+          triggerSize={size}
+          {...action.extraProps}
+        />
+      )
+    }
+    if (action.type === 'custom') {
+      return action.component
+    }
+
+    return (
+      <Button
+        onClick={(e: any) => action.onClick(e)}
+        theme={theme}
+        variant={variant}
+        size={size}
+        component={action.component || 'button'}
+        {...action.extraProps}
+      >
+        {action.label}
+      </Button>
+    )
   }
 
   return (
@@ -35,35 +68,11 @@ export default function ButtonGroup(props: ButtonGroupProps) {
         {
           actions.map((action: ButtonGroupActionProps) => (
             <Fragment key={generateUEID()}>
-              {
-                action.type === 'dropdown' ? (
-                  <Dropdown
-                    textContent={action.label}
-                    onClick={(item: any) => action.onClick(item)}
-                    options={action.options || []}
-                    position={action.dropdownPosition || 'right'}
-                    theme={theme}
-                    variant={variant}
-                    triggerSize={size}
-                    {...action.extraProps}
-                  />
-                ) : (
-                  <Button
-                    onClick={(e: any) => action.onClick(e)}
-                    theme={theme}
-                    variant={variant}
-                    size={size}
-                    component={action.component || 'button'}
-                    {...action.extraProps}
-                  >
-                    {action.label}
-                  </Button>
-                )
-              }
+              {renderItem(action)}
             </Fragment>
           ))
         }
       </div>
-    </div>
+    </div >
   )
 }

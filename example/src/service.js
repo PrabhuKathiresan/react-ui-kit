@@ -1,5 +1,5 @@
 /* eslint-disable */
-import data from './olympic.json';
+import olympic from './olympic.json';
 import { createSorter } from './utils/sort';
 import { createFilter } from './utils/filter';
 
@@ -12,15 +12,15 @@ const wait = ms => new Promise(resolve => {
 });
 
 const get = ({ limit = 10, skip = 0, sort = [] , filters = [], searchText = '', paginate = false }) => new Promise(resolve => {
-  wait(2000)
+  wait(1000)
     .then(() => {
-      let d = data.filter(_d => stringify(_d).toLowerCase().includes(searchText.toLowerCase()));
-      d = createFilter(d, filters);
-      let total = d.length;
-      d = d.sort(createSorter(...sort))
-      if (paginate) d = d.slice(skip, skip + limit);
+      let data = olympic.filter(_d => stringify(_d).toLowerCase().includes(searchText.toLowerCase()));
+      data = createFilter(data, filters);
+      let total = data.length;
+      data = data.sort(createSorter(...sort))
+      if (paginate) data = data.slice(skip, skip + limit);
       resolve({
-        data: d,
+        data,
         total
       });
     }).catch(err => {

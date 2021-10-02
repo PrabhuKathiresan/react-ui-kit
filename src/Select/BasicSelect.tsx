@@ -28,6 +28,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
   _dropdownScrollableArea: null | HTMLDivElement = null
   menu: null | HTMLDivElement = null
   containerRef = React.createRef<null | HTMLDivElement>()
+  __justClicked: boolean = false
   state = getStateFromProps(this.props)
 
   componentDidMount() {
@@ -255,7 +256,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
     const input = multiple ? this._input : this.input
 
     // Skip most actions when the menu is hidden.
-    if (!this._isMenuOpen()) {
+    if (!this._isMenuOpen) {
       if (e.key === UP || e.key === DOWN) {
         this._openMenu()
       }
@@ -292,21 +293,33 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
     }
   }
 
+  _onClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+
+    if (this.__justClicked) {
+      this.__justClicked = false
+      return
+    }
+    
+    this._isMenuOpen && this._closeMenu()
+  }
+
   _onFocus = (e: React.FocusEvent) => {
     e.persist()
-    if (!this._hasFocus()) {
+    if (!this._hasFocus) {
       this._setFocus(true)
       this._openMenu()
     } else {
-      !this._isMenuOpen() ? this._openMenu() : this._closeMenu()
+      !this._isMenuOpen ? this._openMenu() : this._closeMenu()
     }
+    this.__justClicked = true
     const { onInputFocus = noop } = this.props;
     onInputFocus(e)
   }
 
   _onBlur = (e: React.FocusEvent) => {
     e.persist()
-    this._hasFocus() && this._setFocus(false)
+    this._hasFocus && this._setFocus(false)
     const { onInputBlur = noop } = this.props
     onInputBlur(e)
   }
@@ -330,12 +343,18 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
     const { labelKey, onChange = noop } = this.props;
     const selected = [...(this.state.selected || [])].filter(s => s[labelKey] !== option[labelKey]).map(ms => ms[ACTUAL_VALUE])
     onChange(selected)
-    this._isMenuOpen() && this._closeMenu()
+    this._isMenuOpen && this._closeMenu()
   }
 
-  _hasFocus = () => this.state.focus
+  // _hasFocus = () => this.state.focus
+  get _hasFocus() {
+    return this.state.focus
+  }
 
-  _isMenuOpen = () => this.state.open
+  // _isMenuOpen = () => this.state.open
+  get _isMenuOpen() {
+    return this.state.open
+  }
 
   _setFocus = (focus: boolean) => {
     this.setState({
@@ -344,7 +363,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
   }
 
   _triggerOpen = () => {
-    if (!this._isMenuOpen()) {
+    if (!this._isMenuOpen) {
       this.input && this.input.focus()
       this._openMenu()
     } else {
@@ -407,7 +426,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
 
   _listenClickEvent = () => {
     setTimeout(() => {
-      if (this._isMenuOpen()) {
+      if (this._isMenuOpen) {
         document.addEventListener('click', this._handleOutsideClick, false)
         document.addEventListener('scroll', this._handlePageScroll, true)
       }
@@ -421,7 +440,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
 
   _handleOutsideClick = (event: Event) => {
     if (
-      this._isMenuOpen()
+      this._isMenuOpen
       && (this.menu && (event.target instanceof HTMLElement || event.target instanceof SVGElement) && !this.menu.contains(event.target))
       && this.props.closeOnOutsideClick
     ) {
@@ -605,6 +624,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
     const extraProps = this._getExtraProps()
     const portalTarget = this._getPortalTarget()
     const menuContainer = this._menuContainer()
+    const isTextOnlyAndBorderLess = textOnly && borderless
 
     return (
       <>
@@ -616,6 +636,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
               inputClass={inputClass}
               disabled={disabled}
               placeholder={placeholder}
+              onClick={this._onClick}
               onFocus={this._onFocus}
               inputRef={this._setInputRef}
               loading={loading}
@@ -631,7 +652,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
               open={open}
               extraProps={extraProps}
               id={id}
-              allowClear={allowClear}
+              allowClear={!isTextOnlyAndBorderLess && allowClear}
               onChange={onChange}
               textOnly={textOnly}
               inputSize={inputSize}

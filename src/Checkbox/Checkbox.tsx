@@ -5,7 +5,6 @@ import { CheckboxProps } from './props'
 
 export default function (props: CheckboxProps) {
   let {
-    type = 'checkbox',
     tabIndex,
     checked,
     defaultChecked,
@@ -43,7 +42,7 @@ export default function (props: CheckboxProps) {
         <input
           name={name}
           id={id}
-          type={type}
+          type='checkbox'
           tabIndex={tabIndex}
           value={value}
           ref={checkbox}

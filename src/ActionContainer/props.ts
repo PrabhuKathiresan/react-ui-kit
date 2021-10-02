@@ -1,10 +1,12 @@
-export interface ActionContainer {
+export interface ActionContainerProps {
   content: {
-    primary: any;
-    secondary?: any;
+    primary: any
+    secondary?: any
   },
-  showSecondaryAction?: boolean;
-  height?: number | string;
-  containerClass?: string;
-  transitionDuration?: number;
+  showSecondaryAction?: boolean
+  height?: number | string
+  containerClass?: string
+  transitionDuration?: number
+  primaryContentClass?: string
+  secondaryContentClass?: string
 }

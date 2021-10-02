@@ -27,7 +27,6 @@ export default function (props: CheckboxGroupProps) {
           {
             options.map((option, index) => (
               <Checkbox
-                type='checkbox'
                 key={index}
                 onChange={handleChange}
                 value={option.value}

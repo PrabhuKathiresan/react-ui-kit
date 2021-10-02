@@ -18,7 +18,7 @@ const computeDynamicInputWidth = (value: string, fakeDiv: HTMLDivElement | null)
 
   fakeDiv.innerHTML = value.replace(/\s/g, '&' + 'nbsp;');
   const fakeEleStyles = window.getComputedStyle(fakeDiv);
-  return `calc(${fakeEleStyles.width} + 2px)`;
+  return `calc(${fakeEleStyles.width} + 4px)`;
 }
 
 const Input = (props: SelectInputProps) => {
@@ -61,7 +61,7 @@ const Input = (props: SelectInputProps) => {
     'has-right-icon': hasRightIcon,
     'has-clear-icon': showClearIcon,
     'text-only': textOnly,
-    'has-less-padding': isSmallInput,
+    'has-less-padding': isSmallInput || isTextOnlyAndBorderLess,
     'ui-kit-select-has-focus': open,
     'ui-kit-select-input__borderless': borderless,
     'ui-kit-select-input_sm': isSmallInput,
@@ -169,7 +169,8 @@ const InputWrapper = (props: SelectInputProps) => {
     allowClear = false,
     inputSize = 'default',
     inputProps,
-    borderless
+    borderless,
+    textOnly
   } = props
 
   const isSmallInput = inputSize === 'small'
@@ -179,7 +180,7 @@ const InputWrapper = (props: SelectInputProps) => {
   const hasRightIcon = !isEmpty(icons.right.component) && !disabled
   let iconClass = '';
 
-  if (isSmallInput) {
+  if (isSmallInput || (borderless && textOnly)) {
     iconClass = 'ui-kit-select-input-icon-sm';
   } else if (isLargeInput) {
     iconClass = 'ui-kit-select-input-icon-lg';

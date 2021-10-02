@@ -233,6 +233,10 @@ export default function ButtonExample() {
             extraProps: {
               iconOnly: true
             }
+          },
+          {
+            type: 'custom',
+            component: <Button>Custom button</Button>
           }
         ]} />
         <hr />

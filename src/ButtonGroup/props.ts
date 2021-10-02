@@ -5,7 +5,7 @@ export declare type ButtonGroupJustify = 'right' | 'left' | 'center'
 export declare type ButtonGroupAlign = 'top' | 'bottom' | 'center'
 export declare type ButtonGroupGap = 'small' | 'medium' | 'large'
 export declare type ButtonGroupVerticalSpacing = 'top' | 'bottom' | 'both'
-export declare type ButtonGroupActionType = 'button' | 'dropdown'
+export declare type ButtonGroupActionType = 'button' | 'dropdown' | 'custom'
 
 export interface ButtonGroupActionProps {
   label: any;

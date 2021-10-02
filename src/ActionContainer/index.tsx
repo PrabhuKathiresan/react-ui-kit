@@ -2,7 +2,7 @@ import React from 'react'
 import cx from 'classnames'
 import { Transition } from 'react-transition-group'
 import { TransitionState } from '../constants'
-import { ActionContainer } from './props'
+import { ActionContainerProps } from './props'
 
 const mainContentTransformMap = {
   entering: 'translate3d(0, -100%, 0)',
@@ -18,23 +18,25 @@ const subContentTransformMap = {
   exited: 'translate3d(0, 0, 0)'
 }
 
-export default function ActionContainer(props: ActionContainer) {
-  let {
+export default function ActionContainer(props: ActionContainerProps) {
+  const {
     height = 64,
     content,
     showSecondaryAction = false,
     containerClass = '',
+    primaryContentClass = '',
+    secondaryContentClass = '',
     transitionDuration = 150
   } = props
 
-  let renderMainContent = () => (
+  const renderMainContent = () => (
     <Transition
       in={!showSecondaryAction}
       timeout={transitionDuration}
     >
       {(transitionState: TransitionState) => (
         <div
-          className='ui-kit-action-container__main-content element-flex-align-center'
+          className={cx('ui-kit-action-container__main-content element-flex-align-center', primaryContentClass)}
           style={{
             height,
             transition: `transform ${transitionDuration}ms linear`,
@@ -47,7 +49,7 @@ export default function ActionContainer(props: ActionContainer) {
     </Transition>
   )
 
-  let renderSubContent = () => {
+  const renderSubContent = () => {
     if (!content.secondary) return null
 
     return (
@@ -58,7 +60,7 @@ export default function ActionContainer(props: ActionContainer) {
       >
         {(transitionState: TransitionState) => (
           <div
-            className='ui-kit-action-container__sub-content element-flex-align-center'
+            className={cx('ui-kit-action-container__sub-content element-flex-align-center', secondaryContentClass)}
             style={{
               height,
               transition: `transform ${transitionDuration}ms linear`,
