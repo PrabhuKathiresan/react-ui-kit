@@ -68,3 +68,10 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### For dev environment setup
+
+In your package.json, change the following
+
+  `"@pk-design/react-ui-kit": "~x.x.x",` to `"@pk-design/react-ui-kit": "file:..",`
+  
