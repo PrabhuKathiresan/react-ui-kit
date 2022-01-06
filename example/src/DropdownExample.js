@@ -73,7 +73,6 @@ export default function DropdownExample() {
 
   let onContentDropdownClick = (item) => {
     onClick(item);
-    console.log(contentDropdown.current)
     contentDropdown.current?.closeDropdown()
   }
 

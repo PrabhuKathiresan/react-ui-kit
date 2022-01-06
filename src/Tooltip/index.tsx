@@ -116,7 +116,6 @@ export default function Tooltip(props: TooltipProps) {
     if (isDefined(zIndex)) style.zIndex = zIndex;
     return (
       <div className={`ui-kit-tooltip-Tip ${direction}`} style={style}>
-        {/* Content */}
         {content}
       </div>
     )
@@ -139,15 +138,17 @@ export default function Tooltip(props: TooltipProps) {
   let portalTarget = canUseDOM && container ? document.querySelector(container) : null
 
   return (
-    <span
-      className='ui-kit-tooltip-Wrapper'
-      // When to show the tooltip
-      onMouseEnter={onEnter}
-      onMouseLeave={onLeave}
-      ref={wrapper}
-    >
-      {/* Wrapping */}
-      {cloneElement(children)}
+    <>
+      <span
+        className='ui-kit-tooltip-Wrapper'
+        // When to show the tooltip
+        onMouseEnter={onEnter}
+        onMouseLeave={onLeave}
+        ref={wrapper}
+      >
+        {/* Wrapping */}
+        {cloneElement(children)}
+      </span>
       {
         portalTarget ?
           (
@@ -160,6 +161,6 @@ export default function Tooltip(props: TooltipProps) {
             <>{tooltipContainer}</>
           )
       }
-    </span>
+    </>
   )
 }

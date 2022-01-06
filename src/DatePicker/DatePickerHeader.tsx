@@ -28,13 +28,13 @@ export default function DatePickerHeader(props: DatePickerHeaderProps) {
   let disablePrevious = selectedYear === startYear && selectedMonth === startMonth
   let disableNext = selectedYear === endYear && selectedMonth === endMonth
 
-  let handleChange = (_: any, change: any) => { 
+  let handleChange = (_: any, change: any) => {
     onChange({ changeType: 'date', ...change })
   }
 
   return (
     <div className='ui-kit-datepicker_calendar-header'>
-      <Button size='tiny' variant='plain' className='px-4' disabled={disablePrevious} onClick={() => onChange({ changeType: 'month', offset: -1 })}><Previous /></Button>
+      <Button tabIndex={-1} size='tiny' variant='plain' className='px-4' disabled={disablePrevious} onClick={() => onChange({ changeType: 'month', offset: -1 })}><Previous /></Button>
       <Monthpicker
         startDate={startDate}
         endDate={endDate}
@@ -49,8 +49,9 @@ export default function DatePickerHeader(props: DatePickerHeaderProps) {
         container='body'
         className='element-flex-justify-around mb-0'
         inputSize='small'
+        tabIndex={-1}
       />
-      <Button size='tiny' variant='plain' className='px-4' disabled={disableNext} onClick={() => onChange({ changeType: 'month', offset: 1 })}><Next /></Button>
+      <Button tabIndex={-1} size='tiny' variant='plain' className='px-4' disabled={disableNext} onClick={() => onChange({ changeType: 'month', offset: 1 })}><Next /></Button>
     </div>
   )
 }

@@ -1,6 +1,8 @@
 import React from 'react'
-import { Form } from '@pk-design/react-ui-kit';
+import { Form, Toast } from '@pk-design/react-ui-kit';
 import { map, isEmpty, isNumber } from 'lodash'
+
+const { useToasts } = Toast;
 
 export const GST_RATES = [
   {
@@ -106,6 +108,7 @@ const FIELDS = [
 ]
 
 export default function CustomFormComponent() {
+  const toasts = useToasts();
   let products = [
     {
       _id: '1',
@@ -130,13 +133,13 @@ export default function CustomFormComponent() {
     let validation = {
       errors: {},
       genericError: 'Requires atleast one field to update products',
-      isValid: false
+      isValid: true
     };
-    for (let field in data) {
+    for (let field of ['hsncode', 'price', 'gst', 'unit']) {
       let value = data[field];
-      if (!isEmpty(value) || isNumber(value)) {
-        validation.isValid = true;
-        validation.genericError = '';
+      if (isEmpty(value) && !isNumber(value)) {
+        validation.isValid = false;
+        validation.genericError = `${field} is required`;
         break;
       }
     }
@@ -158,6 +161,8 @@ export default function CustomFormComponent() {
         data={{}}
         isNewForm
         service={service}
+        createMethod='post'
+        onSuccess={() => toasts.addToast('Custom form saved successfully')}
       />
     </div>
   )

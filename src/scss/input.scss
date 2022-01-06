@@ -57,8 +57,6 @@
 
   .ui-kit-input {
     width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
     font-size: inherit;
     font-family: inherit;
     -webkit-appearance: none;
@@ -69,6 +67,10 @@
     display: flex;
     align-items: center;
     transition: box-shadow .25s ease-in-out;
+
+    &::placeholder {
+      color: $placeholder-color;
+    }
 
     &:focus, &:active {
       outline: none;

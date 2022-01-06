@@ -52,8 +52,8 @@ class MenuItem extends Component<MenuItemProps, {}> {
         onClick={this.beforeItemClick}
         data-testid={id}
       >
-        <span className='ui-kit-select--dropdown_item-text'>{label}</span>
-        {selected && <Check width={12} height={12} />}
+        <span className={cx('ui-kit-select--dropdown_item-text', { 'text--ellipsis': selected })}>{label}</span>
+        {selected && <Check className='element-flex--0-auto' width={12} height={12} />}
       </div>
     )
   }

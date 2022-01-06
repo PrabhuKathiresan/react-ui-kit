@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Dialog from './Dialog'
 import { DialogProps, DialogPositions } from './props'
 import { TransitionState } from '../constants'
+import { ESC } from '../Select/constants'
+import { noop } from '../utils'
 
 const sizeMap = {
   xs: 360,
@@ -118,6 +120,28 @@ const dialogPositions = (position: DialogPositions, state: TransitionState) => {
 }
 
 export default class DialogController extends Component<DialogProps> {
+  _subscribed: boolean = false
+  componentDidMount() {
+    let {
+      closeOnEscape = false
+    } = this.props
+    if (closeOnEscape) {
+      this._subscribed = true
+      document.addEventListener('keydown', this._handleKeyDown, false)
+    }
+  }
+
+  componentWillUnmount() {
+    if (this._subscribed) document.removeEventListener('keydown', this._handleKeyDown, false)
+  }
+
+  _handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === ESC) {
+      let { onClose = noop } = this.props
+      onClose()
+    }
+  }
+
   render() {
     let { position = 'right', size = 'sm', transitionState } = this.props
     return (

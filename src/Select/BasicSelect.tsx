@@ -23,7 +23,6 @@ import { canUseDOM, noop } from '../utils'
 import { TransitionState } from '../constants'
 
 class BasicSelect extends PureComponent<SelectProps, SelectState> {
-  _input: null | HTMLInputElement = null
   input: null | HTMLInputElement = null
   _dropdownScrollableArea: null | HTMLDivElement = null
   menu: null | HTMLDivElement = null
@@ -124,8 +123,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
     }
 
     if (disabled !== this.props.disabled) {
-      if (multiple) this._input = null
-      else this.input = null
+      this.input = null
     }
 
     // If new selections are passed via props, treat as a controlled input.
@@ -160,10 +158,6 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
       this.input = input
       this._setMenuPosition()
     }
-  }
-
-  _setBackgroundInputRef = (input: HTMLInputElement) => {
-    this._input = input
   }
 
   _setDropdownScrollableArea = (dropdownScrollArea: HTMLDivElement) => {
@@ -252,8 +246,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
 
   _handleKeyDown = (e: React.KeyboardEvent) => {
     const { activeItem } = this.state
-    const { multiple, searchable } = this.props
-    const input = multiple ? this._input : this.input
+    const { searchable } = this.props
 
     // Skip most actions when the menu is hidden.
     if (!this._isMenuOpen) {
@@ -285,7 +278,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
       case TAB:
         // ESC simply hides the menu. TAB will blur the input and move focus to
         // the next item hide the menu so it doesn't gain focus.
-        searchable && input && input.focus()
+        searchable && this.input?.focus()
         this._closeMenu()
         break
       default:
@@ -408,13 +401,12 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
       isDirty: false,
     }, () => {
       const {
-        multiple,
+        // multiple,
         onClose = noop
       } = this.props
       setTimeout(() => {
         this._revokeClickListener()
-        const input = multiple ? this._input : this.input
-        input && input.blur()
+        this.input?.blur()
       }, 100)
       onClose()
     })
@@ -558,11 +550,17 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
     component: this.props.icons?.left || null
   })
 
+  get inputHeight(): any {
+    const {
+      inputSize = 'default',
+      height = HEIGHT_MAP[inputSize] || SELECT_HEIGHT
+    } = this.props
+    return height
+  }
+
   _getContainerStyle = () => {
     const {
       multiple,
-      height,
-      inputSize = 'default',
       borderless,
       textOnly
     } = this.props
@@ -570,16 +568,16 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
     if (borderless && textOnly && this.input) {
       width = 'max-content'
     }
-    return multiple ? { minHeight: height, height: 'auto', width } : { height: height || HEIGHT_MAP[inputSize] || SELECT_HEIGHT, width }
+    return multiple ? { minHeight: this.inputHeight, height: 'auto', width } : { height: this.inputHeight, width }
   }
 
   _getExtraProps = () => {
     const {
       searchable,
-      multiple
+      // multiple
     } = this.props
     const extraProps: ExtraInputProps = searchable ? {} : { onKeyDown: this._handleKeyDown }
-    if (multiple) extraProps.ref = this._setBackgroundInputRef
+    // if (multiple) extraProps.ref = this._setBackgroundInputRef
 
     return extraProps;
   }
@@ -658,6 +656,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
               inputSize={inputSize}
               borderless={borderless}
               width={width}
+              height={this.inputHeight}
             />
             {
               portalTarget ?

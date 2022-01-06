@@ -11,6 +11,16 @@ import { TransitionState } from '../constants'
 const ToastContext = React.createContext<ProviderProps | null>(null);
 const { Consumer, Provider } = ToastContext;
 
+const getWithDefaultOptions = (options: ToastProps): ToastProps => {
+  let id = options.id || generateUEID()
+  return {
+    ...options,
+    id,
+    autoDismiss: options.autoDismiss || true,
+    type: options.type || 'info'
+  }
+}
+
 export class ToastProvider extends Component<Props, ToastState> {
   state: ToastState = { toasts: [] }
 
@@ -30,9 +40,9 @@ export class ToastProvider extends Component<Props, ToastState> {
   // Public API
   // ------------------------------
 
-  add = (content: any, options: ToastProps, cb: Function = noop) => {
-    let id = options.id ? options.id : generateUEID()
-    options.id = id
+  add = (content: any, options: ToastProps = { id: generateUEID() }, cb: Function = noop) => {
+    options = getWithDefaultOptions(options)
+    let { id } = options
     let callback = () => cb(id)
 
     // bail if a toast exists with this ID

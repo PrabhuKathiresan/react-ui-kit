@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Alert, Button, AlertStack } from '@pk-design/react-ui-kit'
+import AppCode from './AppCode'
+import PropsTable from './PropsTable'
 
 const alertStacks = [
   {
@@ -26,6 +28,155 @@ const alertStacks = [
     content: 'I am a alert, with a long text. I will word break when required. I am a alert, with a long text. I will word break when required',
     type: 'info',
     iconType: 'filled'
+  }
+]
+
+const alertProps = [
+  {
+    name: 'title',
+    description: 'Title to be displayed on the alert',
+    type: 'any',
+    default: 'null'
+  },
+  {
+    name: 'content',
+    description: 'Content to be displayed on the alert',
+    type: 'any',
+    default: 'null'
+  },
+  {
+    name: 'type',
+    description: 'Alert type',
+    type: 'string',
+    default: 'info',
+    options: `'success' | 'error' | 'warning' | 'info'`
+  },
+  {
+    name: 'className',
+    description: 'Classname applied to alert box',
+    type: 'string',
+    default: ''
+  },
+  {
+    name: 'dismissable',
+    description: 'If alert can be dismissed',
+    type: 'boolean',
+    default: 'undefined'
+  },
+  {
+    name: 'showIcon',
+    description: 'If alert can display icon',
+    type: 'boolean',
+    default: 'true'
+  },
+  {
+    name: 'iconType',
+    description: 'Displayed icon type',
+    type: 'string',
+    default: 'default',
+    options: `'default' | 'filled'`
+  },
+  {
+    name: 'variant',
+    description: 'Alert variant',
+    type: 'string',
+    default: 'default',
+    options: `'default' | 'filled'`
+  },
+  {
+    name: 'container',
+    description: 'Parent container of the alert',
+    type: 'string',
+    default: 'null'
+  },
+  {
+    name: 'banner',
+    description: 'Is alert an banner',
+    type: 'boolean',
+    default: 'false'
+  },
+  {
+    name: 'fixed',
+    description: 'Is alert holds a fixed position',
+    type: 'boolean',
+    default: 'false'
+  },
+  {
+    name: 'show',
+    description: 'Can alert be shown (Useful when controlling alert visibility)',
+    type: 'boolean',
+    default: 'undefined'
+  },
+  {
+    name: 'transitionDuration',
+    description: 'Transistion duration on close (in milliseconds)',
+    type: 'number',
+    default: '220'
+  },
+  {
+    name: 'style',
+    description: 'CSS styles to be applied to alert',
+    type: 'CSS object',
+    default: '{}'
+  },
+  {
+    name: 'position',
+    description: 'CSS position of alter container',
+    type: 'string',
+    default: 'undefined',
+    options: `absolute | fixed`
+  },
+  {
+    name: 'fitToContainer',
+    description: 'Fit alert into container',
+    type: 'boolean',
+    default: 'undefined'
+  },
+  {
+    name: 'containerClass',
+    description: 'Class applied to the container',
+    type: 'string',
+    default: ''
+  },
+  {
+    name: 'onClose',
+    description: 'Triggered on close of alert',
+    type: 'function',
+    default: 'noop'
+  }
+]
+
+const alertStackProps = [
+  {
+    name: 'placement',
+    description: 'Placement of alert stack',
+    type: 'string',
+    default: 'top',
+    options: 'top | bottom'
+  },
+  {
+    name: 'alerts',
+    description: 'List of alerts to be stacked',
+    type: 'Array of alert props',
+    default: '[]'
+  },
+  {
+    name: 'className',
+    description: 'Alert stack className',
+    type: 'string',
+    default: ''
+  },
+  {
+    name: 'banner',
+    description: 'Is alert stack a banner',
+    type: 'boolean',
+    default: 'false'
+  },
+  {
+    name: 'offset',
+    description: 'Offset if alert stack is a banner',
+    type: 'number',
+    default: '0'
   }
 ]
 
@@ -174,6 +325,23 @@ export default function AlertComponent() {
             onDismiss={onDismiss}
           />
         </div>
+      </div>
+      <div>
+        <h4>Usage</h4>
+        <AppCode code={
+          `
+            import { Alert } from '@pk-design/react-ui-kit';
+            // on render
+            <Alert content='I am a success alert' type='success' />
+          `
+        } />
+      </div>
+      <div>
+        <h4>Props</h4>
+        <h6>Alert</h6>
+        <PropsTable contents={alertProps} />
+        <h6>Alert stack</h6>
+        <PropsTable contents={alertStackProps} />
       </div>
     </>
   )

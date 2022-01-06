@@ -1,6 +1,209 @@
 import React, { useState } from 'react'
 import { Button, ButtonGroup, Radio, Checkbox, ActionContainer } from '@pk-design/react-ui-kit'
 import { Link } from 'react-router-dom'
+import AppCode from './AppCode';
+import PropsTable from './PropsTable';
+
+const buttonProps = [
+  {
+    name: 'loading',
+    description: 'Disables button and shows loader icon',
+    type: 'boolean',
+    default: 'false'
+  },
+  {
+    name: 'loadingText',
+    description: 'Content to show while displaying',
+    type: 'string',
+    default: 'null'
+  },
+  {
+    name: 'disabled',
+    description: 'Disables the button',
+    type: 'boolean',
+    default: 'false'
+  },
+  {
+    name: 'className',
+    description: 'Button classname',
+    type: 'string',
+    default: ''
+  },
+  {
+    name: 'theme',
+    description: 'Button theme',
+    type: 'sting',
+    default: 'default',
+    options: `'primary' | 'danger' | 'success' | 'warning' | 'default'`
+  },
+  {
+    name: 'variant',
+    description: 'Button variant',
+    type: 'string',
+    default: `filled if theme is not default else null`,
+    options: `'plain' | 'outlined' | 'filled'`
+  },
+  {
+    name: 'size',
+    description: 'Button size',
+    type: 'string',
+    default: 'default',
+    options: `'tiny' | 'small' | 'default' | 'medium' | 'large'`
+  },
+  {
+    name: 'block',
+    description: 'Is block button (will take all available space of the parent)',
+    type: 'boolean',
+    default: 'false'
+  },
+  {
+    name: 'bold',
+    description: 'Button font weight bold',
+    type: 'boolean',
+    default: 'false'
+  },
+  {
+    name: 'iconOnly',
+    description: 'Does button contains only icon',
+    type: 'boolean',
+    default: 'false'
+  },
+  {
+    name: 'raised',
+    description: 'Raised button',
+    type: 'boolean',
+    default: 'false'
+  },
+  {
+    name: 'iconTheme',
+    description: 'Disables the button',
+    type: 'string',
+    default: '',
+    options: `'primary' | 'danger' | 'warning'`
+  },
+  {
+    name: 'icon',
+    description: 'Icon to be displayed on button',
+    type: '{}',
+    default: '{}',
+    options: `
+      {
+        left: 'Left icon',
+        right: 'Right icon'
+      }
+    `
+  }
+]
+
+const buttonGroupProps = [
+  {
+    name: 'containerClass',
+    description: 'Button group container class',
+    type: 'string',
+    default: ''
+  },
+  {
+    name: 'theme',
+    description: 'Button theme',
+    type: 'sting',
+    default: 'default',
+    options: `'primary' | 'danger' | 'success' | 'warning' | 'default'`
+  },
+  {
+    name: 'variant',
+    description: 'Button variant',
+    type: 'string',
+    default: `filled if theme is not default else null`,
+    options: `'plain' | 'outlined' | 'filled'`
+  },
+  {
+    name: 'size',
+    description: 'Button size',
+    type: 'string',
+    default: 'default',
+    options: `'tiny' | 'small' | 'default' | 'medium' | 'large'`
+  },
+  {
+    name: 'justify',
+    description: 'Horizontal button alignments',
+    type: 'string',
+    default: 'left',
+    options: `'right' | 'left' | 'center'`
+  },
+  {
+    name: 'align',
+    description: 'Vertical button alignments',
+    type: 'string',
+    default: 'center',
+    options: `'top' | 'bottom' | 'center'`
+  },
+  {
+    name: 'gap',
+    description: 'Horizontal button spacing',
+    type: 'string',
+    default: '',
+    options: `'small' | 'medium' | 'large'`
+  },
+  {
+    name: 'verticalSpacing',
+    description: 'Vertical button spacing',
+    type: 'string',
+    default: '',
+    options: `'top' | 'bottom' | 'both'`
+  },
+  {
+    name: 'actions',
+    description: 'List of action button to be displayed',
+    type: 'Array of ButtonGroupActionProps',
+    default: '[]'
+  }
+]
+
+const buttonGroupActionProps = [
+  {
+    name: 'label',
+    description: 'Button text/label',
+    type: 'any'
+  },
+  {
+    name: 'onClick',
+    description: 'On button click',
+    type: 'function',
+    default: 'noop'
+  },
+  {
+    name: 'type',
+    description: 'Type of button to display',
+    type: 'string',
+    default: 'button',
+    options: `'button' | 'dropdown' | 'custom'`
+  },
+  {
+    name: 'component',
+    description: 'Component to be rendered',
+    type: 'any',
+    default: 'button'
+  },
+  {
+    name: 'options',
+    description: 'If type is dropdown, this options will be used as dropdown items',
+    type: 'Array of dropdown OptionItem',
+    default: []
+  },
+  {
+    name: 'dropdownPosition',
+    description: 'Position of the dropdown',
+    type: 'string',
+    default: 'left',
+    options: `'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'right' | 'left'`
+  },
+  {
+    name: 'extraProps',
+    description: 'Extra props that can be passed to the action component',
+    type: 'any',
+    default: '{}'
+  }
+]
 
 let btnSize = ['tiny', 'small', 'default', 'medium', 'large'];
 let themes = ['primary', 'danger', 'warning', 'success', 'default'];
@@ -47,13 +250,13 @@ const options = [
 
 const ButtonGroupOptions = [
   {
-    label: 'New invoice',
+    label: 'New',
     component: Link,
     onClick: () => {},
     type: 'button',
     extraProps: {
       icon: { left: <i className='material-icons-outlined' style={{ fontSize: iconSizeMap.default }}>add_circle</i> },
-      'data-testid': 'new-invoice-btn',
+      'data-testid': 'new-btn',
       to: '/select',
     }
   },
@@ -222,7 +425,7 @@ export default function ButtonExample() {
         <hr />
         <ButtonGroup theme='primary' actions={[
           {
-            label: 'New invoice',
+            label: 'New',
             onClick: () => {},
             type: 'button'
           },
@@ -277,6 +480,79 @@ export default function ButtonExample() {
         >
           Go to select
         </Button>
+      </div>
+      <div className='mb-16 col-12'>
+        <h4>Usage</h4>
+        <AppCode code={
+          `
+            import { Button, ButtonGroup } from '@pk-design/react-ui-kit';
+            // on render
+            // button
+            <Button theme='primary' variant='filled' onClick={() => {}}>Sample button</Button>
+            // button group
+            <ButtonGroup actions={[
+              {
+                label: 'New',
+                onClick: () => {},
+                type: 'button', // no need to provide this as it is the default value
+                extraprops: {
+                  'data-testid': 'new-btn'
+                }
+              },
+              // use different component
+              {
+                label: 'Link as button',
+                type: 'button',
+                component: 'a' // render anchor tag as button
+              },
+              // use custom component on buttongroup
+              {
+                label: '',
+                type: 'custom',
+                component: <button>Custom button</button>
+              },
+              // render dropdown
+              {
+                label: 'More',
+                type: 'dropdown',
+                options: [
+                  {
+                    key: 'option1',
+                    name: 'Action 1'
+                  },
+                  {
+                    key: 'option2',
+                    name: 'Action 2'
+                  },
+                  {
+                    key: 'option3',
+                    name: 'Action 3'
+                  },
+                  {
+                    divider: true
+                  },
+                  {
+                    key: 'option4',
+                    name: 'Another action 1'
+                  },
+                  {
+                    key: 'option5',
+                    name: 'Another action 2'
+                  }
+                ]
+              }
+            ]} size='small' variant='plain' theme='danger' verticalSpacing='top' />
+          `
+        } />
+      </div>
+      <div className='mb-16 col-12'>
+        <h4>Props</h4>
+        <h6>Button</h6>
+        <PropsTable contents={buttonProps} />
+        <h6>Button group</h6>
+        <PropsTable contents={buttonGroupProps} />
+        <h6>Button group action</h6>
+        <PropsTable contents={buttonGroupActionProps} />
       </div>
     </>
   )

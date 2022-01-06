@@ -163,11 +163,6 @@ $btn-font-weight: var(--ui-kit-btn-font-weight, 500);
   }
 
   &.ui-kit-btn-group__space-both {
-    // .ui-kit-btn {
-    //   margin-top: 6px !important;
-    //   margin-bottom: 6px !important;
-    // }
-
     &.gap__small {
       .ui-kit-btn {
         margin-top: 4px;
@@ -256,7 +251,7 @@ $btn-font-weight: var(--ui-kit-btn-font-weight, 500);
 
   &:not(:disabled):focus {
     outline: 0;
-    box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.6), 0 2px 8px 0px rgba(0, 0, 0, 0.3), 0 0px 0px 2px rgba(0, 0, 0, 0.05);
+    // box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.6), 0 2px 8px 0px rgba(0, 0, 0, 0.3), 0 0px 0px 2px rgba(0, 0, 0, 0.05);
   }
 
   &:disabled {
@@ -267,7 +262,7 @@ $btn-font-weight: var(--ui-kit-btn-font-weight, 500);
   }
 
   &.ui-kit-btn-default {
-    @include gradient($white, $btn-bg);
+    @include gradient($white, $secondary);
     border-color: $border-color;
 
     &:not(:disabled):focus {
@@ -296,19 +291,19 @@ $btn-font-weight: var(--ui-kit-btn-font-weight, 500);
   }
 
   &.ui-kit-btn-primary {
-    @include btn-variant($primary, $primary-dark, $primary-light, $primary-300);
+    @include btn-variant($primary, $primary-dark, $primary-light, $primary-300, $primary-shadow);
   }
 
   &.ui-kit-btn-danger {
-    @include btn-variant($danger, $danger-dark, $danger-light, $danger-300);
+    @include btn-variant($danger, $danger-dark, $danger-light, $danger-300, $danger-shadow);
   }
 
   &.ui-kit-btn-warning {
-    @include btn-variant($warning, $warning-dark, $warning-light, $warning-300);
+    @include btn-variant($warning, $warning-dark, $warning-light, $warning-300, $warning-shadow);
   }
 
   &.ui-kit-btn-success {
-    @include btn-variant($success, $success-dark, $success-light, $success-300);
+    @include btn-variant($success, $success-dark, $success-light, $success-300, $success-shadow);
   }
 
   &.ui-kit-btn-size-tiny {

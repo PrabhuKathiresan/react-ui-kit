@@ -88,7 +88,7 @@ const Menu = (props: MenuProps) => {
                   type='search'
                   autoComplete='off'
                   onFocus={(e) => e.target.select()}
-                  className={cx('ui-kit-select--search-input', { dropup })}
+                  className={cx('ui-kit-select--search-input text--ellipsis', { dropup })}
                   placeholder='Search...'
                   tabIndex={-1}
                   {...searchInputProps}

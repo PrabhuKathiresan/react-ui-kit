@@ -1,0 +1,53 @@
+.ui-kit-tabs {
+  &-header {
+    position: relative;
+  }
+
+  &-list {
+    margin: 0;
+  }
+
+  &-item {
+    color: $text-grey;
+    list-style: none;
+    flex: 0 0 auto;
+    line-height: 28px;
+    transition: all .2s ease;
+    border-top-right-radius: $border-radius;
+    border-top-left-radius: $border-radius;
+
+    &:not(.ui-kit-tabs-item__active):not(.ui-kit-tabs-item__disabled):not(.ui-kit-tabs-item__more-icon-container):hover {
+      background-color: rgba(0,0,0,.05);
+    }
+
+    &__more-icon-container {
+      flex: 1;
+    }
+
+    &_more-icon {
+      width: 24px;
+    }
+
+    &__active {
+      color: $text-color;
+    }
+
+    &__disabled {
+      pointer-events: none;
+      color: $disabled-text;
+    }
+  }
+
+  &-active-tab-indicator {
+    bottom: 0;
+    height: 3px;
+    background-color: $secondary;
+  }
+
+  &-active-tab-tracker {
+    background-color: $primary;
+    transition: margin-left .2s linear;
+    height: 3px;
+    border-radius: 3px;
+  }
+}

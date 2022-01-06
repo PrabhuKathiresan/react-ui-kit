@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react'
 import createSorter from './create-sorter'
 import { PaginationOption, TableProps, TableState } from '../DataTable/props'
 import * as typeCheck from './type-check'
@@ -7,7 +8,8 @@ export const {
   isObject,
   isFunction,
   isDefined,
-  isUnDefined
+  isUnDefined,
+  isNumber
 } = typeCheck 
 
 export const noop = () => {
@@ -252,3 +254,43 @@ export const getMenuAnimationStyle = (options: AnimationStyleProps) => {
     boxShadow: ['entering', 'exiting'].includes(transitionState) ? 'rgba(18, 52, 77, 0.16) 0px 0px 4px 0px' : ''
   }
 }
+
+export const getDefaultStyle = (style: CSSProperties & { duration?: string | number }) => {
+  let {
+    duration = 300,
+    transitionProperty = 'transform, opacity',
+    transitionDuration = duration,
+    transitionTimingFunction = 'linear',
+    transformOrigin = 'top',
+    ...extraDefaultStyle
+  } = style
+  return {
+    defaultStyle: {
+      transitionProperty,
+      transitionDuration,
+      transitionTimingFunction,
+      transformOrigin,
+      ...extraDefaultStyle
+    }
+  }
+}
+
+export const getHeightTransition = (height: number | string) => ({
+  entering: {
+    height,
+    overflow: 'hidden'
+  },
+  entered: {
+    height: 'auto',
+    overflow: 'visible'
+  },
+  exiting: {
+    height: 0,
+    overflow: 'hidden'
+  },
+  exited: {
+    height: 0,
+    overflow: 'visible'
+  }
+})
+

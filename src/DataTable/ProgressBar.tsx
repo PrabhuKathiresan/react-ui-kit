@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { noop } from '../utils'
 
-function progressTimerMap(p: number) {
+export function progressTimerMap(p: number) {
   if (p < 50)
     return 10
   if (p < 80)
@@ -13,7 +13,7 @@ function progressTimerMap(p: number) {
   return 0
 }
 
-function useInterval(callback: Function, delay: number) {
+export function useInterval(callback: Function, delay: number) {
   let savedCallback = useRef<Function>(noop)
 
   // Remember the latest callback.

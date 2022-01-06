@@ -27,9 +27,9 @@ export default function DatePickerFooter(props: DatePickerFooterProps) {
 
   return (
     <div className='ui-kit-datepicker_calendar-footer'>
-      <Button size='tiny' variant='plain' theme='default' className='is-primary has-less-padding' disabled={computeDisabled('yesterday')} onClick={() => handleChange('yesterday')}>Yesterday</Button>
-      <Button size='tiny' variant='plain' theme='default' className='is-primary has-less-padding' disabled={computeDisabled('today')} onClick={() => handleChange('today')}>Today</Button>
-      <Button size='tiny' variant='plain' theme='default' className='is-primary has-less-padding' disabled={computeDisabled('tomorrow')} onClick={() => handleChange('tomorrow')}>Tomorrow</Button>
+      <Button tabIndex={-1} size='tiny' variant='plain' theme='default' className='is-primary has-less-padding' disabled={computeDisabled('yesterday')} onClick={() => handleChange('yesterday')}>Yesterday</Button>
+      <Button tabIndex={-1} size='tiny' variant='plain' theme='default' className='is-primary has-less-padding' disabled={computeDisabled('today')} onClick={() => handleChange('today')}>Today</Button>
+      <Button tabIndex={-1} size='tiny' variant='plain' theme='default' className='is-primary has-less-padding' disabled={computeDisabled('tomorrow')} onClick={() => handleChange('tomorrow')}>Tomorrow</Button>
     </div>
   )
 }

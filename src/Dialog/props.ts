@@ -3,31 +3,33 @@ export type DialogPositions = 'top' | 'bottom' | 'left' | 'right' | 'top-left' |
 export type DialogSizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 export interface ModalProps {
-  title: any;
-  content: any;
-  actions?: Array<any>;
-  showFooter?: boolean;
-  afterClose?: Function;
-  transitionState: TransitionState;
-  transitionDuration?: number;
-  showBackdrop?: boolean;
+  title: any
+  content: any
+  actions?: Array<any>
+  showFooter?: boolean
+  afterClose?: Function
+  transitionState: TransitionState
+  transitionDuration?: number
+  showBackdrop?: boolean
+  closeOnOutsideClick?: boolean
+  closeOnEscape?: boolean
 }
 
 export interface DialogProps extends ModalProps {
-  id: string;
-  position?: DialogPositions;
-  size?: DialogSizes;
-  onClose?: Function;
+  id: string
+  position?: DialogPositions
+  size?: DialogSizes
+  onClose?: Function
 }
 
 export interface Props extends DialogProps {
-  container?: any;
+  container?: any
 }
 
 export interface DialogContainerProps {
-  children: any;
-  hidden: boolean;
-  transitionDuration?: number;
+  children: any
+  hidden: boolean
+  transitionDuration?: number
 }
 
 export interface DialogState {
@@ -35,15 +37,15 @@ export interface DialogState {
 }
 
 export interface DialogControllerProps {
-  transitionState: TransitionState;
-  position: DialogPositions;
-  size: DialogSizes;
-  modalProps: ModalProps;
+  transitionState: TransitionState
+  position: DialogPositions
+  size: DialogSizes
+  modalProps: ModalProps
   onClose: Function
 }
 
 export interface ProviderProps {
-  show: Function;
-  hide: Function;
-  update: Function;
+  show: Function
+  hide: Function
+  update: Function
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { HTMLAttributes } from 'react'
 import Button from '../Button'
 import Close from '../icons/close'
 import { noop } from '../utils'
@@ -75,11 +75,22 @@ export default function Dialog(props: DialogProps) {
     position = 'right',
     transitionState,
     showBackdrop = false,
+    closeOnOutsideClick = false,
     id
   } = props
+
+  let backdropProps: HTMLAttributes<HTMLDivElement> = {
+    className: 'ui-kit-dialog-mask',
+    style: backDropTransistion[transitionState]
+  }
+
+  if (showBackdrop && closeOnOutsideClick) {
+    backdropProps.onClick = () => onClose()
+  }
+
   return (
     <>
-      {showBackdrop && <div className='ui-kit-dialog-mask' style={{ ...backDropTransistion[transitionState] }} />}
+      {showBackdrop && <div {...backdropProps} />}
       <div
         className='ui-kit-dialog pa-1'
         id={id}

@@ -21,7 +21,7 @@ function App() {
           </button>
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav">
-              <NavLink className='nav-link' activeClassName='active' aria-current='page' to='/basic'>Basic</NavLink>
+              <NavLink className='nav-link' activeClassName='active' aria-current='page' to='/ui-components'>UI components</NavLink>
               <NavLink className='nav-link' activeClassName='active' aria-current='page' to='/select'>Select</NavLink>
               <NavLink className='nav-link' activeClassName='active' aria-current='page' to='/form'>Form</NavLink>
               <NavLink className='nav-link' activeClassName='active' aria-current='page' to='/custom-form'>Custom Form</NavLink>
@@ -33,13 +33,13 @@ function App() {
       </nav>
       <div className="container py-40 text-default">
         <Switch>
-          <Route path='/basic/:componentName' component={BaseRoute} />
+          <Route path='/ui-components/:componentName' component={BaseRoute} />
           <Route exact path='/select' component={SelectComponent} />
           <Route exact path='/form' component={FormComponent} />
           <Route exact path='/custom-form' component={CustomFormComponent} />
           <Route exact path='/data-table' component={TableComponent} />
           <Route exact path='/date-picker' component={DatepickerComponent} />
-          <Redirect from='/' to='/basic/alert' exact />
+          <Redirect from='/' to='/ui-components/alert' exact />
           <Redirect to='/' />
         </Switch>
       </div>

@@ -12,12 +12,11 @@
   box-shadow: 0 0 0 1px $color !important;
 }
 
-@mixin btn-variant($color, $color-dark, $color-light, $color-100) {
+@mixin btn-variant($color, $color-dark, $color-light, $color-100, $color-shadow) {
   &.ui-kit-btn__filled {
     color: $white;
     border-color: $color;
     background-color: $color;
-    text-shadow: 0 2px 4px rgba($color: #000000, $alpha: .05);
 
     &:not(:disabled):hover {
       border-color: $color-dark;
@@ -25,7 +24,7 @@
     }
 
     &:not(:disabled):focus {
-      background-color: $color-dark;
+      box-shadow: 0 0 0 3px $color-shadow;
     }
 
     &:disabled {

@@ -101,7 +101,8 @@ export default function DialogExample() {
     content: 'This is a description component in the dialog window',
     position: 'right',
     size: 'sm',
-    showBackdrop: true
+    showBackdrop: true,
+    closeOnOutsideClick: false
   })
 
   let hideDialog = () => dialog.hide(DIALOG)
@@ -157,6 +158,7 @@ export default function DialogExample() {
             }}
           />
           <Checkbox className='mr-8 mb-16' checked={options.showBackdrop} onChange={e => setOptions(options => ({ ...options, showBackdrop: e.target.checked }))}>Show backdrop</Checkbox>
+          <Checkbox className='mr-8 mb-16' checked={options.closeOnOutsideClick} onChange={e => setOptions(options => ({ ...options, closeOnOutsideClick: e.target.checked }))}>Close on outside click</Checkbox>
         </div>
         <Button onClick={() => handleClick()} className='mr-16'>Show Dialog</Button>
         <Button onClick={() => openWithUpdate()}>Updatable Dialog</Button>

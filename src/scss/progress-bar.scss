@@ -1,7 +1,9 @@
+$progress-bar-secondary-bg: var(--ui-kit-progress-secondary-bg, #e4e4e4);
+
 .ui-kit-progress-bar {
   display: flex;
   width: 100%;
-  background-color: #e4e4e4;
+  background-color: $progress-bar-secondary-bg;
   position: relative;
 
   &-outer {
@@ -53,25 +55,39 @@
 
   &.ui-kit-progress-bar-primary {
     .ui-kit-progress-bar-inner {
-      @include gradient($primary, $primary-dark);
+      @include gradient($primary-medium, $primary);
     }
   }
 
   &.ui-kit-progress-bar-success {
     .ui-kit-progress-bar-inner {
-      @include gradient($success, $success-dark);
+      @include gradient($success-medium, $success);
     }
   }
 
   &.ui-kit-progress-bar-warning {
     .ui-kit-progress-bar-inner {
-      @include gradient($warning, $warning-dark);
+      @include gradient($warning-medium, $warning);
     }
   }
 
   &.ui-kit-progress-bar-danger {
     .ui-kit-progress-bar-inner {
-      @include gradient($danger, $danger-dark);
+      @include gradient($danger-medium, $danger);
     }
+  }
+}
+
+.ui-kit-progress-bar-meter {
+  height: 100%;
+  border-radius: 3px;
+  background-color: $primary;
+
+  &-indeterminate {
+    width: 100%;
+    height: 100%;
+    background-color: $primary;
+    transform-origin: 0% 50%;
+    animation: indeterminateProgressbar 1s infinite linear;
   }
 }

@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect, useRef } from 'react'
+import React, { CSSProperties, useRef } from 'react'
 import cx from 'classnames'
 import isEmpty from 'is-empty'
 import Tag from './Tag'
@@ -11,14 +11,6 @@ const getSelectedValue = (input: SelectedValueProps) => {
   const { selected = [], multiple, key } = input
   if (multiple || isEmpty(selected)) return ''
   return selected[0][key] || ''
-}
-
-const computeDynamicInputWidth = (value: string, fakeDiv: HTMLDivElement | null) => {
-  if (!fakeDiv) return `calc(56px + ${value.length}ch)`
-
-  fakeDiv.innerHTML = value.replace(/\s/g, '&' + 'nbsp;');
-  const fakeEleStyles = window.getComputedStyle(fakeDiv);
-  return `calc(${fakeEleStyles.width} + 4px)`;
 }
 
 const Input = (props: SelectInputProps) => {
@@ -36,14 +28,16 @@ const Input = (props: SelectInputProps) => {
     onClick = noop,
     onBlur = noop,
     onInputChange = noop,
+    onRemove = noop,
     id,
     extraProps,
     allowClear,
     open,
     textOnly,
-    inputProps,
+    inputProps = {},
     inputSize = 'default',
-    borderless
+    borderless,
+    height
   } = props
 
   const isSmallInput = inputSize === 'small'
@@ -53,7 +47,6 @@ const Input = (props: SelectInputProps) => {
   const value = getSelectedValue({ selected, multiple, key: labelKey })
   const showClearIcon = (allowClear && !disabled) && (multiple ? !isEmpty(selected) : !isEmpty(value))
   const inputEle = useRef<HTMLInputElement | null>(null)
-  const fakeDiv = useRef<HTMLDivElement | null>(null)
   const isTextOnlyAndBorderLess = textOnly && borderless
 
   const inputClassHash = {
@@ -68,68 +61,43 @@ const Input = (props: SelectInputProps) => {
     'ui-kit-select-input_lg': isLargeInput
   }
 
-  useEffect(() => {
-    if (!inputEle.current || !isTextOnlyAndBorderLess) return
+  const renderValue = () => multiple ? renderTags() : <span className='text--ellipsis'>{value}</span>
 
-    const fakeEle = document.createElement('div');
-    // Hide it completely
-    fakeEle.style.position = 'absolute';
-    fakeEle.style.top = '0';
-    fakeEle.style.left = '-9999px';
-    fakeEle.style.overflow = 'hidden';
-    fakeEle.style.visibility = 'hidden';
-    fakeEle.style.whiteSpace = 'nowrap';
-    fakeEle.style.height = '0';
-    // We copy some styles from the textbox that effect the width
-    // const textboxEle = document.getElementById(id);
-    // Get the styles
-    const styles = window.getComputedStyle(inputEle.current);
-    // Copy font styles from the textbox
-    fakeEle.style.fontFamily = styles.fontFamily;
-    fakeEle.style.fontSize = styles.fontSize;
-    fakeEle.style.fontStyle = styles.fontStyle;
-    fakeEle.style.fontWeight = styles.fontWeight;
-    fakeEle.style.letterSpacing = styles.letterSpacing;
-    fakeEle.style.textTransform = styles.textTransform;
-    fakeEle.style.borderLeftWidth = styles.borderLeftWidth;
-    fakeEle.style.borderRightWidth = styles.borderRightWidth;
-    fakeEle.style.paddingLeft = styles.paddingLeft;
-    fakeEle.style.paddingRight = styles.paddingRight;
-    // Append the fake element to `body`
-    document.body.appendChild(fakeEle);
-    fakeDiv.current = fakeEle
-
-    return () => {
-      fakeEle && document.body.removeChild(fakeEle)
-    }
-  }, [inputEle.current, isTextOnlyAndBorderLess])
+  const renderTags = () => selected.map((_selected, i) => (
+    <Tag id={`${id}-selected-input-${i}`} closeable={!disabled} disabled={disabled} onClose={() => onRemove(_selected)} key={i}>
+      {_selected.__label}
+    </Tag>
+  ))
 
   const style: CSSProperties = {}
 
   if (isTextOnlyAndBorderLess) {
-    style.width = computeDynamicInputWidth(value || placeholder, fakeDiv.current)
+    style.width = 'auto'
+  }
+
+  if (multiple) {
+    style.minHeight = height
   }
 
   if (disabled) {
     return (
-      <input
-        className={cx('ui-kit-select-input', inputClass, inputClassHash)}
+      <div
+        className={cx('ui-kit-select-input disabled', inputClass, inputClassHash)}
         defaultValue={value}
-        disabled
         data-testid={`${id}-input-disabled`}
-        placeholder={placeholder}
         style={style}
-      />
+      >
+        {renderValue()}
+      </div>
     )
   }
 
   return (
-    <input
+    <div
       {...inputProps}
       {...extraProps}
       style={style}
-      className={cx('ui-kit-select-input read-only', inputClass, inputClassHash)}
-      value={value}
+      className={cx('ui-kit-select-input text--ellipsis read-only', inputClass, inputClassHash)}
       ref={(input: HTMLInputElement) => {
         inputEle.current = input
         inputRef(input)
@@ -142,33 +110,26 @@ const Input = (props: SelectInputProps) => {
       id={id}
       data-testid={`${id}-input`}
       onChange={e => onInputChange(e)}
-    />
+      tabIndex={inputProps.tabIndex || 0}
+    >
+      {(value || !!selected.length) ?
+        renderValue() :
+        <span className='text--placeholder user-select-none'>{placeholder}</span>}
+    </div>
   );
 }
 
 const InputWrapper = (props: SelectInputProps) => {
   const {
-    onFocus = noop,
-    onClick = noop,
-    onBlur = noop,
-    inputClass = '',
     icons = {},
-    inputRef,
-    placeholder,
     disabled,
     loading,
     multiple,
     selected = [],
     labelKey,
-    onRemove = noop,
-    open,
-    extraProps,
-    id,
-    onInputChange = noop,
     onChange = noop,
     allowClear = false,
     inputSize = 'default',
-    inputProps,
     borderless,
     textOnly
   } = props
@@ -208,62 +169,6 @@ const InputWrapper = (props: SelectInputProps) => {
     ) : null
   }
 
-  const renderTags = () => selected.map((_selected, i) => (
-    <Tag id={`${id}-selected-input-${i}`} closeable={!disabled} disabled={disabled} onClose={() => onRemove(_selected)} key={i}>
-      {_selected.__label}
-    </Tag>
-  ))
-
-  const renderMultipleInput = () => {
-    if (disabled) {
-      return (
-        <input
-          className='ui-kit-select-multiple-input cursor-not-allowed'
-          disabled
-          placeholder={placeholder}
-          id={`${id}`}
-          data-testid={`${id}-input-disabled`}
-        />
-      )
-    }
-
-    return (
-      <input
-        className='ui-kit-select-multiple-input cursor-pointer'
-        onFocus={e => onFocus(e)}
-        onClick={e => onClick(e)}
-        onBlur={e => onBlur(e)}
-        placeholder={placeholder}
-        readOnly
-        id={id}
-        data-testid={`${id}-input`}
-        onChange={e => onInputChange(e)}
-        {...inputProps}
-        {...extraProps}
-      />
-    )
-  }
-
-  const renderInput = () => multiple ? (
-    <div
-      ref={inputRef}
-      className={cx('ui-kit-select-input', inputClass, {
-        'ui-kit-select-has-focus': open,
-        'has-left-icon': hasLeftIcon,
-        'has-right-icon': hasRightIcon,
-        'has-clear-icon': showClearIcon,
-        'has-less-padding': isSmallInput,
-        'disabled': disabled,
-        'ui-kit-select-input__borderless': borderless,
-        'ui-kit-select-input_sm': isSmallInput,
-        'ui-kit-select-input_lg': isLargeInput
-      })}
-    >
-      {renderTags()}
-      {renderMultipleInput()}
-    </div>
-  ) : <Input {...props} />
-
   return (
     <div className='ui-kit-select-input-wrapper'>
       {
@@ -275,7 +180,7 @@ const InputWrapper = (props: SelectInputProps) => {
           :
           null
       }
-      {renderInput()}
+      <Input {...props} />
       <>
         {
           showClearIcon && (

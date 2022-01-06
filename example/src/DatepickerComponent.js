@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { DatePicker, MonthPicker } from '@pk-design/react-ui-kit'
 
 export default function DatepickerComponent() {
-  let [date, setDate] = React.useState(new Date(2021, 5, 10));
+  let [date, setDate] = useState(new Date(2021, 5, 10));
+  let [mpDate, setMpDate] = useState(new Date())
   return (
     <div style={{ width: 480 }}>
       <DatePicker label='Basic datepicker' closeOnSelect placeholder='choose a date' />
@@ -50,8 +51,9 @@ export default function DatepickerComponent() {
       />
       <br />
       <MonthPicker
-        onChange={(_) => console.log(_)}
+        onChange={(_date) => setMpDate(_date)}
         label='Basic monthpicker'
+        value={mpDate}
       />
       <div style={{ height: 400 }} />
       <div className='d-flex'>
@@ -61,8 +63,9 @@ export default function DatepickerComponent() {
           className='mr-8'
         />
         <MonthPicker
-          onChange={(_) => console.log(_)}
+          onChange={(_) => setMpDate(_)}
           label='Basic monthpicker'
+          value={mpDate}
         />
       </div>
       

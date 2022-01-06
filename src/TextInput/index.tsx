@@ -1,7 +1,7 @@
 import React, { InputHTMLAttributes, MouseEvent, useRef, forwardRef, useImperativeHandle, useEffect, useState } from 'react'
 import cx from 'classnames'
 import Tooltip from '../Tooltip'
-import { TextInputProps } from './props'
+import { TextInputProps, NumberFieldProps } from './props'
 import InfoCircle from '../icons/info-circle'
 import Error from '../icons/error'
 import { noop, isEqual, generateID } from '../utils'
@@ -139,6 +139,7 @@ const TextInput = (props: InputHTMLAttributes<HTMLInputElement | HTMLTextAreaEle
     charLeft,
     min,
     max,
+    step,
     containerRef = useRef(null),
     labelRef = useRef(null),
     className,
@@ -148,6 +149,7 @@ const TextInput = (props: InputHTMLAttributes<HTMLInputElement | HTMLTextAreaEle
     value,
     ...inputProps
   } = props
+  let numberFieldProps: NumberFieldProps = {}
   let leftIconRef = useRef<any>(null)
   let [hasLeftIcon, setLeftIcon] = useState<boolean>(false)
   let rightIconRef = useRef<any>(null)
@@ -156,6 +158,14 @@ const TextInput = (props: InputHTMLAttributes<HTMLInputElement | HTMLTextAreaEle
   let Input = component
 
   let sizeClass = INPUT_SIZE_MAP[inputSize]
+
+  if (inputProps.type === 'number') {
+    numberFieldProps = {
+      min,
+      max,
+      step
+    }
+  }
 
   useEffect(() => {
     setRightIcon(rightIconRef.current?.hasIcon)
@@ -192,9 +202,9 @@ const TextInput = (props: InputHTMLAttributes<HTMLInputElement | HTMLTextAreaEle
         {
           disabled
             ?
-            <Input ref={ref} disabled data-testid={`${id}-input-disabled`} placeholder={placeholder} className={cx('ui-kit-input disabled', className, sizeClass, { 'ui-kit-input-with-left-icon': hasLeftIcon, 'ui-kit-input-with-right-icon': hasRightIcon })} value={value} style={style} />
+            <Input ref={ref} disabled data-testid={`${id}-input-disabled`} placeholder={placeholder} className={cx('ui-kit-input text--ellipsis disabled', className, sizeClass, { 'ui-kit-input-with-left-icon': hasLeftIcon, 'ui-kit-input-with-right-icon': hasRightIcon })} value={value} style={style} />
             :
-            <Input maxLength={maxLength} ref={ref} autoFocus={autoFocus} data-testid={`${id}-input`} id={id} placeholder={placeholder} autoComplete='off' className={cx('ui-kit-input', className, sizeClass, { 'ui-kit-input-with-left-icon': hasLeftIcon, 'ui-kit-input-with-right-icon': hasRightIcon })} style={style} value={value} {...inputProps} />
+            <Input {...numberFieldProps} maxLength={maxLength} ref={ref} autoFocus={autoFocus} data-testid={`${id}-input`} id={id} placeholder={placeholder} autoComplete='off' className={cx('ui-kit-input text--ellipsis', className, sizeClass, { 'ui-kit-input-with-left-icon': hasLeftIcon, 'ui-kit-input-with-right-icon': hasRightIcon })} style={style} value={value} {...inputProps} />
         }
         <RightIcon
           id={id}

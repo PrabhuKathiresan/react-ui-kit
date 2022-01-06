@@ -39,7 +39,8 @@ function MonthPicker(props: MonthPickerProps, ref: any) {
     message,
     error,
     inputSize = 'default',
-    animate = true
+    animate = true,
+    ...inputProps
   } = props
 
   value = value || defaultValue || today
@@ -85,7 +86,8 @@ function MonthPicker(props: MonthPickerProps, ref: any) {
     height,
     borderless,
     container,
-    required
+    required,
+    inputProps
   }
 
   return (

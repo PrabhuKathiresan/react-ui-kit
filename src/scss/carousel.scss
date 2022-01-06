@@ -1,0 +1,77 @@
+.ui-kit-carousel {
+  position: relative;
+
+  &--item,
+  &--inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  &--indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    z-index: 5;
+
+    &-icon {
+      color: #7e7e7e;
+
+      &:hover {
+        color: #404040;
+      }
+    }
+  }
+
+  &--inner {
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  &--item {
+    z-index: 3;
+    transition: transform 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    &-mask {
+      filter: blur(5px);
+    }
+
+    .ui-kit-empty-state {
+      height: 50%;
+      width: 280px;
+      background-position: center;
+      background-size: 40%;
+      background-repeat: no-repeat;
+      background-image: url('https://assets.invoicebook.in/no-data.svg');
+    }
+  }
+
+  .ui-kit-btn.ui-kit-carousel--controls {
+    position: absolute;
+    z-index: 5;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &.ui-kit-btn-default {
+      &:not(:disabled) {
+        &:focus {
+          border-color: transparent;
+          box-shadow: none;
+        }
+      }
+    }
+
+    &.left-control {
+      left: 10px;
+    }
+
+    &.right-control {
+      right: 10px;
+    }
+  }
+}

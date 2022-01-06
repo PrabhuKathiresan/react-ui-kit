@@ -13,9 +13,11 @@ const floatingPositionMap = (elem: HTMLDivElement | null, floatOffset: number = 
     let width = elem?.clientWidth || 0
     let height = elem?.clientHeight || 0
     let top = rect.top
-    let left = (rect.left - width) - floatOffset
+    let left: any = (rect.left - width) - floatOffset
+    let marginLeft: any
     if (left < 0) {
-      left = width + left - rect.left
+      left = 'auto'
+      marginLeft = 10
     }
     let bufferTop = window.innerHeight - top
     if (bufferTop < height) {
@@ -25,7 +27,8 @@ const floatingPositionMap = (elem: HTMLDivElement | null, floatOffset: number = 
       top,
       left,
       marginTop: 0,
-      marginLeft: 10
+      marginRight: 10,
+      marginLeft
     }
   },
   'bottom-left': (rect: any) => {

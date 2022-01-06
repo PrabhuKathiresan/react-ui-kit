@@ -20,7 +20,6 @@ export const ToastContainer = ({
   let style: React.CSSProperties = {
     boxSizing: 'border-box',
     maxHeight: '100%',
-    maxWidth: '100%',
     overflow: 'hidden',
     padding: 16,
     position: 'fixed',

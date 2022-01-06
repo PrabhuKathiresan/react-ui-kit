@@ -57,8 +57,6 @@ $translateY: 50%;
 
     .ui-kit-select-input {
       width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
       font-size: inherit;
       font-family: inherit;
       -webkit-appearance: none;
@@ -191,8 +189,6 @@ $translateY: 50%;
 
   .ui-kit-select--search-input {
     width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
     font-size: inherit;
     font-family: inherit;
     -webkit-appearance: none;
@@ -204,6 +200,10 @@ $translateY: 50%;
     align-items: center;
     border-top-left-radius: $border-radius;
     border-top-right-radius: $border-radius;
+
+    &::placeholder {
+      color: $placeholder-color;
+    }
 
     &.dropup {
       border-bottom: 0;
@@ -265,7 +265,7 @@ $translateY: 50%;
   }
 
   &.has-shadow {
-    box-shadow: $shodow
+    box-shadow: $shadow
   }
 }
 
@@ -287,15 +287,15 @@ $translateY: 50%;
 
 .ui-kit-select--transition {
   width: 100%;
-  box-shadow: $shodow;
+  box-shadow: $shadow;
   border-radius: $border-radius;
 }
 
 .ui-kit-select--tag {
   display: flex;
   align-items: center;
-  height: 24px;
-  line-height: 24px;
+  height: 22px;
+  line-height: 22px;
   padding-left: 8px;
   background-color: #f5f5f5;
   border: 1px solid $border-color;
@@ -312,10 +312,6 @@ $translateY: 50%;
 
   &_text {
     max-width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    padding-right: 8px;
 
     &.closable {
       max-width: calc(100% - 20px);

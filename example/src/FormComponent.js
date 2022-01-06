@@ -420,7 +420,6 @@ class Service {
   }
 
   update = async (id, data) => {
-    console.log('Update data', data)
     return Promise.resolve({ success: true });
   }
 }

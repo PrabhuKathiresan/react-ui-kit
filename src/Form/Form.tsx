@@ -140,6 +140,10 @@ export default class Form extends Component<FormProps, FormState> {
     }, () => this.afterChange(name))
   }
 
+  handleKeyDown = (e: React.KeyboardEvent) => {
+    e.stopPropagation()
+  }
+
   handleCheckboxChange = (name: string, e: any) => {
     this.setState((state: FormState) => {
       let { formData } = state
@@ -238,6 +242,7 @@ export default class Form extends Component<FormProps, FormState> {
         inputProps.maxLength = maxLength
         inputProps.charLeft = charLeft
         inputProps.component = 'textarea'
+        inputProps.onKeyDown = this.handleKeyDown
         break
       case 'Select':
         inputProps.labelKey = inputProps.labelKey || 'name'
@@ -279,9 +284,11 @@ export default class Form extends Component<FormProps, FormState> {
       case 'Custom':
         FieldComponent = customComponent
         inputProps.onChange = (value: any) => this.handleInputChange(name, value)
+        inputProps.onKeyDown = this.handleKeyDown
         break
       case 'TextInput':
       default:
+        inputProps.onKeyDown = this.handleKeyDown
         break
     }
 

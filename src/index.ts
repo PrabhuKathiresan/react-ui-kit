@@ -41,6 +41,12 @@ export { default as MonthPicker } from './MonthPicker'
 
 export { default as Loader } from './Loader'
 
-export { default as ProgressBar } from './ProgressBar'
+export * as ProgressBar from './ProgressBar'
 
 export { default as ActionContainer } from './ActionContainer'
+
+export { default as Accordion } from './Accordion'
+
+export { default as Carousel } from './Carousel'
+
+export { default as Tabs } from './Tabs'

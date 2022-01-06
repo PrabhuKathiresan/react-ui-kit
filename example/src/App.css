@@ -24,3 +24,11 @@
 .list-group-item a.active {
   color: #0d6efd;
 }
+
+.code-block {
+  margin-bottom: 16px;
+}
+
+.code-block code {
+  padding: 0 !important;
+}

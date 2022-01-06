@@ -90,7 +90,8 @@ class DialogClassExample extends Component {
     content: 'This is a description component in the dialog window',
     position: 'right',
     size: 'sm',
-    showBackdrop: true
+    showBackdrop: true,
+    closeOnOutsideClick: false
   }
 
   hideDialog = () => this.props.dialogManager.hide(DIALOG)
@@ -114,7 +115,8 @@ class DialogClassExample extends Component {
     let {
       position,
       size,
-      showBackdrop
+      showBackdrop,
+      closeOnOutsideClick
     } = this.state
     return (
       <div className='col-xl-4 col-lg-6 mb-16'>
@@ -141,6 +143,7 @@ class DialogClassExample extends Component {
             onChange={selected => this.setOptions('size', selected[0]?.value || 'sm')}
           />
           <Checkbox className='mr-8 mb-16' checked={showBackdrop} onChange={e => this.setOptions('showBackdrop', e.target.checked)}>Show backdrop</Checkbox>
+          <Checkbox className='mr-8 mb-16' checked={closeOnOutsideClick} onChange={e => this.setOptions('closeOnOutsideClick', e.target.checked)}>Close on outside click</Checkbox>
         </div>
         <Button onClick={() => this.handleClick()}>Show Dialog</Button>
       </div>

@@ -215,6 +215,10 @@
 .element-flex {
   display: flex;
 
+  &--0-auto {
+    flex: 0 0 auto;
+  }
+
   &--wrap {
     flex-wrap: wrap;
   }
@@ -244,28 +248,192 @@
     display: flex;
     justify-content: space-around;
   }
+
+  &.justify-center {
+    justify-content: center;
+  }
+
+  &.justify-between {
+    justify-content: space-between;
+  }
+
+  &.align-center {
+    align-items: center;
+  }
+
+  &.flex-column {
+    flex-direction: column;
+  }
 }
 
-.text--success {
-  color: $success;
+.text {
+  &--success {
+    color: $success;
+  }
+
+  &--primary {
+    color: $primary;
+  }
+
+  &--danger {
+    color: $danger;
+  }
+
+  &--info {
+    color: $info;
+  }
+
+  &--warning {
+    color: $warning;
+  }
+
+  &--muted {
+    color: $text-muted;
+  }
+
+  &--placeholder {
+    color: $placeholder-color;
+  }
+
+  &--ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 }
 
-.text--danger {
-  color: $danger;
+.border {
+  border: 1px solid $border-color;
+
+  &-left {
+    border-left: 1px solid $border-color;
+  }
+
+  &-right {
+    border-right: 1px solid $border-color;
+  }
+
+  &-top {
+    border-top: 1px solid $border-color;
+  }
+
+  &-bottom {
+    border-bottom: 1px solid $border-color;
+  }
+
+  &-radius {
+    border-radius: $border-radius;
+  }
 }
 
-.text--primary {
-  color: $primary;
+.position {
+  &-relative {
+    position: relative;
+  }
+
+  &-absolute {
+    position: absolute;
+  }
 }
 
-.text--info {
-  color: $info;
+.overflow {
+  &-hidden {
+    overflow: hidden;
+  }
+
+  &-visible {
+    overflow: visible;
+  }
+
+  &-auto {
+    overflow: auto;
+  }
+
+  &-x {
+    &-hidden {
+      overflow-x: hidden;
+    }
+  
+    &-visible {
+      overflow-x: visible;
+    }
+  
+    &-auto {
+      overflow-x: auto;
+    }
+  }
+
+  &-y {
+    &-hidden {
+      overflow-y: hidden;
+    }
+  
+    &-visible {
+      overflow-y: visible;
+    }
+  
+    &-auto {
+      overflow-y: auto;
+    }
+  }
 }
 
-.text--warning {
-  color: $warning;
+.rotate {
+  &-0 {
+    transform: rotate(0deg);
+  }
+
+  &-45 {
+    transform: rotate(45deg);
+  }
+
+  &-90 {
+    transform: rotate(90deg);
+  }
+
+  &-135 {
+    transform: rotate(135deg);
+  }
+
+  &-180 {
+    transform: rotate(180deg);
+  }
+
+  &-225 {
+    transform: rotate(225deg);
+  }
+
+  &-270 {
+    transform: rotate(270deg);
+  }
+
+  &-315 {
+    transform: rotate(315deg);
+  }
 }
 
-.text--muted {
-  color: rgba(0, 0, 0, .5);
+.full {
+  &-absolute {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  &-fixed {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+.z-index {
+  @for $i from -1 through 40 {
+    &-#{$i} {
+      z-index: #{($i * 1)};
+    }
+  }
 }

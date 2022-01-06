@@ -9,8 +9,9 @@ import DatePickerElement from './DatePickerElement'
 import DateIcon from '../icons/date-icon'
 import { DatePickerProps, DatePickerState } from './props'
 import { TransitionState } from '../constants'
-import { canUseDOM, getOffset, noop } from '../utils'
+import { canUseDOM, getOffset, isDefined, noop } from '../utils'
 import { endOf, startOf } from './utils'
+import { DOWN, ESC, TAB, UP } from '../Select/constants'
 
 const PICKER_HEIGHT = 380
 const TRANSITION_DURATION = 300
@@ -34,7 +35,7 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
   containerRef = React.createRef<null | HTMLDivElement>()
   menuRef = React.createRef<null | HTMLDivElement>()
   inputContainer = React.createRef<null | HTMLDivElement>()
-  inputRef = React.createRef<null | HTMLInputElement>()
+  inputRef = React.createRef<HTMLInputElement>()
   iconRef = React.createRef<null | HTMLSpanElement>()
   monthMenuRef: any = null
   yearMenuRef: any = null
@@ -105,11 +106,11 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
   }
 
   handleResize = () => {
-    this.datePickerOpen() && this.setPickerPosition()
+    this.datePickerOpen && this.setPickerPosition()
   }
 
   addBackDrop = (e: Event) => {
-    if (!this.stopPropagation && (this.datePickerOpen() && (e.target instanceof Element || e.target instanceof Document))) {
+    if (!this.stopPropagation && (this.datePickerOpen && (e.target instanceof Element || e.target instanceof Document))) {
       if (
         this.inputRef.current?.contains(e.target) ||
         (!this.containerRef.current?.contains(e.target) &&
@@ -125,7 +126,7 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
 
   handleScroll = (e: Event) => {
     if (
-      this.datePickerOpen() && this.hasFocus() &&
+      this.datePickerOpen && this.hasFocus &&
       (e.target instanceof HTMLElement || e.target instanceof Document) &&
       !this.monthMenuRef?.contains(e.target) &&
       !this.yearMenuRef?.contains(e.target)
@@ -135,18 +136,18 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
   }
 
   onFocus = () => {
-    if (!this.hasFocus()) this.datePickerOpen() ? this.closeDatePicker() : this.openDatePicker()
+    if (!this.hasFocus) this.datePickerOpen ? this.closeDatePicker() : this.openDatePicker()
   }
 
   onClick = () => {
-    if (this.hasFocus()) {
+    if (this.hasFocus) {
       this.stopPropagation = true
       this.closeDatePicker()
     }
   }
 
   triggerOpen = () => {
-    if (this.datePickerOpen()) {
+    if (this.datePickerOpen) {
       this.closeDatePicker()
     } else {
       this.stopPropagation = true
@@ -154,8 +155,8 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
     }
   }
 
-  datePickerOpen = () => this.state.open
-  hasFocus = () => this.state.focus
+  get datePickerOpen() { return this.state.open }
+  get hasFocus() { return this.state.focus }
 
   closeDatePicker = () => this.setState({ open: false }, () => {
     this.removeListener()
@@ -175,6 +176,28 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
         this.setState({ focus: true })
       }, 200)
     })
+  }
+
+  handleKeyDown = (e: React.KeyboardEvent) => {
+    // Skip most actions when the menu is hidden.
+    if (!this.datePickerOpen) {
+      if (e.key === UP || e.key === DOWN) {
+        this.openDatePicker()
+      }
+
+      return
+    }
+
+    switch (e.key) {
+      case ESC:
+      case TAB:
+        // ESC simply hides the menu. TAB will blur the input and move focus to
+        // the next item hide the menu so it doesn't gain focus.
+        this.closeDatePicker()
+        break
+      default:
+        break
+    }
   }
 
   setPickerPosition = () => {
@@ -383,8 +406,8 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
   }
 
   changeDate = ({ year, month }: any) => {
-    if (year) this.setState({ year }, this.setYear)
-    else if (month) this.setState({ month }, this.setMonth)
+    if (isDefined(year)) this.setState({ year }, this.setYear)
+    else if (isDefined(month)) this.setState({ month }, this.setMonth)
   }
 
   disabledDate = (timestamp: any) => {
@@ -493,12 +516,13 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
           placeholder={placeholder}
           onFocus={this.onFocus}
           onClick={this.onClick}
+          onKeyDown={this.handleKeyDown}
           ref={this.inputRef}
           readOnly
           icon={{
             right: (
               <span className={cx('element-flex-center w-100 h-100', { 'is-clickable': !disabled })} ref={this.iconRef  as React.RefObject<HTMLSpanElement>}>
-                <DateIcon className='text--muted' />
+                <DateIcon className='text--placeholder' />
               </span>
             )
           }}

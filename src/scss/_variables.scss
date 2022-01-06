@@ -1,34 +1,70 @@
-$text-color: #183247;
+// $text-color: #183247;
+$text-color: #1c2636 !default;
+$secondary: #e7ecf1 !default;
+// $secondary: #dfe9f3 !default;
+// $primary: #1266f1;
+// $primary: #3377ff;
+// $primary: #216cff;
+// $primary: #5047e1;
+$primary: #356ae6 !default;
+$danger: #f93154 !default;
+$warning: #ffa900 !default;
+$success: #00b74a !default;
+// $info: #39c0ed;
+$info: #1890ff !default;
 
-$primary: #1266f1;
+$black: #000000 !default;
+$white: #ffffff !default;
+
+// Breakpoints
+$xs: 0 !default;
+$sm: 576px !default;
+$md: 768px !default;
+$lg: 1024px !default;
+$xl: 1200px !default;
+
+$placeholder-color: lighten($black, 60%);
+
+$text-secondary: lighten($text-color, 10%);
+$text-grey: lighten($black, 40%);
+$text-muted: lighten($text-color, 60%);
+
+$secondary-dark: darken($secondary, 10%);
+$secondary-light: lighten($secondary, 5%);
+
 $primary-dark: darken($primary, 10%);
 $primary-light: lighten($primary, 10%);
+$primary-medium: lighten($primary, 20%);
+$primary-shadow: lighten($primary, 30%);
 $primary-300: lighten($primary, 94% - lightness($primary));
 $primary-200: lighten($primary, 96% - lightness($primary));
 $primary-100: lighten($primary, 98% - lightness($primary));
 
-$danger: #f93154;
 $danger-dark: darken($danger, 10%);
 $danger-light: lighten($danger, 10%);
+$danger-medium: lighten($danger, 20%);
+$danger-shadow: lighten($danger, 30%);
 $danger-300: lighten($danger, 94% - lightness($danger));
 $danger-100: lighten($danger, 98% - lightness($danger));
 
-$warning: #ffa900;
 $warning-dark: darken($warning, 10%);
 $warning-light: lighten($warning, 10%);
+$warning-medium: lighten($warning, 20%);
+$warning-shadow: lighten($warning, 30%);
 $warning-300: lighten($warning, 94% - lightness($warning));
 $warning-100: lighten($warning, 98% - lightness($warning));
 
-$success: #00b74a;
 $success-dark: darken($success, 10%);
 $success-light: lighten($success, 10%);
+$success-medium: lighten($success, 20%);
+$success-shadow: lighten($success, 30%);
 $success-300: lighten($success, 94% - lightness($success));
 $success-100: lighten($success, 98% - lightness($success));
 
-// $info: #39c0ed;
-$info: #1890ff;
 $info-dark: darken($info, 10%);
 $info-light: lighten($info, 10%);
+$info-medium: lighten($info, 20%);
+$info-shadow: lighten($info, 30%);
 $info-300: lighten($info, 94% - lightness($info));
 $info-100: lighten($info, 98% - lightness($info));
 
@@ -42,8 +78,6 @@ $input-icon-width-sm: 24px;
 $border-radius: var(--border-radius, 4px);
 $readOnly: var(--read-only-bg, rgba(255, 255, 255, 0.6));
 $label-color: var(--label-color, #6c757d);
-$black: #000000;
-$white: #ffffff;
 $table-header-font-size: var(--table-header-font-size, 500);
 $table-header-bg: var(--table-header-bg, #f5f5f5);
 $table-header-text-color: var(--table-header-text-color, #6c767f);
@@ -55,7 +89,7 @@ $font-size-default: 13px;
 $font-size-small: 12px;
 $font-size-x-small: 11px;
 
-$btn-color: var(--ui-kit-btn-color, #183247);
+$btn-color: var(--ui-kit-btn-color, $text-color);
 $btn-border: var(--ui-kit-btn-border-color, #cfd7df);
 $btn-bg: var(--ui-kit-btn-bg, #f3f5f7);
 
@@ -66,16 +100,9 @@ $dialog-header-height: 60px;
 
 $toast-border-width: var(--ui-kit-toast-border-width, 3px);
 
-$alert-text-color: var(--ui-kit-alert-text-color, #183247);
+$alert-text-color: var(--ui-kit-alert-text-color, $text-color);
 
-$shodow: rgba(18, 52, 77, 0.16) 0px 2px 18px 0px, rgba(18, 52, 77, 0.06) 0px 2px 4px 0px;
-
-// Breakpoints
-$xs: 0;
-$sm: 576px;
-$md: 768px;
-$lg: 1024px;
-$xl: 1200px;
+$shadow: rgba(18, 52, 77, 0.16) 0px 2px 18px 0px, rgba(18, 52, 77, 0.06) 0px 2px 4px 0px;
 
 :root {
   --primary-color: #{$primary};
@@ -98,5 +125,6 @@ $xl: 1200px;
   --info-dark: #{$info-dark};
   --info-light: #{$info-light};
 
-  --app-color: #{$text-color};
+  --text-color: #{$text-color};
+  --text-secondary: #{$text-secondary};
 }
