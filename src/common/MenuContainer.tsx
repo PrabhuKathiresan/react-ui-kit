@@ -1,18 +1,18 @@
-import React from 'react';
+import React from 'react'
 
 interface PositionProps {
-  top?: number | string;
-  bottom?: number | string;
-  left?: number | string;
-  width?: number | string;
-  dropup?: boolean;
+  top?: number | string
+  bottom?: number | string
+  left?: number | string
+  width?: number | string
+  dropup?: boolean
 }
 
 interface MenuContainerProps {
-  position: PositionProps;
-  children: any;
-  dropup: boolean;
-  [k: string]: any;
+  position: PositionProps
+  children: any
+  dropup: boolean
+  [k: string]: any
 }
 
 const Container = ({

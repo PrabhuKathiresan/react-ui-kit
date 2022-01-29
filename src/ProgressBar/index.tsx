@@ -3,4 +3,4 @@ export {
   ProgressBarConsumer,
   ProgressBarProvider,
   withProgressBarManager
-} from './ProgressBarProvider';
+} from './ProgressBarProvider'

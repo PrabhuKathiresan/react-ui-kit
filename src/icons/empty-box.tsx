@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
-import React from 'react';
+import React from 'react'
 
 const DefaultEmptyIcon = () => (
   <svg width="64" height="41" viewBox="0 0 64 41" xmlns="http://www.w3.org/2000/svg">
@@ -12,7 +12,7 @@ const DefaultEmptyIcon = () => (
       </g>
     </g>
   </svg>
-);
+)
 
 export default function EmptyBox({ emptyText = 'No data found', emptyIcon = null }) {
   return (
@@ -22,5 +22,5 @@ export default function EmptyBox({ emptyText = 'No data found', emptyIcon = null
       }
       <span>{emptyText}</span>
     </div>
-  );
+  )
 }

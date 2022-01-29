@@ -3,15 +3,15 @@
   margin-bottom: 1rem;
 
   .ui-kit-input-hint-icon {
-    display: inline-block;
-    vertical-align: text-bottom;
+    display: inline-flex;
   }
 
   .ui-kit-input-label {
-    display: inline-block;
-    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
     line-height: 20px;
     color: $label-color;
+    line-height: 14px;
     margin-bottom: 0.5rem;
 
     &.is-required {

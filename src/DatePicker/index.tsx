@@ -52,8 +52,8 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
     let endDate = new Date((date.getFullYear() + 10), 11, 31)
     if (props.min) startDate = props.min
     if (props.max) endDate = props.max
-    let value = props.value instanceof Date ? props.value.getTime() : ''
-    let defaultValue = props.defaultValue instanceof Date ? props.defaultValue.getTime() : ''
+    let value = props.value instanceof Date ? dayjs(props.value).startOf('d').toDate().getTime() : ''
+    let defaultValue = props.defaultValue instanceof Date ? dayjs(props.defaultValue).startOf('d').toDate().getTime() : ''
     let selectedDay = value || defaultValue
     if (props.value && !props.onChange) {
       console.warn('[Datepicker]: uncontrolled input')
@@ -77,8 +77,9 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
   }
 
   componentDidUpdate() {
-    if (this.props.value) {
-      let nextSelectedDay = this.props.value.getTime()
+    let { value } = this.props
+    if (value) {
+      let nextSelectedDay = dayjs(value).startOf('d').toDate().getTime()
 
       if (nextSelectedDay !== this.state.selectedDay) {
         this.setState({ selectedDay: nextSelectedDay }, this.setDateFromTimestamp)
@@ -201,7 +202,7 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
   }
 
   setPickerPosition = () => {
-    let pickerPosition: any = DEFAULT_PICKER_POSITION;
+    let pickerPosition: any = DEFAULT_PICKER_POSITION
     if (this.inputRef.current) {
       let { dropup } = this.props
       let _dropup = false
@@ -230,7 +231,7 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
 
   setDateFromTimestamp = () => {
     let { selectedDay } = this.state
-    if (!selectedDay) return;
+    if (!selectedDay) return
     let date = new Date(selectedDay)
     let month = date.getMonth()
     let year = date.getFullYear()

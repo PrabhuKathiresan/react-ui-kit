@@ -1,5 +1,5 @@
-import React from 'react';
-import { IconProps } from './props';
+import React from 'react'
+import { IconProps } from './props'
 
 const IndeterminateIcon = (props: IconProps) => {
   let { height = 18, width = 18, viewBox = '0 0 24 24', fill = 'currentColor' } = props
@@ -16,7 +16,7 @@ const IndeterminateIcon = (props: IconProps) => {
         </g>
       </g>
     </svg>
-  );
-};
+  )
+}
 
-export default IndeterminateIcon;
+export default IndeterminateIcon

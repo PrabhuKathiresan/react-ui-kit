@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { DatePicker, MonthPicker } from '@pk-design/react-ui-kit'
 
 export default function DatepickerComponent() {
-  let [date, setDate] = useState(new Date(2021, 5, 10));
+  let [date, setDate] = useState(new Date());
   let [mpDate, setMpDate] = useState(new Date())
   return (
     <div style={{ width: 480 }}>
@@ -54,6 +54,7 @@ export default function DatepickerComponent() {
         onChange={(_date) => setMpDate(_date)}
         label='Basic monthpicker'
         value={mpDate}
+        hint='I am hint text'
       />
       <div style={{ height: 400 }} />
       <div className='d-flex'>
@@ -68,7 +69,6 @@ export default function DatepickerComponent() {
           value={mpDate}
         />
       </div>
-      
     </div>
   )
 }

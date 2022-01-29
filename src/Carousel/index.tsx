@@ -50,7 +50,7 @@ export default function Carousel(props: CarouselProps) {
   let indicator = (i: number) => i === activeIndex ? <CircleFilled width={12} height={12} /> : <CircleOutline width={12} height={12} />
 
   let changeCurrentIndex = (i: number, options: any = {}) => {
-    let { animate = true, auto = false } = options;
+    let { animate = true, auto = false } = options
     indexTrackerRef.current = i
     if (!auto) timer.current?.restart()
     setAnimate(animate)
@@ -80,7 +80,7 @@ export default function Carousel(props: CarouselProps) {
       onStop: () => setPlaying(false),
       autoStart: true,
       interval: autoPlayInterval
-    });
+    })
   }
 
   useEffect(() => {
@@ -148,7 +148,7 @@ export default function Carousel(props: CarouselProps) {
         )
       }
     </>
-  );
+  )
 
   let renderEmptyState = () => (
     <div className={cx('ui-kit-carousel--inner', containerClass)} style={{ ...getInnerStyle() }}>

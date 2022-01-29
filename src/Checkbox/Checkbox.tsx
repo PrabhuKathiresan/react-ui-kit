@@ -23,15 +23,15 @@ export default function (props: CheckboxProps) {
 
   let globalProps = Object.keys(others).reduce((prev, key) => {
     if (key.substr(0, 5) === 'aria-' || key.substr(0, 5) === 'data-' || key === 'role') {
-      prev[key] = others[key];
+      prev[key] = others[key]
     }
-    return prev;
-  }, {});
+    return prev
+  }, {})
 
   let checkbox = useRef<HTMLInputElement | null>(null)
 
   let handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e);
+    onChange(e)
   }
 
   let checkboxStyle = variant === 'bordered' ? 'ui-kit-checkbox-wrapper-bordered' : ''

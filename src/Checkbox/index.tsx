@@ -4,7 +4,7 @@ import { CheckboxProps } from './props'
 
 interface CompoundedComponent
   extends React.ForwardRefExoticComponent<CheckboxProps & React.RefAttributes<HTMLInputElement>> {
-  Group: typeof CheckboxGroup;
+  Group: typeof CheckboxGroup
 }
 
 const Checkbox = InternalCheckbox as CompoundedComponent

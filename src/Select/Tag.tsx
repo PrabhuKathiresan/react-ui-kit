@@ -11,7 +11,7 @@ interface TagProps {
 }
 
 const Tag = (props: TagProps) => {
-  let { children, closeable, onClose, id, disabled } = props;
+  let { children, closeable, onClose, id, disabled } = props
 
   const handleFocus = (e: React.FocusEvent) => {
     e.stopPropagation()
@@ -29,4 +29,4 @@ const Tag = (props: TagProps) => {
   )
 }
 
-export default Tag;
+export default Tag

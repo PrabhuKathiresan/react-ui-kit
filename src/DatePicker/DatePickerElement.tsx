@@ -1,11 +1,11 @@
 import React, { forwardRef, useState } from 'react'
 import cx from 'classnames'
 import { DatePickerElementProps } from './props'
-import DatePickerHeader from './DatePickerHeader';
-import DatePickerFooter from './DatePickerFooter';
-import { getMenuAnimationStyle } from '../utils';
+import DatePickerHeader from './DatePickerHeader'
+import DatePickerFooter from './DatePickerFooter'
+import { getMenuAnimationStyle } from '../utils'
 
-const DAYS_MINI = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+const DAYS_MINI = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
 function DatePickerElement(props: DatePickerElementProps, ref: any) {
   let {

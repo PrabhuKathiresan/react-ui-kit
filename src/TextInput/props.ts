@@ -31,4 +31,5 @@ export interface TextInputProps extends InputProps {
   containerRef?: Ref<any>
   labelRef?: Ref<any>
   onRightIconClick?: Function
+  hintIcon?: any
 }

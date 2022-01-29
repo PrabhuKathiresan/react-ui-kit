@@ -3,7 +3,6 @@ import cx from 'classnames'
 import Button from '../Button'
 import Dropdown from '../Dropdown'
 import { ButtonGroupProps, ButtonGroupActionProps } from './props'
-import { generateUEID } from '../utils'
 
 export default function ButtonGroup(props: ButtonGroupProps) {
   const {
@@ -66,8 +65,8 @@ export default function ButtonGroup(props: ButtonGroupProps) {
     >
       <div className={cx('element-flex-align-center', { 'element-flex--wrap': Boolean(gap) })}>
         {
-          actions.map((action: ButtonGroupActionProps) => (
-            <Fragment key={generateUEID()}>
+          actions.map((action: ButtonGroupActionProps, index: number) => (
+            <Fragment key={index}>
               {renderItem(action)}
             </Fragment>
           ))

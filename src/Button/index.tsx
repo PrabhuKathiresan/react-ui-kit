@@ -32,6 +32,8 @@ function Button(props: ButtonHTMLAttributes<HTMLButtonElement> & ButtonProps, re
     onClick = noop,
     id = generateUEID(),
     component: Tag = 'button',
+    hint,
+    hintPosition = 'top',
     ...btnProps
   } = props
 
@@ -46,6 +48,11 @@ function Button(props: ButtonHTMLAttributes<HTMLButtonElement> & ButtonProps, re
   let isFilledBtn = variant === 'filled'
 
   if (variant) computedClassNames[`ui-kit-btn__${variant}`] = true
+
+  if (hint) {
+    computedClassNames[`hint--rounded hint--${hintPosition}`] = true
+    btnProps['aria-label'] = hint
+  }
 
   let iconComputerClass = {
     [`ui-kit-btn-icon-${iconTheme}`]: Boolean(iconTheme)

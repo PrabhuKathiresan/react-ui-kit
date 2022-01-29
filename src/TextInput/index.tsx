@@ -1,6 +1,6 @@
 import React, { InputHTMLAttributes, MouseEvent, useRef, forwardRef, useImperativeHandle, useEffect, useState } from 'react'
 import cx from 'classnames'
-import Tooltip from '../Tooltip'
+// import Tooltip from '../Tooltip'
 import { TextInputProps, NumberFieldProps } from './props'
 import InfoCircle from '../icons/info-circle'
 import Error from '../icons/error'
@@ -22,7 +22,7 @@ const LeftIcon = forwardRef((props: TextInputProps, ref: any) => {
     hasIcon: Boolean(leftIcon)
   }), [leftIcon])
 
-  if (!leftIcon) return null;
+  if (!leftIcon) return null
 
   return (
     <span className='ui-kit-input-icon left' data-testid={`${id}-input-left-icon`}>
@@ -56,7 +56,7 @@ const RightIcon = forwardRef((props: TextInputProps, ref: any) => {
     rightIcon = <Error className={`text--${error ? 'danger' : 'warning'}`} />
   }
 
-  if (!rightIcon) return null;
+  if (!rightIcon) return null
 
   return (
     <span className='ui-kit-input-icon right' data-testid={`${id}-input-right-icons`} {...iconProps}>
@@ -76,8 +76,7 @@ export const InputLabel = (props: TextInputProps) => {
     disabled,
     hint,
     hintPosition = 'right',
-    hintContainer,
-    hintZIndex,
+    hintIcon = null,
     maxLength,
     id,
     charLeft,
@@ -90,10 +89,10 @@ export const InputLabel = (props: TextInputProps) => {
       <span>{label}</span>
       {
         hint &&
-        <span className='ml-8 ui-kit-input-hint-icon'>
-          <Tooltip direction={hintPosition} content={hint} wrapperClass='d-flex' container={hintContainer} zIndex={hintZIndex}>
-            <InfoCircle width={14} height={14} />
-          </Tooltip>
+        <span aria-label={hint} className={cx('ml-8 ui-kit-input-hint-icon hint--rounded', `hint--${hintPosition}`)}>
+          {
+            hintIcon ? hintIcon : <InfoCircle width={14} height={14} />
+          }
         </span>
       }
       {
@@ -120,8 +119,7 @@ const TextInput = (props: InputHTMLAttributes<HTMLInputElement | HTMLTextAreaEle
     message,
     hint,
     hintPosition,
-    hintZIndex,
-    hintContainer,
+    hintIcon,
     id = generateID(Math.random()).toString(),
     actionItem = {
       show: false,
@@ -191,8 +189,7 @@ const TextInput = (props: InputHTMLAttributes<HTMLInputElement | HTMLTextAreaEle
         disabled={disabled}
         hint={hint}
         hintPosition={hintPosition}
-        hintContainer={hintContainer}
-        hintZIndex={hintZIndex}
+        hintIcon={hintIcon}
         maxLength={maxLength}
         charLeft={charLeft}
         component={component}

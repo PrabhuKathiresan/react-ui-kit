@@ -4,7 +4,7 @@ import { RadioProps } from './props'
 
 interface CompoundedComponent
   extends React.ForwardRefExoticComponent<RadioProps> {
-  Group: typeof RadioGroup;
+  Group: typeof RadioGroup
 }
 
 const Radio = InternalRadio as CompoundedComponent

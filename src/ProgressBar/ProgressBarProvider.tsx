@@ -85,6 +85,8 @@ export class ProgressBarProvider extends Component<{}, ProgressBarState> {
         }, 0)
       }
     })
+
+    return id
   }
 
   increment = (id: any, n: number = .1) => {
@@ -130,7 +132,7 @@ export class ProgressBarProvider extends Component<{}, ProgressBarState> {
           return { bars }
         })
       }, transistionEndSpeed + 10)
-    });
+    })
   }
 
   renderContainner = (bar: ProgressBarProps) => {
@@ -185,7 +187,7 @@ export class ProgressBarProvider extends Component<{}, ProgressBarState> {
 
 export const ProgressBarConsumer = ({ children }: { children: any }) => (
   <Consumer>{context => children(context)}</Consumer>
-);
+)
 
 export const withProgressBarManager = (Comp: any) => (
   forwardRef((props: any, ref: any) => (
@@ -196,12 +198,12 @@ export const withProgressBarManager = (Comp: any) => (
 )
 
 export const useProgressBar = (): ProgressBarProviderProps => {
-  const ctx = useContext(Context);
+  const ctx = useContext(Context)
 
   if (!ctx) {
     throw Error(
       'The `useToasts` hook must be called from a descendent of the `ToastProvider`.'
-    );
+    )
   }
 
   return {
@@ -209,5 +211,5 @@ export const useProgressBar = (): ProgressBarProviderProps => {
     done: ctx.done,
     increment: ctx.increment,
     getBar: ctx.getBar
-  };
-};
+  }
+}

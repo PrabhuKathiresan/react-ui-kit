@@ -1,21 +1,22 @@
 import React, { HTMLAttributes } from 'react'
+import cx from 'classnames'
 import Button from '../Button'
 import Close from '../icons/close'
 import { noop } from '../utils'
 import { DialogProps, DialogPositions } from './props'
 
 function getTranslate(position: string) {
-  const pos = position.split('-');
-  const relevantPlacement = (!pos[1] || pos[1] === 'center') ? pos[0] : pos[1];
+  const pos = position.split('-')
+  const relevantPlacement = (!pos[1] || pos[1] === 'center') ? pos[0] : pos[1]
   const translateMap = {
     right: 'translate3d(120%, 0, 0)',
     left: 'translate3d(-120%, 0, 0)',
     bottom: 'translate3d(0, 120%, 0)',
     top: 'translate3d(0, -120%, 0)',
     center: 'scale(0.66)'
-  };
+  }
 
-  return translateMap[relevantPlacement];
+  return translateMap[relevantPlacement]
 }
 
 const dialogStates = (position: DialogPositions) => ({
@@ -76,7 +77,8 @@ export default function Dialog(props: DialogProps) {
     transitionState,
     showBackdrop = false,
     closeOnOutsideClick = false,
-    id
+    id,
+    contentPadding = 16
   } = props
 
   let backdropProps: HTMLAttributes<HTMLDivElement> = {
@@ -87,6 +89,8 @@ export default function Dialog(props: DialogProps) {
   if (showBackdrop && closeOnOutsideClick) {
     backdropProps.onClick = () => onClose()
   }
+
+  let contentClass = `pb-0 px-${contentPadding} pt-${contentPadding}`
 
   return (
     <>
@@ -114,7 +118,7 @@ export default function Dialog(props: DialogProps) {
             <Close width={20} height={20} />
           </span>
         </div>
-        <div className='ui-kit-dialog-content' data-testid={`${id}-content`}>{content}</div>
+        <div className={cx('ui-kit-dialog-content', contentClass)} data-testid={`${id}-content`}>{content}</div>
         {
           showFooter && (
             <div className='ui-kit-dialog-footer' data-testid={`${id}-footer`}>

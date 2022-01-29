@@ -8,7 +8,7 @@ export declare type ButtonGroupVerticalSpacing = 'top' | 'bottom' | 'both'
 export declare type ButtonGroupActionType = 'button' | 'dropdown' | 'custom'
 
 export interface ButtonGroupActionProps {
-  label: any;
+  label: any
   onClick: Function
   type?: ButtonGroupActionType
   extraProps?: {

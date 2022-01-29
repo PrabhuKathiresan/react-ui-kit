@@ -37,4 +37,4 @@ export interface AccordionProps {
   activeIcon?: any
   iconPlacement?: 'start' | 'end'
   transitionDuration?: number
-};
+}

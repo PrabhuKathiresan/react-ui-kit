@@ -5,21 +5,21 @@ export declare type Positions = 'top-left' | 'top-right' | 'bottom-left' | 'bott
 export declare type ToastType = 'success' | 'error' | 'warning' | 'info'
 
 export interface ToastProps {
-  id: string;
-  autoDismiss?: boolean;
-  duration?: number;
-  type?: ToastType;
-  description?: any;
-  message?: any;
-  closable?: boolean;
-  icon?: any;
-  position?: Positions;
-  onClose?: Function;
-  confirm?: boolean;
-  onConfirm?: Function;
-  onCancel?: Function;
-  confirmText?: string;
-  cancelText?: string;
+  id: string
+  autoDismiss?: boolean
+  duration?: number
+  type?: ToastType
+  description?: any
+  message?: any
+  closable?: boolean
+  icon?: any
+  position?: Positions
+  onClose?: Function
+  confirm?: boolean
+  onConfirm?: Function
+  onCancel?: Function
+  confirmText?: string
+  cancelText?: string
 }
 
 export interface Props extends ToastProps {
@@ -32,9 +32,9 @@ export interface ToastState {
 }
 
 export interface ToastContainerProps {
-  children?: any;
-  hasToasts: boolean;
-  position: Positions;
+  children?: any
+  hasToasts: boolean
+  position: Positions
   [k: string]: any
 }
 
@@ -47,25 +47,25 @@ export interface ProviderProps {
 }
 
 export interface TransitionProps {
-  transitionState: TransitionState;
-  transitionDuration: number;
+  transitionState: TransitionState
+  transitionDuration: number
 }
 
 export interface SingleToastProp {
-  id: string;
-  message?: string;
+  id: string
+  message?: string
   type: string,
   autoDismiss: boolean, // may be inherited from ToastProvider
   duration: number, // inherited from ToastProvider
   children: any,
   onClose: Function,
   position: Positions,
-  confirm?: boolean;
-  onConfirm?: Function;
-  onCancel?: Function;
-  confirmText?: string;
-  cancelText?: string;
-  onMouseEnter: Function;
-  onMouseLeave: Function;
+  confirm?: boolean
+  onConfirm?: Function
+  onCancel?: Function
+  confirmText?: string
+  cancelText?: string
+  onMouseEnter: Function
+  onMouseLeave: Function
   iconType?: 'default' | 'filled'
 }

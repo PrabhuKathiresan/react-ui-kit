@@ -24,7 +24,7 @@ export const filterResultsFromOptions = (options: Array<OptionProps>, props: any
     filterBy = [],
     searchable = false,
     multiple = false,
-  } = props;
+  } = props
   let results = [...options]
   if (!searchable && !multiple) return results
   if (searchable || multiple) {
@@ -165,7 +165,7 @@ export function getUpdatedActiveIndex(
 }
 
 export const getMenuHeight = (maxDropdownHeight: number, length: number, searchable: boolean) => {
-  let height = DROPDOWN_ITEM_HEIGHT;
+  let height = DROPDOWN_ITEM_HEIGHT
   if (length) {
     height = (length * DROPDOWN_ITEM_HEIGHT) + 15
   } else if (searchable) {
@@ -193,7 +193,7 @@ export const getActiveIndex = (options: Array<OptionProps | string>, selected: A
   if (async || props.multiple) {
     return defaultFirstItemSelected ? 0 : -1
   }
-  let selectedOption = [...selected].shift() || {};
+  let selectedOption = [...selected].shift() || {}
   let value = selectedOption[labelKey]
   return options.findIndex(option => option[labelKey] === value)
 }

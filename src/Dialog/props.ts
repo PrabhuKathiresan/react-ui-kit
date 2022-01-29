@@ -20,6 +20,7 @@ export interface DialogProps extends ModalProps {
   position?: DialogPositions
   size?: DialogSizes
   onClose?: Function
+  contentPadding?: number
 }
 
 export interface Props extends DialogProps {

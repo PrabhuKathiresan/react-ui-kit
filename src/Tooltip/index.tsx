@@ -1,10 +1,10 @@
 import React, { useState, useRef, cloneElement } from 'react'
 import { createPortal } from 'react-dom'
 import { Transition } from 'react-transition-group'
-import { canUseDOM } from '../utils';
+import { canUseDOM } from '../utils'
 import { TooltipProps } from './props'
 import { TransitionState } from '../constants'
-import { isDefined } from '../utils/type-check';
+import { isDefined } from '../utils/type-check'
 
 const directionStyleMap = {
   top: (position: any) => {
@@ -113,13 +113,13 @@ export default function Tooltip(props: TooltipProps) {
       ...tooltipStyle,
       ...transitionStyle
     }
-    if (isDefined(zIndex)) style.zIndex = zIndex;
+    if (isDefined(zIndex)) style.zIndex = zIndex
     return (
       <div className={`ui-kit-tooltip-Tip ${direction}`} style={style}>
         {content}
       </div>
     )
-  };
+  }
 
   let tooltipContainer = (
     <Transition

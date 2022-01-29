@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { TextInput } from '@pk-design/react-ui-kit'
+import { iconSizeMap } from './ButtonExample';
 
 export default function TextInputExample() {
   let [success, setSuccess] = useState(false);
@@ -38,6 +39,7 @@ export default function TextInputExample() {
       <TextInput
         label='I have a hint'
         hintPosition='bottom'
+        hintIcon={<i className='material-icons-outlined' style={{ fontSize: iconSizeMap.medium }}>home</i>}
         hint='I will display a message. And this will show a very long text that you will never expect.'
         id='hint'
       />

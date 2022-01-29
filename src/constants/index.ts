@@ -1,18 +1,18 @@
-import { TooltipDirection } from '../Tooltip/props'
-
+export declare type TooltipDirection = 'top' | 'bottom' | 'left' | 'right'
 export declare type TransitionState = 'entering' | 'entered' | 'exiting' | 'exited'
 export declare type InputSize = 'small' | 'default' | 'large'
 
-export interface InputProps {
+export interface HintProps {
+  hint?: any
+  hintPosition?: TooltipDirection
+}
+
+export interface InputProps extends HintProps {
   id?: string
   label?: any
   labelClass?: string
   required?: boolean
   disabled?: boolean
-  hint?: any
-  hintPosition?: TooltipDirection
-  hintContainer?: string
-  hintZIndex?: number
   message?: any
   error?: any
   placeholder?: string

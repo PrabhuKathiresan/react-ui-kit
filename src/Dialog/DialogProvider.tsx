@@ -7,8 +7,8 @@ import DialogController from './DialogController'
 import { DialogState, ProviderProps, Props, DialogProps } from './props'
 import { TransitionState } from '../constants'
 
-const DialogContext = React.createContext<ProviderProps | null>(null);
-const { Provider, Consumer } = DialogContext;
+const DialogContext = React.createContext<ProviderProps | null>(null)
+const { Provider, Consumer } = DialogContext
 
 const ANIMATION_DURATION = 200
 
@@ -48,6 +48,8 @@ export class DialogProvider extends Component<Props, DialogState> {
         ]
       }
     }, callback)
+
+    return id
   }
 
   hide = (id: string, cb: Function = noop) => {
@@ -153,7 +155,7 @@ export class DialogProvider extends Component<Props, DialogState> {
 
 export const DialogConsumer = ({ children }: { children: any }) => (
   <Consumer>{context => children(context)}</Consumer>
-);
+)
 
 export const withDialogManager = (Comp: any) => (
   React.forwardRef((props: any, ref: any) => (
@@ -164,17 +166,17 @@ export const withDialogManager = (Comp: any) => (
 )
 
 export const useDialog = () => {
-  const ctx = useContext(DialogContext);
+  const ctx = useContext(DialogContext)
 
   if (!ctx) {
     throw Error(
       'The `useToasts` hook must be called from a descendent of the `ToastProvider`.'
-    );
+    )
   }
 
   return {
     show: ctx.show,
     hide: ctx.hide,
     update: ctx.update
-  };
-};
+  }
+}

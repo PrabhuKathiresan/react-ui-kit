@@ -24,7 +24,7 @@ const Menu = (props: MenuProps) => {
       const input = searchInput.current
       setTimeout(() => {
         input?.focus()
-      }, dropup ? transitionDuration : 0);
+      }, dropup ? transitionDuration : 0)
     }
   }, [transitionState])
 

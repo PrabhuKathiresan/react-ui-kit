@@ -116,7 +116,7 @@ const Input = (props: SelectInputProps) => {
         renderValue() :
         <span className='text--placeholder user-select-none'>{placeholder}</span>}
     </div>
-  );
+  )
 }
 
 const InputWrapper = (props: SelectInputProps) => {
@@ -139,12 +139,12 @@ const InputWrapper = (props: SelectInputProps) => {
 
   const hasLeftIcon = !isEmpty(icons.left.component)
   const hasRightIcon = !isEmpty(icons.right.component) && !disabled
-  let iconClass = '';
+  let iconClass = ''
 
   if (isSmallInput || (borderless && textOnly)) {
-    iconClass = 'ui-kit-select-input-icon-sm';
+    iconClass = 'ui-kit-select-input-icon-sm'
   } else if (isLargeInput) {
-    iconClass = 'ui-kit-select-input-icon-lg';
+    iconClass = 'ui-kit-select-input-icon-lg'
   }
 
   const value = isEmpty(selected) ? '' : getSelectedValue({ selected, multiple, key: labelKey })

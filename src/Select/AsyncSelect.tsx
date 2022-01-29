@@ -5,7 +5,7 @@ import { debounce } from './helpers'
 import { noop } from '../utils'
 
 export default class AsyncSelect extends Component<SelectProps, { loading: boolean, options: Array<OptionProps> }> {
-  cancelled = false;
+  cancelled = false
 
   search = debounce((value: string) => {
     this.setLoader(true)
@@ -48,8 +48,8 @@ export default class AsyncSelect extends Component<SelectProps, { loading: boole
 
   onClose = () => {
     if (this.state.loading) {
-      this.setLoader(false);
-      this.cancelled = true;
+      this.setLoader(false)
+      this.cancelled = true
     }
   }
 

@@ -236,7 +236,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
   }
 
   _handleActiveIndexChange = (activeIndex: number) => {
-    const { results = [] } = this.state;
+    const { results = [] } = this.state
     const activeItem = activeIndex === -1 ? null : results[activeIndex]
     this.setState({
       activeIndex,
@@ -306,7 +306,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
       !this._isMenuOpen ? this._openMenu() : this._closeMenu()
     }
     this.__justClicked = true
-    const { onInputFocus = noop } = this.props;
+    const { onInputFocus = noop } = this.props
     onInputFocus(e)
   }
 
@@ -333,7 +333,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
 
   _onRemoveSelected = (option: OptionProps) => {
     if (!this.props.multiple) return
-    const { labelKey, onChange = noop } = this.props;
+    const { labelKey, onChange = noop } = this.props
     const selected = [...(this.state.selected || [])].filter(s => s[labelKey] !== option[labelKey]).map(ms => ms[ACTUAL_VALUE])
     onChange(selected)
     this._isMenuOpen && this._closeMenu()
@@ -375,7 +375,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
         open: true,
         activeIndex: -1
       }
-      const { results = [], selected = [] } = prevState;
+      const { results = [], selected = [] } = prevState
       if (!prevState.searchable) {
         nextState.activeIndex = getActiveIndex(results, selected.length ? selected : [], this.props)
       } else {
@@ -431,10 +431,13 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
   }
 
   _handleOutsideClick = (event: Event) => {
+    let {
+      closeOnOutsideClick = true
+    } = this.props;
     if (
       this._isMenuOpen
       && (this.menu && (event.target instanceof HTMLElement || event.target instanceof SVGElement) && !this.menu.contains(event.target))
-      && this.props.closeOnOutsideClick
+      && closeOnOutsideClick
     ) {
       this._closeMenu()
     }
@@ -579,7 +582,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
     const extraProps: ExtraInputProps = searchable ? {} : { onKeyDown: this._handleKeyDown }
     // if (multiple) extraProps.ref = this._setBackgroundInputRef
 
-    return extraProps;
+    return extraProps
   }
 
   _getPortalTarget = () => {

@@ -8,8 +8,8 @@ import { ToastElement } from './ToastElement'
 import ToastController from './ToastController'
 import { TransitionState } from '../constants'
 
-const ToastContext = React.createContext<ProviderProps | null>(null);
-const { Consumer, Provider } = ToastContext;
+const ToastContext = React.createContext<ProviderProps | null>(null)
+const { Consumer, Provider } = ToastContext
 
 const getWithDefaultOptions = (options: ToastProps): ToastProps => {
   let id = options.id || generateUEID()
@@ -122,7 +122,7 @@ export class ToastProvider extends Component<Props, ToastState> {
   }
 
   render() {
-    let { add, remove, removeAll, update, props, state } = this;
+    let { add, remove, removeAll, update, props, state } = this
     let {
       children,
       position = 'top-right',
@@ -198,7 +198,7 @@ export class ToastProvider extends Component<Props, ToastState> {
 
 export const ToastConsumer = ({ children }: { children: any }) => (
   <Consumer>{context => children(context)}</Consumer>
-);
+)
 
 export const withToastManager = (Comp: any) => (
   React.forwardRef((props: any, ref: any) => (
@@ -214,12 +214,12 @@ export const withToastManager = (Comp: any) => (
 )
 
 export const useToasts = () => {
-  const ctx = useContext(ToastContext);
+  const ctx = useContext(ToastContext)
 
   if (!ctx) {
     throw Error(
       'The `useToasts` hook must be called from a descendent of the `ToastProvider`.'
-    );
+    )
   }
 
   return {
@@ -228,5 +228,5 @@ export const useToasts = () => {
     removeAllToasts: ctx.removeAll,
     updateToast: ctx.update,
     toastStack: ctx.toasts,
-  };
-};
+  }
+}

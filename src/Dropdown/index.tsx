@@ -81,7 +81,7 @@ const floatingPositionMap = (elem: HTMLDivElement | null, floatOffset: number = 
     }
   }
 })
-const floatPositions = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+const floatPositions = ['top-left', 'top-right', 'bottom-left', 'bottom-right']
 
 const getDropdownStyle = (state: string, position: string = 'dropdown') => {
   let style: any = {
@@ -115,14 +115,14 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
     position = 'right', additionalTriggerClass = '', size = 'sm', offsetTop = 0, maxHeight = 'auto',
     floatOffset, theme = 'default', variant = 'filled', triggerSize = 'default'
   } = props
-  let [_position, _setPosition] = useState(position);
+  let [_position, _setPosition] = useState(position)
 
   useEffect(() => {
     if (!float && floatPositions.includes(_position)) {
-      console.warn(`Position cannot be ${_position} when float is not enabled. You can either enable float or use 'right' or 'left'`);
-      _setPosition('right');
+      console.warn(`Position cannot be ${_position} when float is not enabled. You can either enable float or use 'right' or 'left'`)
+      _setPosition('right')
     }
-  }, [float]);
+  }, [float])
 
   useEffect(() => {
     _setPosition(position)
@@ -158,7 +158,7 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
     let rect = trigger.current.getBoundingClientRect()
     let pos: DropdownPosition = {}
     if (float) {
-      pos = floatingPositionMap(dropdown.current, floatOffset)[_position](rect);
+      pos = floatingPositionMap(dropdown.current, floatOffset)[_position](rect)
     } else {
       let body = document.documentElement || document.body
       let offset = Math.max(body.scrollTop, (body.scrollHeight - window.innerHeight))
@@ -277,7 +277,7 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
   }
 
   let getTransitionType = (): string => {
-    let type = 'dropdown';
+    let type = 'dropdown'
     if (float) {
       let [, pos] = position.split('-')
       type = `slide${pos}`
@@ -285,7 +285,7 @@ const Dropdown = (props: DropdownProps & PositionalProps, ref: any) => {
       type = 'dropup'
     }
 
-    return type;
+    return type
   }
 
   let dropdownWrapper = (content: any) => (

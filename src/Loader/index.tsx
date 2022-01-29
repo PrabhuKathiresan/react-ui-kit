@@ -3,9 +3,9 @@ import cx from 'classnames'
 import CircleLoader from '../icons/circle-loader'
 
 interface LoaderProps {
-  size?: number;
-  strokeWidth?: number;
-  className?: string;
+  size?: number
+  strokeWidth?: number
+  className?: string
   theme?: 'primary' | 'currentColor'
 }
 

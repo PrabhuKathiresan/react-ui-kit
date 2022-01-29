@@ -1,75 +1,75 @@
 export interface FormFields {
-  name: string;
-  label?: string;
-  getter?: Function;
-  required?: boolean;
-  disabled?: boolean;
-  hidden?: boolean;
-  type?: string;
-  component?: 'TextInput' | 'TextArea' | 'Checkbox' | 'Checkbox.Group' | 'Select' | 'Radio' | 'Radio.Group' | 'DatePicker' | 'MonthPicker' | 'Custom';
-  customComponent?: any;
-  componentProps?: object;
-  disabledIf?: Function;
-  requiredIf?: Function;
-  hiddenIf?: Function;
-  onInputChange?: Function;
-  validation?: Function | boolean;
-  formatter?: Function;
-  validationProps?: object;
-  editable?: boolean;
-  [k: string]: any;
+  name: string
+  label?: string
+  getter?: Function
+  required?: boolean
+  disabled?: boolean
+  hidden?: boolean
+  type?: string
+  component?: 'TextInput' | 'TextArea' | 'Checkbox' | 'Checkbox.Group' | 'Select' | 'Radio' | 'Radio.Group' | 'DatePicker' | 'MonthPicker' | 'Custom'
+  customComponent?: any
+  componentProps?: object
+  disabledIf?: Function
+  requiredIf?: Function
+  hiddenIf?: Function
+  onInputChange?: Function
+  validation?: Function | boolean
+  formatter?: Function
+  validationProps?: object
+  editable?: boolean
+  [k: string]: any
 }
 
 export interface FormState {
-  formData?: any;
-  errors?: object;
-  genericError: any;
-  submitting?: boolean;
-  dirty?: boolean;
+  formData?: any
+  errors?: object
+  genericError: any
+  submitting?: boolean
+  dirty?: boolean
 }
 
 export interface IconProps {
-  left?: any;
-  right?: any;
+  left?: any
+  right?: any
 }
 
 export interface ServiceProps {
-  [k: string]: Function;
+  [k: string]: Function
 }
 
 export interface FormProps {
-  onSubmit?: Function;
-  service?: ServiceProps;
-  createMethod?: string;
-  updateMethod?: string;
-  fields: Array<FormFields>;
-  data: object;
-  stickyFooter?: boolean;
-  loading?: boolean;
-  loadingText?: any;
-  disabled?: boolean;
-  isNewForm?: boolean;
-  submitBtnText?: string;
-  submitBtnIcon?: IconProps;
-  showCancelBtn?: boolean;
-  cancelBtnText?: string;
-  cancelBtnIcon?: IconProps;
-  onCancel?: Function;
-  name: string;
-  dataId?: any;
-  onSuccess?: Function;
-  onError?: Function;
-  strict?: boolean;
-  extra?: any;
-  customValidation?: Function;
-  constructParams?: Function;
+  onSubmit?: Function
+  service?: ServiceProps
+  createMethod?: string
+  updateMethod?: string
+  fields: Array<FormFields>
+  data: object
+  stickyFooter?: boolean
+  loading?: boolean
+  loadingText?: any
+  disabled?: boolean
+  isNewForm?: boolean
+  submitBtnText?: string
+  submitBtnIcon?: IconProps
+  showCancelBtn?: boolean
+  cancelBtnText?: string
+  cancelBtnIcon?: IconProps
+  onCancel?: Function
+  name: string
+  dataId?: any
+  onSuccess?: Function
+  onError?: Function
+  strict?: boolean
+  extra?: any
+  customValidation?: Function
+  constructParams?: Function
 }
 
 export interface FieldRules {
-  name: string;
-  method?: any;
-  message?: any;
-  validationProps: object;
-  formatter?: Function;
-  ctx?: any;
+  name: string
+  method?: any
+  message?: any
+  validationProps: object
+  formatter?: Function
+  ctx?: any
 }

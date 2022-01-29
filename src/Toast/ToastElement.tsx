@@ -35,16 +35,16 @@ const ICONSMAP = {
 }
 
 function getTranslate(placement: string) {
-  const pos = placement.split('-');
-  const relevantPlacement = pos[1] === 'center' ? pos[0] : pos[1];
+  const pos = placement.split('-')
+  const relevantPlacement = pos[1] === 'center' ? pos[0] : pos[1]
   const translateMap = {
     right: 'translate3d(120%, 0, 0)',
     left: 'translate3d(-120%, 0, 0)',
     bottom: 'translate3d(0, 120%, 0)',
     top: 'translate3d(0, -120%, 0)',
-  };
+  }
 
-  return translateMap[relevantPlacement];
+  return translateMap[relevantPlacement]
 }
 
 const toastStates = (placement: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center') => ({
@@ -81,11 +81,11 @@ export const ToastElement = (props: SingleToastProp & TransitionProps) => {
   useEffect(
     () => {
       if (transitionState === 'entered') {
-        let el = element.current;
-        setHeight((el?.offsetHeight || 0) + gutter);
+        let el = element.current
+        setHeight((el?.offsetHeight || 0) + gutter)
       }
       if (transitionState === 'exiting') {
-        setHeight(0);
+        setHeight(0)
       }
     },
     [transitionState]

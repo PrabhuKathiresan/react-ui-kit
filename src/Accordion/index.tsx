@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import cx from 'classnames'
-import AccordionItem from './accordion-item';
+import AccordionItem from './accordion-item'
 import { AccordionItem as ItemProp, AccordionProps } from './props'
 
 export default function Accordion(props: AccordionProps) {

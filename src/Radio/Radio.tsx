@@ -15,9 +15,7 @@ export function Radio(props: RadioProps) {
     label
   } = props
 
-  let handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e);
-  }
+  let handleChange = (e: React.ChangeEvent<HTMLInputElement>) => onChange(e)
 
   return (
     <label

@@ -1,8 +1,8 @@
-import React from 'react';
-import cx from 'classnames';
-import NextIcon from '../icons/next';
-import PreviousIcon from '../icons/previous';
-import { noop } from '../utils';
+import React from 'react'
+import cx from 'classnames'
+import NextIcon from '../icons/next'
+import PreviousIcon from '../icons/previous'
+import { noop } from '../utils'
 
 const Pager = ({
   paginationOptions = { currentPage: 1, limit: 10 },
@@ -14,18 +14,18 @@ const Pager = ({
   const {
     currentPage,
     limit,
-  } = paginationOptions;
+  } = paginationOptions
 
-  const lastPage = itemsCount === 0 ? 1 : Math.ceil(itemsCount / limit);
+  const lastPage = itemsCount === 0 ? 1 : Math.ceil(itemsCount / limit)
 
   const startingRecord = () => {
     if (itemsCount === 0) {
-      return 0;
+      return 0
     }
-    return ((Math.max(currentPage, 1) - 1) * limit) + 1;
-  };
+    return ((Math.max(currentPage, 1) - 1) * limit) + 1
+  }
 
-  const endingRecord = () => Math.min((currentPage * Math.min(limit, itemsCount)), itemsCount);
+  const endingRecord = () => Math.min((currentPage * Math.min(limit, itemsCount)), itemsCount)
   return (
     <div className='ui-kit-table-pagination'>
       <div className={cx('ui-kit-table-pagination-item ui-kit-hide-md', { 'ui-kit-hide': hideFooterText })}>
@@ -65,7 +65,7 @@ const Pager = ({
         </span>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Pager;
+export default Pager

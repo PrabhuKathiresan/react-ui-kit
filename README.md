@@ -8,18 +8,17 @@
 
 1. DataTable (Basic and Async)
 2. Select (Basic and Async) (with support for multi select)
-3. Tooltip
-4. Toast message
-5. Dialog
-6. Basic inputs (TextInput, TextArea)
-7. Checkbox and Checkbox group
-8. Radio and Radio group
-9. Dropdown
-10. Alert and AlertStack
-11. DatePicker and MonthPicker
-12. ProgressBar
-13. Loader
-14. Reusable Forms.
-15. Progressbar
-16. Accordion
-17. Tabs
+3. Toast message
+4. Dialog
+5. Basic inputs (TextInput, TextArea)
+6. Checkbox and Checkbox group
+7. Radio and Radio group
+8. Dropdown
+9. Alert and AlertStack
+10. DatePicker and MonthPicker
+11. ProgressBar
+12. Loader
+13. Reusable Forms.
+14. Progressbar
+15. Accordion
+16. Tabs

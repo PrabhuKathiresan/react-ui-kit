@@ -86,7 +86,7 @@ export default class Table extends Component<TableProps & InternalTableState, {}
   )
 
   renderHeaderColumn = (column: ColumnProps) => {
-    let _column = null;
+    let _column = null
     let {
       getSelectedState,
       toggleSelectAll,
@@ -111,7 +111,7 @@ export default class Table extends Component<TableProps & InternalTableState, {}
       )
     }
 
-    return _column;
+    return _column
   }
 
   renderHeader = (width: number) => {
@@ -152,7 +152,7 @@ export default class Table extends Component<TableProps & InternalTableState, {}
   }
 
   renderBodyColumn = (column: ColumnProps, row: any) => {
-    let _column = null;
+    let _column = null
     let {
       toggleRowSelect = noop
     } = this.props
@@ -162,7 +162,7 @@ export default class Table extends Component<TableProps & InternalTableState, {}
       _column = <span className='ui-kit-table-content'>{getCellData(row, column)}</span>
     }
 
-    return _column;
+    return _column
   }
 
   renderBody = (width: number, rows: Array<any>) => {

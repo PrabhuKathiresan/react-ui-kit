@@ -23,8 +23,6 @@ export { default as ButtonGroup } from './ButtonGroup'
 
 export { default as Dropdown } from './Dropdown'
 
-export { default as Tooltip } from './Tooltip'
-
 export * as Toast from './Toast'
 
 export * as Dialog from './Dialog'

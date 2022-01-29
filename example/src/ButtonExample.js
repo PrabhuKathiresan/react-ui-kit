@@ -1,8 +1,39 @@
 import React, { useState } from 'react'
-import { Button, ButtonGroup, Radio, Checkbox, ActionContainer } from '@pk-design/react-ui-kit'
+import {
+  Button, ButtonGroup, Radio,
+  Checkbox, ActionContainer, Select, TextInput
+} from '@pk-design/react-ui-kit'
 import { Link } from 'react-router-dom'
 import AppCode from './AppCode';
 import PropsTable from './PropsTable';
+import { find } from 'lodash';
+
+const { BasicSelect } = Select;
+export const iconSizeMap = {
+  tiny: 14,
+  small: 16,
+  default: 18,
+  medium: 20,
+  large: 24
+}
+const HINT_POSITION = [
+  {
+    name: 'Left',
+    key: 'left'
+  },
+  {
+    name: 'Right',
+    key: 'right'
+  },
+  {
+    name: 'Top',
+    key: 'top'
+  },
+  {
+    name: 'Bottom',
+    key: 'bottom'
+  }
+]
 
 const buttonProps = [
   {
@@ -214,13 +245,6 @@ let iconOptions = [
   { label: 'Icon and text', value: 'textPlusIcon' }
 ];
 let showText = ['noIcon', 'textPlusIcon'];
-let iconSizeMap = {
-  tiny: 14,
-  small: 16,
-  default: 18,
-  medium: 20,
-  large: 24
-}
 
 const options = [
   {
@@ -291,7 +315,7 @@ const ButtonGroupOptions = [
 ]
 
 export default function ButtonExample() {
-  let [btnState, setBtnState] = useState({ size: 'default', theme: 'primary', variant: 'filled', text: '', outlined: '' });
+  let [btnState, setBtnState] = useState({ size: 'default', theme: 'primary', variant: 'filled', text: '', outlined: '', hint: '', hintPosition: 'top' });
   let [btnCheckState, setBtnCheckState] = useState({ icon: 'noIcon', iconTheme: '', block: false, raised: false, loading: false, disabled: false })
   let themeOptions = themes.map(theme => ({ label: theme, value: theme }));
   let [showSubAction, setShowSubAction] = useState(false)
@@ -334,6 +358,8 @@ export default function ButtonExample() {
       ]}
     />
   )
+
+  let hintPosition = find(HINT_POSITION, { key: btnState.hintPosition });
 
   return (
     <>
@@ -402,6 +428,23 @@ export default function ButtonExample() {
             <Checkbox id='disabled' name='disabled' checked={btnCheckState.disabled} onChange={e => setBtnCheckState(_state => ({ ..._state, disabled: e.target.checked }))}>
               Disable button
             </Checkbox>
+          </div>
+          <div className='mb-8 d-flex'>
+            <TextInput label='Hint text' value={btnState.hint} onChange={(e) => setBtnState((_current) => ({
+              ..._current,
+              hint: e.target.value
+            }))} placeholder='enter hint text' />
+            <BasicSelect
+              options={[...HINT_POSITION]}
+              labelKey='name'
+              selected={hintPosition ? [hintPosition] : []}
+              onChange={([_position]) => setBtnState((_current) => ({
+                ..._current,
+                hintPosition: _position.key
+              }))}
+              label='Hint position'
+              containerClass='ml-8'
+            />
           </div>
         </div>
         <div className='example-btn-block mb-16'>

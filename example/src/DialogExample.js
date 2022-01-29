@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Dialog, Select, Checkbox } from '@pk-design/react-ui-kit'
+import { Button, Dialog, Select, Checkbox, TextInput } from '@pk-design/react-ui-kit'
 import FormComponent from './FormComponent'
 import DialogClassExample from './DialogClassExample'
 
@@ -102,7 +102,8 @@ export default function DialogExample() {
     position: 'right',
     size: 'sm',
     showBackdrop: true,
-    closeOnOutsideClick: false
+    closeOnOutsideClick: false,
+    contentPadding: 16
   })
 
   let hideDialog = () => dialog.hide(DIALOG)
@@ -159,8 +160,9 @@ export default function DialogExample() {
           />
           <Checkbox className='mr-8 mb-16' checked={options.showBackdrop} onChange={e => setOptions(options => ({ ...options, showBackdrop: e.target.checked }))}>Show backdrop</Checkbox>
           <Checkbox className='mr-8 mb-16' checked={options.closeOnOutsideClick} onChange={e => setOptions(options => ({ ...options, closeOnOutsideClick: e.target.checked }))}>Close on outside click</Checkbox>
+          <TextInput label='Content padding' type='number' onChange={e => setOptions(_options => ({ ..._options, contentPadding: e.target.value }))} value={options.contentPadding} />
         </div>
-        <Button onClick={() => handleClick()} className='mr-16'>Show Dialog</Button>
+        <Button onClick={() => handleClick()} className='mr-16 hint--rounded hint--bottom' aria-label='Show dialog'>Show Dialog</Button>
         <Button onClick={() => openWithUpdate()}>Updatable Dialog</Button>
       </div>
       <DialogClassExample />

@@ -4,7 +4,6 @@ import dayjs from 'dayjs'
 import { BasicSelect } from '../Select'
 import { MonthPickerProps } from './props'
 import { noop, generateUEID } from '../utils'
-import Tooltip from '../Tooltip'
 import InfoCircle from '../icons/info-circle'
 
 const MonthList = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -98,10 +97,8 @@ function MonthPicker(props: MonthPickerProps, ref: any) {
           <span>{label}</span>
           {
             hint &&
-            <span className='ml-8 ui-kit-input-hint-icon'>
-              <Tooltip direction={hintPosition} content={hint} wrapperClass='d-flex'>
-                <InfoCircle width={14} height={14} />
-              </Tooltip>
+            <span aria-label={hint} className={cx('ml-8 ui-kit-input-hint-icon hint--rounded', `hint--${hintPosition}`)}>
+              <InfoCircle width={14} height={14} />
             </span>
           }
         </label>
