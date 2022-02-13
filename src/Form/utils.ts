@@ -8,3 +8,9 @@ export const isDateField = (component: string = '', type: string = '') =>
 export const isBooleanField = (component: string = '', type: string = '') => {
   return BOOLEAN_FIELDS.includes(component) || ['boolean', 'bool'].includes(type)
 }
+
+export const isSelectField = (component: string = '', multiple: boolean = false) => (component === 'Select' && !multiple)
+
+export const isMultiValueField = (component: string = '', multiple: boolean = false) => {
+  return MULTI_VALUE_FIELDS.includes(component) && !isSelectField(component, multiple);
+}

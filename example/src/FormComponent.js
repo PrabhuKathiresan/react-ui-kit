@@ -206,7 +206,6 @@ const isSuperAdmin = (role) => role === 'super_admin'
 // const isNewForm = agent => isEmpty(agent._id)
 
 const CustomCompoent = (props) => {
-  console.log(props)
   return (
     <div className='mb-16'>
       <div className='mb-2'>
@@ -295,7 +294,7 @@ const AGENT_FIELDS = [
     name: 'role',
     label: 'Agent role',
     hint: 'Role that agent will hold',
-    type: 'mixed',
+    type: 'object',
     component: 'Select',
     componentProps: {
       animate: true,
@@ -305,7 +304,7 @@ const AGENT_FIELDS = [
     },
     required: true,
     transform: function (role) {
-      return role[0]?.value || '';
+      return role.value || '';
     }
   },
   {
@@ -318,7 +317,7 @@ const AGENT_FIELDS = [
       variant: 'bordered'
     },
     value: false,
-    disabledIf: (agent) => isSuperAdmin(agent.role[0].value)
+    disabledIf: (agent) => isSuperAdmin(agent.role.value)
   },
   {
     name: 'managedBrands',
@@ -341,7 +340,7 @@ const AGENT_FIELDS = [
       ['role', 'manageAllBrands'],
       (...data) => {
         let [role, manageAllBrands, schema] = data;
-        return (manageAllBrands || role === 'super_admin') ? schema.nullable() : schema.min(1, 'Atleast one brand is required')
+        return (manageAllBrands || role.value === 'super_admin') ? schema.nullable() : schema.min(1, 'Atleast one brand is required')
       }
     ]
   },
@@ -366,10 +365,8 @@ const AGENT_FIELDS = [
     errorMessage: {
       required: 'Please agree terms and conditions'
     },
-    disabledIf: (agent) => {
-      console.log(agent.agreeTerms);
-      return agent.agreeTerms
-    }
+    disabledIf: (agent) => agent.agreeTerms,
+    nullable: true
   },
   {
     name: 'createdAt',
@@ -424,8 +421,13 @@ export default function FormComponent({ stickyFooter = true, onError = () => { }
     },
     dob: '',
     // dob: new Date(1993, 10, 30),
-    manageAllBrands: true,
-    managedBrands: []
+    manageAllBrands: false,
+    managedBrands: [
+      {
+        name: 'Sakthi masala',
+        _id: '1'
+      }
+    ]
   });
 
   function handleSuccess() {
@@ -443,7 +445,7 @@ export default function FormComponent({ stickyFooter = true, onError = () => { }
       updates.managedBrands = []
     }
     if (ownProp(updates, 'role')) {
-      updates.manageAllBrands = isSuperAdmin(updates.role[0].value)
+      updates.manageAllBrands = isSuperAdmin(updates.role.value)
     }
     return updates
   }

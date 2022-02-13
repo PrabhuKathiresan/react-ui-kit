@@ -101,7 +101,7 @@ export default class Schema {
           break
         case 'bool':
         case 'boolean':
-          field = bool().nullable(true)
+          field = bool().nullable(nullable)
           if (required) field = field.required(requiredMessage)
           break
         case 'string':
@@ -135,6 +135,10 @@ export default class Schema {
           if (!Array.isArray(defaultValue)) defaultValue = nullable ? null : []
           field = field.default(defaultValue)
           break
+        case 'object':
+          field = object()
+          if (required) field = field.required(requiredMessage)
+          field = field.default(defaultValue || null)
         default:
           field = mixed().nullable(nullable)
           if (required) field = field.required(requiredMessage)

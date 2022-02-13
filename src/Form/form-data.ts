@@ -3,7 +3,7 @@ import set from 'lodash.set'
 import { isEqual, isFunction } from '../utils'
 import { FormFields, ChangedAttributesType, AttributesType } from './props'
 import Schema from './schema'
-import { MULTI_VALUE_FIELDS, isDateField, isBooleanField } from './utils'
+import { isMultiValueField, isDateField, isBooleanField } from './utils'
 
 const noopWithReturn = (str: string) => str
 
@@ -23,7 +23,7 @@ export default class FormData extends Schema {
   // use this only to ensure if form is valid.
   // this will abortEarly as soon as it finds any error
   get isValid(): boolean {
-    return this.validate({ abortEarly: true }).isValid
+    return this.validate({ abortEarly: true, strict: false }).isValid
   }
 
   validate = (options: any = {}, t: Function = noopWithReturn) => {
@@ -79,14 +79,16 @@ export default class FormData extends Schema {
 
   _setupData = (fields: Array<FormFields>, data: object) => {
     return fields.reduce((formData, field) => {
-      let { name, getter, component = 'TextInput', type = 'text', default: defaultValue = '' } = field
+      let {
+        name, getter, component = 'TextInput', componentProps = {},
+        type = 'text', default: defaultValue = ''
+      } = field
+      let multiple = Boolean(componentProps.multiple)
       let value = getter && isFunction(getter) ? getter(data) : get(data, name)
-      if (MULTI_VALUE_FIELDS.includes(component)) {
-        if (value && !Array.isArray(value)) {
-          value = [value]
-        } else {
-          value = []
-        }
+      if (isMultiValueField(component, multiple)) {
+        if (!value) value = []
+        else if (!Array.isArray(value)) value = [value]
+
         defaultValue = []
       }
       if (isDateField(component, type)) {
@@ -94,7 +96,7 @@ export default class FormData extends Schema {
       }
       if (isBooleanField(component, type)) {
         value = Boolean(value)
-        defaultValue = typeof defaultValue === 'boolean' ? defaultValue : null
+        defaultValue = typeof defaultValue === 'boolean' ? defaultValue : field.nullable ? null : false
       }
       if (type === 'number') {
         value = (value && isNaN(value)) ? '' : value;

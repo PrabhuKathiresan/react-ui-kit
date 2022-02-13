@@ -1,7 +1,7 @@
 import FormData from './form-data'
 
 export type FieldComponents = 'TextInput' | 'TextArea' | 'Checkbox' | 'Checkbox.Group' | 'Select' | 'Radio' | 'Radio.Group' | 'DatePicker' | 'MonthPicker' | 'Custom'
-export type FieldTypes = 'text' | 'string' | 'email' | 'url' | 'password' | 'number' | 'date' | 'datetime' | 'boolean' | 'bool' | 'array'
+export type FieldTypes = 'text' | 'string' | 'email' | 'url' | 'password' | 'number' | 'date' | 'datetime' | 'boolean' | 'bool' | 'array' | 'object'
 
 export interface FormFields {
   name: string
@@ -13,7 +13,7 @@ export interface FormFields {
   type?: FieldTypes
   component?: FieldComponents
   customComponent?: any
-  componentProps?: object
+  componentProps?: any
   disabledIf?: Function
   requiredIf?: Function
   hiddenIf?: Function
@@ -23,6 +23,7 @@ export interface FormFields {
   validationProps?: object
   editable?: boolean
   default?: any
+  nullable?: boolean
   [k: string]: any
 }
 
@@ -66,7 +67,6 @@ export interface FormProps {
   dataId?: any
   onSuccess?: Function
   onError?: Function
-  strict?: boolean
   extra?: any
   customValidation?: Function
   constructParams?: Function

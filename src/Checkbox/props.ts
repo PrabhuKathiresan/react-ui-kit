@@ -24,6 +24,7 @@ export interface CheckboxProps extends AbstractCheckboxProps {
   indeterminate?: boolean
   subTitle?: any
   variant?: 'bordered' | 'default'
+  error?: any
 }
 
 export interface CheckboxGroupOptions {

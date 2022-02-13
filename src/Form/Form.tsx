@@ -89,11 +89,11 @@ export default class Form extends Component<FormProps, FormState> {
 
     this.setState({ startValidate: true })
     if (!this.isValid) {
-      let { strict = false, t } = this.props
+      let { t } = this.props
       let {
         errors,
         genericError
-      } = this.formData.validate({ strict }, t)
+      } = this.formData.validate({ strict: false }, t)
       return this.setState({ errors, genericError });
     }
     this.setState({ errors: {}, genericError: null })
@@ -139,7 +139,6 @@ export default class Form extends Component<FormProps, FormState> {
   handleInputChange = (name: string, value: any) => {
     let updates = this.beforeUpdate({ [name]: value })
     let formData = this.formData?.updateAttributes(updates)
-    console.log(formData)
     this.setState({ formData })
   }
 
@@ -218,8 +217,11 @@ export default class Form extends Component<FormProps, FormState> {
       case 'Select':
         inputProps.labelKey = inputProps.labelKey || 'name'
         inputProps.closeOnOutsideClick = isDefined(inputProps.closeOnOutsideClick) ? inputProps.closeOnOutsideClick : true
-        inputProps.selected = inputProps.value
-        inputProps.onChange = (s: Array<any>) => this.handleInputChange(name, s)
+        inputProps.selected = Array.isArray(inputProps.value) ? inputProps.value : [inputProps.value]
+        inputProps.onChange = (s: Array<any>) => {
+          if (inputProps.multiple) return this.handleInputChange(name, s)
+          return this.handleInputChange(name, s[0])
+        }
         inputProps.container = 'body'
         delete inputProps.value
         FieldComponent = BasicSelect
