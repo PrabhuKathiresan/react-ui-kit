@@ -2,8 +2,8 @@ import { InputProps } from '../constants'
 
 export interface MonthPickerProps extends InputProps {
   id?: string
-  startDate?: Date
-  endDate?: Date
+  min?: Date
+  max?: Date
   yearMenuRef?: Function
   monthMenuRef?: Function
   onChange: Function

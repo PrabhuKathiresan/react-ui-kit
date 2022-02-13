@@ -48,7 +48,8 @@ const FIELDS = [
     label: 'Hsn code',
     placeholder: 'enter hsncode',
     required: true,
-    type: 'text'
+    type: 'text',
+    default: ''
   },
   {
     name: 'price',
@@ -56,22 +57,26 @@ const FIELDS = [
     placeholder: 'enter unit price',
     type: 'number',
     required: true,
+    default: ''
   },
   {
     name: 'mrp',
     label: 'MRP',
     placeholder: 'enter mrp',
     type: 'number',
+    default: ''
   },
   {
     name: 'quantity',
     label: 'Stock available',
     placeholder: 'enter quantity available',
     type: 'number',
+    default: ''
   },
   {
     name: 'gst',
     label: 'Tax rate',
+    type: 'mixed',
     component: 'Select',
     componentProps: {
       options: GST_RATES,
@@ -83,15 +88,16 @@ const FIELDS = [
         left: <span className='w-100 text-center'>%</span>
       }
     },
-    formatter: function (value) {
-      return value[0] ? value[0].key : '';
+    transform: function (value) {
+      return value[0] ? value[0].key : null;
     },
-    required: true
+    required: true,
+    default: null
   },
   {
     name: 'unit',
     label: 'UOM',
-    type: 'text',
+    type: 'mixed',
     component: 'Select',
     componentProps: {
       animate: true,
@@ -100,10 +106,11 @@ const FIELDS = [
       options: UNITS,
       labelKey: 'name'
     },
-    formatter: function (value) {
-      return value[0] ? value[0]._id : '';
+    transform: function (value) {
+      return value[0] ? value[0]._id : null;
     },
-    required: true
+    required: true,
+    default: null
   }
 ]
 
@@ -155,6 +162,7 @@ export default function CustomFormComponent() {
   return (
     <div>
       <Form
+        name='custom-form'
         customValidation={validateData}
         constructParams={constructFormData}
         fields={FIELDS}

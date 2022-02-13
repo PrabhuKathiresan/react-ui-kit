@@ -14,8 +14,8 @@ const defaultEndDate = new Date(today.getFullYear() + 10, 11)
 function MonthPicker(props: MonthPickerProps, ref: any) {
   let {
     id = generateUEID(),
-    startDate = dayjs(defaultStartDate).startOf('month').toDate(),
-    endDate = dayjs(defaultEndDate).endOf('month').toDate(),
+    min = dayjs(defaultStartDate).startOf('month').toDate(),
+    max = dayjs(defaultEndDate).endOf('month').toDate(),
     onChange,
     monthMenuRef = noop,
     yearMenuRef = noop,
@@ -46,14 +46,14 @@ function MonthPicker(props: MonthPickerProps, ref: any) {
   let selectedMonth = value.getMonth()
   let selectedYear = value.getFullYear()
 
-  let startYear = startDate.getFullYear()
-  let endYear = endDate.getFullYear()
+  let startYear = min.getFullYear()
+  let endYear = max.getFullYear()
   let month = { label: MonthList[selectedMonth], value: selectedMonth, disabled: false }
   let year = { label: selectedYear.toString(), value: selectedYear }
 
   let disableMonth = (index: number) => {
     if (selectedYear === startYear) {
-      let startMonth = startDate.getMonth()
+      let startMonth = min.getMonth()
 
       if (index < startMonth) {
         return true
@@ -61,7 +61,7 @@ function MonthPicker(props: MonthPickerProps, ref: any) {
     }
 
     if (selectedYear === endYear) {
-      let endMonth = endDate.getMonth()
+      let endMonth = max.getMonth()
 
       if (index > endMonth) {
         return true

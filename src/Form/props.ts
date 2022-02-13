@@ -1,3 +1,8 @@
+import FormData from './form-data'
+
+export type FieldComponents = 'TextInput' | 'TextArea' | 'Checkbox' | 'Checkbox.Group' | 'Select' | 'Radio' | 'Radio.Group' | 'DatePicker' | 'MonthPicker' | 'Custom'
+export type FieldTypes = 'text' | 'string' | 'email' | 'url' | 'password' | 'number' | 'date' | 'datetime' | 'boolean' | 'bool' | 'array'
+
 export interface FormFields {
   name: string
   label?: string
@@ -5,8 +10,8 @@ export interface FormFields {
   required?: boolean
   disabled?: boolean
   hidden?: boolean
-  type?: string
-  component?: 'TextInput' | 'TextArea' | 'Checkbox' | 'Checkbox.Group' | 'Select' | 'Radio' | 'Radio.Group' | 'DatePicker' | 'MonthPicker' | 'Custom'
+  type?: FieldTypes
+  component?: FieldComponents
   customComponent?: any
   componentProps?: object
   disabledIf?: Function
@@ -17,15 +22,17 @@ export interface FormFields {
   formatter?: Function
   validationProps?: object
   editable?: boolean
+  default?: any
   [k: string]: any
 }
 
 export interface FormState {
-  formData?: any
+  formData: FormData
   errors?: object
   genericError: any
   submitting?: boolean
   dirty?: boolean
+  startValidate?: boolean
 }
 
 export interface IconProps {
@@ -63,6 +70,9 @@ export interface FormProps {
   extra?: any
   customValidation?: Function
   constructParams?: Function
+  t?: Function
+  submitOnlyIfValid?: boolean
+  beforeUpdate?: (obj: object) => object
 }
 
 export interface FieldRules {
@@ -72,4 +82,12 @@ export interface FieldRules {
   validationProps: object
   formatter?: Function
   ctx?: any
+}
+
+export interface AttributesType {
+  [key: string]: Array<any>
+}
+
+export interface ChangedAttributesType {
+  [key: string]: any
 }

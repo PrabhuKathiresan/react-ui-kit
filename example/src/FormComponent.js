@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Form, Toast } from '@pk-design/react-ui-kit'
-import { isEmpty } from 'lodash'
 import COUNTRIES from './countries.json'
 
 const { useToasts } = Toast
@@ -201,17 +200,18 @@ const roles = [
   }
 ]
 
-const isSuperAdmin = (agent) => agent.role === 'super_admin'
+const isSuperAdmin = (role) => role === 'super_admin'
 // const isAdmin = (agent) => agent.role === 'admin'
 
-const isNewForm = agent => isEmpty(agent._id)
+// const isNewForm = agent => isEmpty(agent._id)
 
 const CustomCompoent = (props) => {
+  console.log(props)
   return (
     <div className='mb-16'>
       <div className='mb-2'>
         <label htmlFor={props.id}>{props.label}</label>
-        <input type='checkbox' checked={Boolean(props.value)} id={props.id} onChange={(e) => props.onChange(e.target.checked)} />
+        <input type='checkbox' disabled={props.disabled} checked={Boolean(props.value)} id={props.id} onChange={(e) => props.onChange(e.target.checked)} />
       </div>
       {props.error && <span className='text-danger'>{props.error}</span>}
     </div>
@@ -243,7 +243,6 @@ const AGENT_FIELDS = [
     label: 'Agent name',
     autoFocus: true,
     value: '',
-    hintZIndex: 1222,
     hint: 'Agent name'
   },
   {
@@ -259,12 +258,14 @@ const AGENT_FIELDS = [
     label: 'Create password for agent',
     value: '',
     hiddenIf: (agent) => Boolean(agent._id),
-    dependencyCheck: {
-      validate: (value, options, agent) => { // eslint-disable
-        return !isNewForm(agent) || !isEmpty(value);
-      },
-      errorMessage: 'Password is required'
-    }
+    when: [
+      ['_id'],
+      (_id, schema) => {
+        if (_id) return schema.notRequired()
+
+        return schema.required('Password is required')
+      }
+    ]
   },
   {
     name: 'contact',
@@ -278,7 +279,7 @@ const AGENT_FIELDS = [
     required: true,
     type: 'date',
     component: 'DatePicker',
-    min: new Date(1980, 0),
+    min: new Date(1993, 10),
     max: new Date()
   },
   {
@@ -287,14 +288,14 @@ const AGENT_FIELDS = [
     required: true,
     type: 'date',
     component: 'MonthPicker',
-    
+    min: new Date(2000, 0),
+    max: new Date()
   },
   {
     name: 'role',
     label: 'Agent role',
     hint: 'Role that agent will hold',
-    hintZIndex: 1222,
-    type: 'text',
+    type: 'mixed',
     component: 'Select',
     componentProps: {
       animate: true,
@@ -303,28 +304,12 @@ const AGENT_FIELDS = [
       options: roles
     },
     required: true,
-    valueFormatter: function (val) {
-      if (!val) return '';
-      let role = [...roles].filter(r => r.value === val);
-      return role && role[0] ? role[0] : '';
-    },
-    formatter: function (role) {
+    transform: function (role) {
       return role[0]?.value || '';
-    },
-    onInputChange: (agent) => {
-      let updates = {
-        type: 'update',
-        manageAllBrands: false
-      };
-      if (isSuperAdmin(agent)) {
-        updates.manageAllBrands = true
-      }
-      return updates
     }
   },
   {
     name: 'manageAllBrands',
-    // label: 'Agent can work with all brands',
     subTitle: 'If this is enabled, agent will be able to create/update any invoice/product under any brands',
     type: 'boolean',
     component: 'Checkbox',
@@ -333,22 +318,13 @@ const AGENT_FIELDS = [
       variant: 'bordered'
     },
     value: false,
-    disabledIf: (agent) => isSuperAdmin(agent),
-    onInputChange: (agent) => {
-      let updates = {
-        type: 'update',
-        managedBrands: [...agent.managedBrands]
-      };
-      if (agent.manageAllBrands) {
-        updates.managedBrands = []
-      }
-      return updates
-    }
+    disabledIf: (agent) => isSuperAdmin(agent.role[0].value)
   },
   {
     name: 'managedBrands',
     label: 'Brands that this agent can work with',
-    type: 'text',
+    type: 'array',
+    default: null,
     component: 'Select',
     componentProps: {
       placeHolder: 'select brand...',
@@ -357,23 +333,17 @@ const AGENT_FIELDS = [
       options: [...BRANDS],
       labelKey: 'name'
     },
-    requiredIf: (...args) => {
-      let [, , agent] = args
-      return isSuperAdmin(agent) || agent.manageAllBrands || !isEmpty(agent.managedBrands)
-    },
-    formatter: function (value) {
-      if (value && Array.isArray(value)) {
-        return value.map(v => v._id);
-      }
-      return [];
+    transform: function(value) {
+      return value.map(v => v._id);
     },
     hiddenIf: (agent) => agent.manageAllBrands,
-    dependencyCheck: {
-      validate: (value, options, agent) => { // eslint-disable
-        return agent.manageAllBrands || !isEmpty(value);
-      },
-      errorMessage: 'Atleast one brand is required'
-    }
+    when: [
+      ['role', 'manageAllBrands'],
+      (...data) => {
+        let [role, manageAllBrands, schema] = data;
+        return (manageAllBrands || role === 'super_admin') ? schema.nullable() : schema.min(1, 'Atleast one brand is required')
+      }
+    ]
   },
   {
     name: 'custom',
@@ -382,7 +352,9 @@ const AGENT_FIELDS = [
     type: 'text',
     customComponent: CustomTextArea,
     required: true,
-    errorMessage: 'Please enter some free text'
+    errorMessage: {
+      required: 'Please enter some free text'
+    }
   },
   {
     name: 'agreeTerms',
@@ -391,7 +363,13 @@ const AGENT_FIELDS = [
     type: 'boolean',
     customComponent: CustomCompoent,
     required: true,
-    errorMessage: 'Please agree terms and conditions'
+    errorMessage: {
+      required: 'Please agree terms and conditions'
+    },
+    disabledIf: (agent) => {
+      console.log(agent.agreeTerms);
+      return agent.agreeTerms
+    }
   },
   {
     name: 'createdAt',
@@ -424,6 +402,15 @@ class Service {
   }
 }
 
+const ownProp = (o, prop) => {
+  if ('hasOwnProperty' in o) {
+    return o.hasOwnProperty(prop);
+
+  } else {
+    return Object.prototype.hasOwnProperty.call(o, prop);
+  }
+}
+
 export default function FormComponent({ stickyFooter = true, onError = () => { }, onSuccess = () => { }, onCancel = () => { } }) {
   const service = new Service(['post', 'put']);
   const toasts = useToasts();
@@ -435,7 +422,8 @@ export default function FormComponent({ stickyFooter = true, onError = () => { }
       name: 'Admin',
       value: 'admin'
     },
-    dob: new Date(1993, 10, 30),
+    dob: '',
+    // dob: new Date(1993, 10, 30),
     manageAllBrands: true,
     managedBrands: []
   });
@@ -448,6 +436,16 @@ export default function FormComponent({ stickyFooter = true, onError = () => { }
   function handleError() {
     onError()
     toasts.addToast('Agent updated failed', { title: 'Update failed', type: 'error', autoDismiss: true, duration: 5000 })
+  }
+
+  function beforeUpdate(updates) {
+    if (ownProp(updates, 'manageAllBrands') && updates.manageAllBrands) {
+      updates.managedBrands = []
+    }
+    if (ownProp(updates, 'role')) {
+      updates.manageAllBrands = isSuperAdmin(updates.role[0].value)
+    }
+    return updates
   }
 
   return (
@@ -465,6 +463,7 @@ export default function FormComponent({ stickyFooter = true, onError = () => { }
       strict
       showCancelBtn
       onCancel={() => onCancel()}
+      beforeUpdate={beforeUpdate}
     />
   )
 }

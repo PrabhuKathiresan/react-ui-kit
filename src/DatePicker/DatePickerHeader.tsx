@@ -36,8 +36,8 @@ export default function DatePickerHeader(props: DatePickerHeaderProps) {
     <div className='ui-kit-datepicker_calendar-header'>
       <Button tabIndex={-1} size='tiny' variant='plain' className='px-4' disabled={disablePrevious} onClick={() => onChange({ changeType: 'month', offset: -1 })}><Previous /></Button>
       <Monthpicker
-        startDate={startDate}
-        endDate={endDate}
+        min={startDate}
+        max={endDate}
         value={selectedDate}
         onChange={handleChange}
         monthMenuRef={monthMenuRef}
