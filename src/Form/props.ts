@@ -15,12 +15,8 @@ export interface FormFields {
   customComponent?: any
   componentProps?: any
   disabledIf?: Function
-  requiredIf?: Function
   hiddenIf?: Function
   onInputChange?: Function
-  validation?: Function | boolean
-  formatter?: Function
-  validationProps?: object
   editable?: boolean
   default?: any
   nullable?: boolean

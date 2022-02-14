@@ -31,7 +31,7 @@ export default class FormData extends Schema {
     this.isNew = true
     this.data = this._setupData(fields, data)
 
-    this._id = get(this.data, this.idField);
+    this._id = get(data, this.idField);
 
     if (this._id) {
       this.isNew = false

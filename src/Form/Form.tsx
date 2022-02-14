@@ -111,8 +111,6 @@ export default class Form extends Component<FormProps, FormState> {
       return onSubmit(data)
     }
 
-    console.log(data)
-
     let {
       service = {},
       createMethod = 'create',
@@ -177,25 +175,22 @@ export default class Form extends Component<FormProps, FormState> {
       componentProps = {},
       disabled = false,
       required = false,
-      requiredIf = () => false,
       disabledIf = () => false,
       hiddenIf = () => false,
       label,
       name,
       maxLength,
-      dependencyCheck,
-      formatter,
-      validation,
-      validationProps = {},
       customComponent = null,
       ...restProps
     } = field
 
-    if (hiddenIf(this.data)) return null
+    let customOptions = { _id: this._id, isNew: this.isNew }
+
+    if (hiddenIf(this.data, customOptions)) return null
 
     let error = get(errors, name)
 
-    disabled = disabledIf(this.data) || disabled
+    disabled = disabledIf(this.data, customOptions) || disabled
 
     let inputProps: any = {
       ...restProps,
