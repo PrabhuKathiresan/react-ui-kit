@@ -72,7 +72,8 @@ export interface FormProps {
   constructParams?: Function
   t?: Function
   submitOnlyIfValid?: boolean
-  beforeUpdate?: (obj: object) => object
+  abortEarly?: boolean
+  beforeUpdate?: (obj: object, data: object) => object
 }
 
 export interface FieldRules {

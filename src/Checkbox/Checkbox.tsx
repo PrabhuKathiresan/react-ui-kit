@@ -39,7 +39,7 @@ export default function (props: CheckboxProps) {
 
   return (
     <div className={cx('ui-kit-checkbox-wrapper', checkboxStyle, className, { 'ui-kit-checkbox-wrapper-disabled': disabled })}>
-      <label>
+      <label htmlFor={id} className='ui-kit-checkbox-label-block'>
         <span className={cx('ui-kit-checkbox', { 'ui-kit-checkbox-disabled': disabled, 'ui-kit-checkbox-indeterminate': indeterminate && !checked, 'ui-kit-checkbox-checked': checked })}>
           <input
             name={name}

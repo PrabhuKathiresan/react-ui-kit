@@ -76,7 +76,7 @@ const FIELDS = [
   {
     name: 'gst',
     label: 'Tax rate',
-    type: 'mixed',
+    type: 'object',
     component: 'Select',
     componentProps: {
       options: GST_RATES,
@@ -89,7 +89,7 @@ const FIELDS = [
       }
     },
     transform: function (value) {
-      return value[0] ? value[0].key : null;
+      return value?.key || null;
     },
     required: true,
     default: null
@@ -97,7 +97,7 @@ const FIELDS = [
   {
     name: 'unit',
     label: 'UOM',
-    type: 'mixed',
+    type: 'object',
     component: 'Select',
     componentProps: {
       animate: true,
@@ -107,7 +107,7 @@ const FIELDS = [
       labelKey: 'name'
     },
     transform: function (value) {
-      return value[0] ? value[0]._id : null;
+      return value?._id || null;
     },
     required: true,
     default: null
@@ -154,7 +154,7 @@ export default function CustomFormComponent() {
   };
 
   let service = {
-    post: (data) => {
+    post: (_data) => {
       return Promise.resolve({});
     }
   };
@@ -170,6 +170,7 @@ export default function CustomFormComponent() {
         isNewForm
         service={service}
         createMethod='post'
+        abortEarly={false}
         onSuccess={() => toasts.addToast('Custom form saved successfully')}
       />
     </div>

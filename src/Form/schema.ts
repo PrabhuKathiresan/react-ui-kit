@@ -45,7 +45,7 @@ export default class Schema {
   _schema: yup.ObjectSchema
   constructor(attrs: SchemaAttrs | Array<FieldAttrs>) {
     let fieldSchema = this._setupSchema(attrs)
-    this._schema = object(fieldSchema)
+    this._schema = object().shape(fieldSchema)
   }
 
   get schema() {
@@ -54,7 +54,7 @@ export default class Schema {
 
   _setupSchema = (attrs: SchemaAttrs | Array<FieldAttrs>) => {
     let _schema: any = {}
-    for (let [attrName, props] of Object.entries(attrs)) {
+    for (let [attrName, props] of Object.entries(attrs).reverse()) {
       let {
         type,
         default: defaultValue = '',
@@ -136,9 +136,9 @@ export default class Schema {
           field = field.default(defaultValue)
           break
         case 'object':
-          field = object()
+          field = object().nullable(nullable)
           if (required) field = field.required(requiredMessage)
-          field = field.default(defaultValue || null)
+          field = field.default(defaultValue || undefined)
         default:
           field = mixed().nullable(nullable)
           if (required) field = field.required(requiredMessage)

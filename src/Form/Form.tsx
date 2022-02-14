@@ -21,9 +21,9 @@ export default class Form extends Component<FormProps, FormState> {
   _changedAttributes: any = {}
   constructor(props: FormProps) {
     super(props)
-    let { fields, data } = props
+    let { fields, data, abortEarly = true, t } = props
     this.state = {
-      formData: new FormData(data, fields),
+      formData: new FormData(data, fields, { abortEarly, t }),
       errors: {},
       genericError: null,
       submitting: false,
@@ -89,11 +89,10 @@ export default class Form extends Component<FormProps, FormState> {
 
     this.setState({ startValidate: true })
     if (!this.isValid) {
-      let { t } = this.props
       let {
         errors,
         genericError
-      } = this.formData.validate({ strict: false }, t)
+      } = this.formData.validate()
       return this.setState({ errors, genericError });
     }
     this.setState({ errors: {}, genericError: null })
@@ -156,7 +155,7 @@ export default class Form extends Component<FormProps, FormState> {
 
   beforeUpdate = (updates: object) => {
     if (this.props.beforeUpdate) {
-      updates = this.props.beforeUpdate(updates) || updates
+      updates = this.props.beforeUpdate(updates, this.formData.data) || updates
     }
 
     return updates;
@@ -217,7 +216,7 @@ export default class Form extends Component<FormProps, FormState> {
       case 'Select':
         inputProps.labelKey = inputProps.labelKey || 'name'
         inputProps.closeOnOutsideClick = isDefined(inputProps.closeOnOutsideClick) ? inputProps.closeOnOutsideClick : true
-        inputProps.selected = Array.isArray(inputProps.value) ? inputProps.value : [inputProps.value]
+        inputProps.selected = Array.isArray(inputProps.value) ? inputProps.value : inputProps.value ? [inputProps.value] : []
         inputProps.onChange = (s: Array<any>) => {
           if (inputProps.multiple) return this.handleInputChange(name, s)
           return this.handleInputChange(name, s[0])

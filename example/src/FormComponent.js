@@ -304,7 +304,7 @@ const AGENT_FIELDS = [
     },
     required: true,
     transform: function (role) {
-      return role.value || '';
+      return role?.value || null;
     }
   },
   {
@@ -340,7 +340,7 @@ const AGENT_FIELDS = [
       ['role', 'manageAllBrands'],
       (...data) => {
         let [role, manageAllBrands, schema] = data;
-        return (manageAllBrands || role.value === 'super_admin') ? schema.nullable() : schema.min(1, 'Atleast one brand is required')
+        return (manageAllBrands || role?.value === 'super_admin') ? schema.nullable() : schema.min(1, 'Atleast one brand is required')
       }
     ]
   },
@@ -415,18 +415,15 @@ export default function FormComponent({ stickyFooter = true, onError = () => { }
     _id: 1,
     name: 'Prabhu Kathiresan',
     email: 'prabhukathir30@gmail.com',
-    role: {
-      name: 'Admin',
-      value: 'admin'
-    },
-    dob: '',
+    role: null,
+    dob: null,
     // dob: new Date(1993, 10, 30),
     manageAllBrands: false,
     managedBrands: [
-      {
-        name: 'Sakthi masala',
-        _id: '1'
-      }
+      // {
+      //   name: 'Sakthi masala',
+      //   _id: '1'
+      // }
     ]
   });
 

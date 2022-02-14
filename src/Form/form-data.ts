@@ -1,5 +1,6 @@
 import get from 'lodash.get'
 import set from 'lodash.set'
+import { ValidationError } from 'yup'
 import { isEqual, isFunction } from '../utils'
 import { FormFields, ChangedAttributesType, AttributesType } from './props'
 import Schema from './schema'
@@ -10,34 +11,58 @@ const noopWithReturn = (str: string) => str
 export default class FormData extends Schema {
   fields: Array<FormFields>
   data: object
+  abortEarly: boolean
+  strict: boolean = false
+  t: Function
 
   attributes: ChangedAttributesType = {}
   _initialValue: object = {}
 
-  constructor(data: object, fields: Array<FormFields>) {
+  constructor(data: object, fields: Array<FormFields>, options: any) {
     super(fields)
     this.fields = fields
     this.data = this._setupData(fields, data)
+    let { abortEarly = true, t = noopWithReturn } = options
+    this.abortEarly = abortEarly;
+    this.t = t
+  }
+
+  get validationOption(): any {
+    return {
+      strict: this.strict,
+      abortEarly: this.abortEarly
+    }
   }
 
   // use this only to ensure if form is valid.
   // this will abortEarly as soon as it finds any error
   get isValid(): boolean {
-    return this.validate({ abortEarly: true, strict: false }).isValid
+    return this.validate().isValid
   }
 
-  validate = (options: any = {}, t: Function = noopWithReturn) => {
+  handleValidationError(validationError: ValidationError): any {
+    let errors: any = {}
+    let { path, message, inner: innerError} = validationError;
+    if (this.abortEarly) {
+      errors[path] = this.t(message)
+    } else {
+      for (let error of innerError) {
+        if (!errors[error.path]) errors[error.path] = error.message
+      }
+    }
+    return errors;
+  }
+
+  validate = () => {
     let validation: any = {
       isValid: true,
       errors: {}
     }
     try {
-      this.schema.validateSync(this.data, { abortEarly: false, ...options })
+      this.schema.validateSync(this.data, this.validationOption)
     } catch (validationError: any) {
       validation.isValid = false
-      for (let error of validationError.inner) {
-        if (!validation.errors[error.path]) validation.errors[error.path] = t(error.message)
-      }
+      validation.errors = this.handleValidationError(validationError)
     }
     return validation;
   }
