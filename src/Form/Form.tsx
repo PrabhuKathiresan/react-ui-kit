@@ -21,9 +21,9 @@ export default class Form extends Component<FormProps, FormState> {
   _changedAttributes: any = {}
   constructor(props: FormProps) {
     super(props)
-    let { fields, data, abortEarly = true, t } = props
+    let { fields, data, abortEarly = true, t, idField } = props
     this.state = {
-      formData: new FormData(data, fields, { abortEarly, t }),
+      formData: new FormData(data, fields, { abortEarly, t, idField }),
       errors: {},
       genericError: null,
       submitting: false,
@@ -37,19 +37,27 @@ export default class Form extends Component<FormProps, FormState> {
   }
 
   get formData() {
-    return this.state.formData;
+    return this.state.formData
   }
 
   get data() {
-    return this.formData.data;
+    return this.formData.data
+  }
+
+  get isNew() {
+    return this.formData.isNew
+  }
+
+  get _id() {
+    return this.formData._id
   }
 
   get changedAttributes(): AttributesType {
-    return this.formData.changedAttributes();
+    return this.formData.changedAttributes()
   }
 
   get dirty(): boolean {
-    return this.formData.hasDirtyAttributes();
+    return this.formData.hasDirtyAttributes()
   }
 
   get isValid(): boolean {
@@ -81,7 +89,7 @@ export default class Form extends Component<FormProps, FormState> {
   }
 
   serialize = (options: any = {}) => {
-    return this.formData.serialize(options);
+    return this.formData.serialize(options)
   }
 
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -93,7 +101,7 @@ export default class Form extends Component<FormProps, FormState> {
         errors,
         genericError
       } = this.formData.validate()
-      return this.setState({ errors, genericError });
+      return this.setState({ errors, genericError })
     }
     this.setState({ errors: {}, genericError: null })
     let data = this.serialize()
@@ -103,23 +111,23 @@ export default class Form extends Component<FormProps, FormState> {
       return onSubmit(data)
     }
 
+    console.log(data)
+
     let {
       service = {},
-      isNewForm,
       createMethod = 'create',
       updateMethod = 'update',
-      dataId,
       onSuccess = noop,
       onError = noop
     } = this.props
 
     let serviceMethod, params
-    if (isNewForm) {
+    if (this.isNew) {
       serviceMethod = service[createMethod]
       params = [data]
     } else {
       serviceMethod = service[updateMethod]
-      params = [dataId, data]
+      params = [this._id, data]
     }
 
     if (serviceMethod && isFunction(serviceMethod)) {
@@ -150,7 +158,7 @@ export default class Form extends Component<FormProps, FormState> {
     let values = get(this.data, name)
     let index = values.indexOf(value)
     index !== -1 ? values.splice(index, 1) : values.push(value)
-    this.handleInputChange(name, [...values]);
+    this.handleInputChange(name, [...values])
   }
 
   beforeUpdate = (updates: object) => {
@@ -158,7 +166,7 @@ export default class Form extends Component<FormProps, FormState> {
       updates = this.props.beforeUpdate(updates, this.formData.data) || updates
     }
 
-    return updates;
+    return updates
   }
 
   renderField = (field: FormFields) => {

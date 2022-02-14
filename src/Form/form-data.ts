@@ -14,6 +14,9 @@ export default class FormData extends Schema {
   abortEarly: boolean
   strict: boolean = false
   t: Function
+  idField: string
+  isNew: boolean
+  _id: string
 
   attributes: ChangedAttributesType = {}
   _initialValue: object = {}
@@ -21,10 +24,18 @@ export default class FormData extends Schema {
   constructor(data: object, fields: Array<FormFields>, options: any) {
     super(fields)
     this.fields = fields
-    this.data = this._setupData(fields, data)
-    let { abortEarly = true, t = noopWithReturn } = options
+    let { abortEarly = true, t = noopWithReturn, idField = 'id' } = options
     this.abortEarly = abortEarly;
     this.t = t
+    this.idField = idField;
+    this.isNew = true
+    this.data = this._setupData(fields, data)
+
+    this._id = get(this.data, this.idField);
+
+    if (this._id) {
+      this.isNew = false
+    }
   }
 
   get validationOption(): any {
@@ -103,7 +114,7 @@ export default class FormData extends Schema {
   }
 
   _setupData = (fields: Array<FormFields>, data: object) => {
-    return fields.reduce((formData, field) => {
+    return fields.filter((f) => !f.hidden).reduce((formData, field) => {
       let {
         name, getter, component = 'TextInput', componentProps = {},
         type = 'text', default: defaultValue = ''

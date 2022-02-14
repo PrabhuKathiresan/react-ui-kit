@@ -417,14 +417,8 @@ export default function FormComponent({ stickyFooter = true, onError = () => { }
     email: 'prabhukathir30@gmail.com',
     role: null,
     dob: null,
-    // dob: new Date(1993, 10, 30),
     manageAllBrands: false,
-    managedBrands: [
-      // {
-      //   name: 'Sakthi masala',
-      //   _id: '1'
-      // }
-    ]
+    managedBrands: []
   });
 
   function handleSuccess() {
@@ -453,8 +447,7 @@ export default function FormComponent({ stickyFooter = true, onError = () => { }
       fields={AGENT_FIELDS}
       data={data}
       service={service}
-      isNewForm={false}
-      dataId={1}
+      idField='_id'
       submitBtnText='Save Agent'
       onError={handleError}
       onSuccess={handleSuccess}

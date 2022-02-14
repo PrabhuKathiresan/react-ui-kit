@@ -167,7 +167,7 @@ export default function CustomFormComponent() {
         constructParams={constructFormData}
         fields={FIELDS}
         data={{}}
-        isNewForm
+        idField='_id'
         service={service}
         createMethod='post'
         abortEarly={false}

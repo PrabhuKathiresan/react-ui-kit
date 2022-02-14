@@ -46,6 +46,7 @@ export interface ServiceProps {
 }
 
 export interface FormProps {
+  idField?: string
   onSubmit?: Function
   service?: ServiceProps
   createMethod?: string
@@ -56,7 +57,6 @@ export interface FormProps {
   loading?: boolean
   loadingText?: any
   disabled?: boolean
-  isNewForm?: boolean
   submitBtnText?: string
   submitBtnIcon?: IconProps
   showCancelBtn?: boolean
@@ -64,7 +64,6 @@ export interface FormProps {
   cancelBtnIcon?: IconProps
   onCancel?: Function
   name: string
-  dataId?: any
   onSuccess?: Function
   onError?: Function
   extra?: any
