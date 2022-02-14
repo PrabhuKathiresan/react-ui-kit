@@ -81,7 +81,10 @@ export default class Schema {
         case 'date':
         case 'datetime':
           field = date().nullable(nullable)
-          if (required) field = field.required(requiredMessage)
+          if (Array.isArray(rest.when)) {
+            let [dependentFields, handler] = rest.when
+            field = field.when(dependentFields, handler)
+          } else if (required) field = field.required(requiredMessage)
           if (defaultValue instanceof Date) field = field.default(defaultValue)
           if (rest.min instanceof Date) field = field.min(dayjs(rest.min).startOf('d').toDate())
           if (rest.max instanceof Date) field = field.max(dayjs(rest.max).endOf('d').toDate())
@@ -91,7 +94,11 @@ export default class Schema {
             nullable: _nullable = true
           } = props;
           field = number().nullable(_nullable)
-          if (required) field = field.required(requiredMessage)
+          if (Array.isArray(rest.when)) {
+            let [dependentFields, handler] = rest.when
+            field = field.when(dependentFields, handler)
+          } else if (required) field = field.required(requiredMessage)
+
           if (typeof defaultValue === 'number') field = field.default(defaultValue)
           if (rest.enum?.length) field = field.oneOf(rest.enum)
           if (typeof rest.min === 'number') field = field.min(rest.min)
@@ -110,7 +117,13 @@ export default class Schema {
         case 'url':
         case 'password':
           field = string().nullable(nullable)
-          if (required) field = field.required(requiredMessage)
+          if (Array.isArray(rest.when)) {
+            let [dependentFields, handler] = rest.when
+            field = field.when(dependentFields, handler)
+          } else {
+            if (required) field = field.required(requiredMessage)
+            else if (nullable) field = field.nullable()
+          }
           field = field.default(defaultValue)
           field = field.trim()
           let {
@@ -137,11 +150,17 @@ export default class Schema {
           break
         case 'object':
           field = object().nullable(nullable)
-          if (required) field = field.required(requiredMessage)
+          if (Array.isArray(rest.when)) {
+            let [dependentFields, handler] = rest.when
+            field = field.when(dependentFields, handler)
+          } else if (required) field = field.required(requiredMessage)
           field = field.default(defaultValue || undefined)
         default:
           field = mixed().nullable(nullable)
-          if (required) field = field.required(requiredMessage)
+          if (Array.isArray(rest.when)) {
+            let [dependentFields, handler] = rest.when
+            field = field.when(dependentFields, handler)
+          } else if (required) field = field.required(requiredMessage)
           field = field.default(defaultValue || null)
           break
       }
