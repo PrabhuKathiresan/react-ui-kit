@@ -84,7 +84,7 @@ export default class FormData extends Schema {
       errors: {}
     }
     try {
-      this.schema.validateSync(this.processableData, this.validationOption)
+      this.schema.validateSync(this.data, this.validationOption)
     } catch (validationError: any) {
       validation.isValid = false
       validation.errors = this.handleValidationError(validationError)
