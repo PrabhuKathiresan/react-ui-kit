@@ -80,11 +80,12 @@ export default class Schema {
       switch (type) {
         case 'date':
         case 'datetime':
-          field = date().nullable(nullable)
+          field = date().nullable(true)
           if (Array.isArray(rest.when)) {
             let [dependentFields, handler] = rest.when
             field = field.when(dependentFields, handler)
           } else if (required) field = field.required(requiredMessage)
+
           if (defaultValue instanceof Date) field = field.default(defaultValue)
           if (rest.min instanceof Date) field = field.min(dayjs(rest.min).startOf('d').toDate())
           if (rest.max instanceof Date) field = field.max(dayjs(rest.max).endOf('d').toDate())
@@ -92,7 +93,7 @@ export default class Schema {
         case 'number':
           let {
             nullable: _nullable = true
-          } = props;
+          } = props
           field = number().nullable(_nullable)
           if (Array.isArray(rest.when)) {
             let [dependentFields, handler] = rest.when

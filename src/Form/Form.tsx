@@ -17,23 +17,22 @@ import { FormFields, FormProps, FormState, AttributesType } from './props'
 const SERVICE_METHOD_NOT_AVAILABLE = 'Service method is not configured'
 
 export default class Form extends Component<FormProps, FormState> {
-  fieldsHash: any
-  _changedAttributes: any = {}
+  // fieldsHash: any
   constructor(props: FormProps) {
     super(props)
-    let { fields, data, abortEarly = true, t, idField } = props
+    let { fields, data, abortEarly = true, t, idField, stripUnchanged } = props
     this.state = {
-      formData: new FormData(data, fields, { abortEarly, t, idField }),
+      formData: new FormData(data, fields, { abortEarly, t, idField, stripUnchanged }),
       errors: {},
       genericError: null,
       submitting: false,
       dirty: false,
       startValidate: false
     }
-    this.fieldsHash = this.props.fields.reduce((hash, field) => {
-      hash[field.name] = { ...field }
-      return hash
-    }, {})
+    // this.fieldsHash = this.props.fields.reduce((hash, field) => {
+    //   hash[field.name] = { ...field }
+    //   return hash
+    // }, {})
   }
 
   get formData() {

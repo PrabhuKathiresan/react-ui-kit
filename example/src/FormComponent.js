@@ -279,7 +279,7 @@ const AGENT_FIELDS = [
     type: 'date',
     component: 'DatePicker',
     min: new Date(1993, 10),
-    max: new Date()
+    max: new Date(2000, 0)
   },
   {
     name: 'monthOfJoining',
@@ -289,6 +289,29 @@ const AGENT_FIELDS = [
     component: 'MonthPicker',
     min: new Date(2000, 0),
     max: new Date()
+  },
+  {
+    name: 'serviceLocation',
+    label: 'Last served location',
+    type: 'text',
+    required: true,
+    component: 'Radio.Group',
+    componentProps: {
+      options: [
+        {
+          label: 'Chennai',
+          value: 'chennai'
+        },
+        {
+          label: 'Bangalore',
+          value: 'bangalore'
+        },
+        {
+          label: 'Hyderabad',
+          value: 'hyderabad'
+        }
+      ]
+    }
   },
   {
     name: 'role',
@@ -304,7 +327,7 @@ const AGENT_FIELDS = [
     },
     required: true,
     transform: function (role) {
-      return role?.value || null;
+      return role?.value || null
     }
   },
   {
@@ -333,16 +356,23 @@ const AGENT_FIELDS = [
       labelKey: 'name'
     },
     transform: function(value) {
-      return value.map(v => v._id);
+      return value.map(v => v._id)
     },
     hiddenIf: (agent) => agent.manageAllBrands,
     when: [
       ['role', 'manageAllBrands'],
       (...data) => {
-        let [role, manageAllBrands, schema] = data;
+        let [role, manageAllBrands, schema] = data
         return (manageAllBrands || role?.value === 'super_admin') ? schema.nullable() : schema.min(1, 'Atleast one brand is required')
       }
     ]
+  },
+  {
+    name: 'age',
+    label: 'Agent age',
+    type: 'number',
+    required: true,
+    default: null
   },
   {
     name: 'custom',
@@ -391,35 +421,36 @@ class Service {
   }
 
   create(data) {
-    return Promise.resolve({ success: true });
+    return Promise.resolve({ success: true })
   }
 
   update = async (id, data) => {
-    return Promise.resolve({ success: true });
+    return Promise.resolve({ success: true })
   }
 }
 
 const ownProp = (o, prop) => {
   if ('hasOwnProperty' in o) {
-    return o.hasOwnProperty(prop);
+    return o.hasOwnProperty(prop)
 
   } else {
-    return Object.prototype.hasOwnProperty.call(o, prop);
+    return Object.prototype.hasOwnProperty.call(o, prop)
   }
 }
 
 export default function FormComponent({ stickyFooter = true, onError = () => { }, onSuccess = () => { }, onCancel = () => { } }) {
-  const service = new Service(['post', 'put']);
-  const toasts = useToasts();
+  const service = new Service(['post', 'put'])
+  const toasts = useToasts()
   const [data,] = useState({
     _id: null,
     name: 'Prabhu Kathiresan',
     email: 'prabhukathir30@gmail.com',
     role: null,
     dob: null,
+    age: null,
     manageAllBrands: false,
     managedBrands: []
-  });
+  })
 
   function handleSuccess() {
     onSuccess()

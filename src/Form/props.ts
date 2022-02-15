@@ -68,6 +68,7 @@ export interface FormProps {
   t?: Function
   submitOnlyIfValid?: boolean
   abortEarly?: boolean
+  stripUnchanged?: boolean
   beforeUpdate?: (obj: object, data: object) => object
 }
 

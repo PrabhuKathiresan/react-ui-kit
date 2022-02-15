@@ -19,10 +19,12 @@ export interface Radio {
 }
 
 export interface RadioGroupProps {
+  id?: any
   label?: any
   required?: boolean
   onChange: Function
   value: any
   options: Array<Radio>
-  variant: 'row' | 'column'
+  variant: 'row' | 'column',
+  error?: any
 }

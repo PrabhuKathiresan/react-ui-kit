@@ -89,7 +89,8 @@ const FIELDS = [
       }
     },
     transform: function (value) {
-      return value?.key || null;
+      if (!value) return null
+      return value.key;
     },
     required: true,
     default: null

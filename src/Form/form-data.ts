@@ -7,6 +7,8 @@ import Schema from './schema'
 import { isMultiValueField, isDateField, isBooleanField } from './utils'
 
 const noopWithReturn = (str: string) => str
+const getNumberValue = (value: any) => value ? (isNaN(value) ? '' : value) : ''
+const getDateValue = (value: any) => value instanceof Date ? value : null
 
 export default class FormData extends Schema {
   fields: Array<FormFields>
@@ -17,6 +19,7 @@ export default class FormData extends Schema {
   idField: string
   isNew: boolean
   _id: string
+  stripUnchanged: boolean
 
   attributes: ChangedAttributesType = {}
   _initialValue: object = {}
@@ -24,14 +27,20 @@ export default class FormData extends Schema {
   constructor(data: object, fields: Array<FormFields>, options: any) {
     super(fields)
     this.fields = fields
-    let { abortEarly = true, t = noopWithReturn, idField = 'id' } = options
-    this.abortEarly = abortEarly;
+    let {
+      abortEarly = true,
+      t = noopWithReturn,
+      idField = 'id',
+      stripUnchanged = false
+    } = options
+    this.abortEarly = abortEarly
     this.t = t
-    this.idField = idField;
+    this.idField = idField
     this.isNew = true
+    this.stripUnchanged = stripUnchanged
     this.data = this._setupData(fields, data)
 
-    this._id = get(data, this.idField);
+    this._id = get(data, this.idField)
 
     if (this._id) {
       this.isNew = false
@@ -51,9 +60,14 @@ export default class FormData extends Schema {
     return this.validate().isValid
   }
 
+  get processableData(): any {
+    let data = this.stripUnchanged ? this.changedAttributes() : this.data
+    return data
+  }
+
   handleValidationError(validationError: ValidationError): any {
     let errors: any = {}
-    let { path, message, inner: innerError} = validationError;
+    let { path, message, inner: innerError} = validationError
     if (this.abortEarly) {
       errors[path] = this.t(message)
     } else {
@@ -61,7 +75,7 @@ export default class FormData extends Schema {
         if (!errors[error.path]) errors[error.path] = error.message
       }
     }
-    return errors;
+    return errors
   }
 
   validate = () => {
@@ -70,18 +84,18 @@ export default class FormData extends Schema {
       errors: {}
     }
     try {
-      this.schema.validateSync(this.data, this.validationOption)
+      this.schema.validateSync(this.processableData, this.validationOption)
     } catch (validationError: any) {
       validation.isValid = false
       validation.errors = this.handleValidationError(validationError)
     }
-    return validation;
+    return validation
   }
 
   serialize = (options: any = {}) => {
     let parsedData: any = {}
     try {
-      parsedData = this.schema.cast(this.data, options)
+      parsedData = this.schema.cast(this.processableData, options)
     } catch (error) {
       console.error(error)
     }
@@ -89,12 +103,12 @@ export default class FormData extends Schema {
   }
 
   update = (data: object) => {
-    this.data = this._setupData(this.fields, data);
-    return this;
+    this.data = this._setupData(this.fields, data)
+    return this
   }
 
   updateAttribute = (name: string, value: any) => {
-    set(this.data, name, value);
+    set(this.data, name, value)
     let attribute = get(this.attributes, name) || []
     let previousValue = attribute[0] || get(this._initialValue, name)
     if (previousValue === value) {
@@ -114,13 +128,16 @@ export default class FormData extends Schema {
   }
 
   _setupData = (fields: Array<FormFields>, data: object) => {
+    let today = new Date()
     return fields.filter((f) => !f.hidden).reduce((formData, field) => {
       let {
         name, getter, component = 'TextInput', componentProps = {},
         type = 'text', default: defaultValue = ''
       } = field
+      let previous, current;
       let multiple = Boolean(componentProps.multiple)
       let value = getter && isFunction(getter) ? getter(data) : get(data, name)
+      previous = current = value;
       if (isMultiValueField(component, multiple)) {
         if (!value) value = []
         else if (!Array.isArray(value)) value = [value]
@@ -128,28 +145,31 @@ export default class FormData extends Schema {
         defaultValue = []
       }
       if (isDateField(component, type)) {
-        value = value instanceof Date ? value : new Date()
+        value = getDateValue(value)
+        defaultValue = getDateValue(defaultValue)
+
+        if (component === 'MonthPicker') value = value || defaultValue || today
       }
       if (isBooleanField(component, type)) {
         value = Boolean(value)
         defaultValue = typeof defaultValue === 'boolean' ? defaultValue : field.nullable ? null : false
       }
       if (type === 'number') {
-        value = (value && isNaN(value)) ? '' : value;
-        defaultValue = (defaultValue && isNaN(defaultValue)) ? '' : defaultValue;
-        value = typeof value === 'undefined' ? defaultValue : value;
+        value = getNumberValue(value)
+        defaultValue = getNumberValue(defaultValue)
       } else {
         value = value || defaultValue
       }
+      if (![[], '', null, undefined, today].includes(value)) current = value
       set(formData, name, value)
       set(this._initialValue, name, value)
-      set(this.attributes, name, [value])
+      set(this.attributes, name, [previous, current])
       return formData
     }, {})
   }
 
   hasDirtyAttributes = () => {
-    let attrs = Object.entries(this.attributes);
+    let attrs = Object.entries(this.attributes)
 
     return attrs.some(([, prop]) => {
       let [previous, current = previous] = prop
@@ -158,7 +178,7 @@ export default class FormData extends Schema {
   }
 
   changedAttributes = (): AttributesType => {
-    let attrs = Object.entries(this.attributes);
+    let attrs = Object.entries(this.attributes)
 
     return attrs.reduce((attributes, [key, prop]) => {
       let [previous, current = previous] = prop

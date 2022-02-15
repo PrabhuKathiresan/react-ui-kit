@@ -11,6 +11,8 @@ export function RadioGroup(props: RadioGroupProps) {
     label,
     required = false,
     variant = 'row',
+    error,
+    id
   } = props
 
   return (
@@ -34,6 +36,7 @@ export function RadioGroup(props: RadioGroupProps) {
           }
         </div>
       </div>
+      {error && <span className='text--danger pt-4 element-flex' data-testid={`${id}-input-error`}>{error}</span>}
     </div>
   )
 }

@@ -46,12 +46,12 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
   constructor(props: DatePickerProps) {
     super(props)
     let date = new Date()
-    let year = date.getFullYear()
-    let month = date.getMonth()
     let startDate = new Date((date.getFullYear() - 10), 0, 1)
     let endDate = new Date((date.getFullYear() + 10), 11, 31)
     if (props.min) startDate = props.min
     if (props.max) endDate = props.max
+    let year = endDate.getFullYear()
+    let month = endDate.getMonth()
     let value = props.value instanceof Date ? dayjs(props.value).startOf('d').toDate().getTime() : ''
     let defaultValue = props.defaultValue instanceof Date ? dayjs(props.defaultValue).startOf('d').toDate().getTime() : ''
     let selectedDay = value || defaultValue
@@ -441,14 +441,13 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
   })
 
   renderCalendar = () => {
-    let date = new Date()
     let {
       pickerPosition,
       open,
-      month = date.getMonth(),
-      year = date.getFullYear(),
       startDate,
-      endDate
+      endDate,
+      month = endDate.getMonth(),
+      year = endDate.getFullYear(),
     } = this.state
     let {
       animate = true,
@@ -503,7 +502,8 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
       error,
       labelClass,
       hint,
-      hintPosition
+      hintPosition,
+      required
     } = this.props
 
     let portalTarget = canUseDOM && container ? document.querySelector(container) : null
@@ -513,6 +513,7 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
         <TextInput
           id={id}
           label={label}
+          required={required}
           disabled={disabled}
           placeholder={placeholder}
           onFocus={this.onFocus}
