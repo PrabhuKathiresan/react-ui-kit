@@ -3,9 +3,10 @@ import cx from 'classnames'
 import Button from '../Button'
 import Dropdown from '../Dropdown'
 import { ButtonGroupProps, ButtonGroupActionProps } from './props'
+import { noop } from '../utils'
 
 export default function ButtonGroup(props: ButtonGroupProps) {
-  const {
+  let {
     align = 'center',
     justify = 'left',
     gap = '',
@@ -17,7 +18,7 @@ export default function ButtonGroup(props: ButtonGroupProps) {
     containerClass = ''
   } = props
 
-  const computedGroupClass = {}
+  let computedGroupClass = {}
   if (gap) {
     computedGroupClass[`ui-kit-btn-group__has-gap gap__${gap}`] = true
   }
@@ -26,35 +27,42 @@ export default function ButtonGroup(props: ButtonGroupProps) {
     computedGroupClass[`ui-kit-btn-group__space-${verticalSpacing}`] = true
   }
 
-  const renderItem = (action: ButtonGroupActionProps) => {
-    if (action.type === 'dropdown') {
+  let renderItem = (action: ButtonGroupActionProps) => {
+    let {
+      type,
+      onClick = noop,
+      label,
+      extraProps = {},
+      component
+    } = action;
+    if (type === 'dropdown') {
       return (
         <Dropdown
-          textContent={action.label}
-          onClick={(item: any) => action.onClick(item)}
+          textContent={label}
+          onClick={(item: any) => onClick(item)}
           options={action.options || []}
           position={action.dropdownPosition || 'right'}
           theme={theme}
           variant={variant}
           triggerSize={size}
-          {...action.extraProps}
+          {...extraProps}
         />
       )
     }
     if (action.type === 'custom') {
-      return action.component
+      return component
     }
 
     return (
       <Button
-        onClick={(e: any) => action.onClick(e)}
+        onClick={(e: any) => onClick(e)}
         theme={theme}
         variant={variant}
         size={size}
-        component={action.component || 'button'}
-        {...action.extraProps}
+        component={component || 'button'}
+        {...extraProps}
       >
-        {action.label}
+        {label}
       </Button>
     )
   }

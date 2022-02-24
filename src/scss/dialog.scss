@@ -15,6 +15,11 @@
     .ui-kit-dialog-close {
       width: 24px;
       height: 24px;
+      transition: all .2s ease-in;
+
+      &:hover {
+        box-shadow: 0 0 2px 1px inset rgba(0, 0, 0, .2);
+      }
     }
   }
 

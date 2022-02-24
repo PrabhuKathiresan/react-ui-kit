@@ -35,19 +35,19 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps: SelectProps) {
-    const { options = [], selected: nextSelected = [], defaultFirstItemSelected } = nextProps
-    const selected = optionsMap([...nextSelected], nextProps)
-    const nextOptions = optionsMap([...options], nextProps)
-    const activeIndex = this._getActiveIndex(selected, defaultFirstItemSelected)
-    const nextState: SelectState = {
+    let { options = [], selected: nextSelected = [], defaultFirstItemSelected } = nextProps
+    let selected = optionsMap([...nextSelected], nextProps)
+    let nextOptions = optionsMap([...options], nextProps)
+    let activeIndex = this._getActiveIndex(selected, defaultFirstItemSelected)
+    let nextState: SelectState = {
       value: this.state.value,
       activeIndex,
       id: this.state.id
     }
-    const { options: currentOptions, value } = this.state
+    let { options: currentOptions, value } = this.state
     if (!isEqual(nextOptions, currentOptions)) {
       nextState.options = nextOptions
-      const results = filterResultsFromOptions([...nextOptions], {
+      let results = filterResultsFromOptions([...nextOptions], {
         ...nextProps,
         id: this.state.id,
         value,
@@ -64,17 +64,17 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
   }
 
   componentDidUpdate(_prevProps: SelectProps, prevState: SelectState) {
-    const { value, options = [] } = this.state
+    let { value, options = [] } = this.state
     if (prevState.value !== value) {
-      const { defaultFirstItemSelected } = this.props
-      const results = filterResultsFromOptions([...options], {
+      let { defaultFirstItemSelected } = this.props
+      let results = filterResultsFromOptions([...options], {
         ...this.props,
         id: this.state.id,
         value,
         activeIndex: -1
       })
-      const activeIndex = defaultFirstItemSelected ? 0 : -1
-      const activeItem = defaultFirstItemSelected ? results[0] : null
+      let activeIndex = defaultFirstItemSelected ? 0 : -1
+      let activeItem = defaultFirstItemSelected ? results[0] : null
       this.setState({
         results,
         activeItem,
@@ -93,7 +93,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
 
   _getActiveIndex = (selected: Array<any>, firstItemSelected?: boolean) => {
     if (selected.length) {
-      const { results = [] } = this.state
+      let { results = [] } = this.state
       return getActiveIndex([...results], selected, this.props)
     }
 
@@ -101,7 +101,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
   }
 
   _getActiveItem = (state = this.state) => {
-    const {
+    let {
       activeIndex,
       results = []
     } = state
@@ -109,12 +109,12 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
   }
 
   _handlePropsChange = (nextProps: SelectProps, nextState: SelectState, nextOptions: Array<OptionProps>, selected: Array<OptionProps>) => {
-    const {
+    let {
       multiple,
       disabled,
       labelKey
     } = nextProps
-    const {
+    let {
       selected: currentSelected
     } = this.state
     if (multiple !== this.props.multiple) {
@@ -170,8 +170,8 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
   }
 
   _checkMenuPosition = () => {
-    const nextMenuPosition = this._getMenuPosition()
-    const { menuPosition } = this.state
+    let nextMenuPosition = this._getMenuPosition()
+    let { menuPosition } = this.state
     if (!isEqual(nextMenuPosition, menuPosition)) {
       this._setMenuPosition(nextMenuPosition)
     }
@@ -187,16 +187,16 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
         dropup: false
       }
     }
-    const { maxDropdownHeight = MAXIMUM_DROPDOWN_HEIGHT, dropup, searchable = false } = this.props
-    const { results = [] } = this.state
-    const menuHeight = getMenuHeight(maxDropdownHeight, results.length, searchable)
-    const body = document.documentElement || document.body
-    const position = getOffset(this.input)
+    let { maxDropdownHeight = MAXIMUM_DROPDOWN_HEIGHT, dropup, searchable = false } = this.props
+    let { results = [] } = this.state
+    let menuHeight = getMenuHeight(maxDropdownHeight, results.length, searchable)
+    let body = document.documentElement || document.body
+    let position = getOffset(this.input)
     let bottom: string | number = 'auto'
     let top = position.y + position.height + 2
     let _dropup = false
-    const offset = Math.max(body.scrollTop, (body.scrollHeight - window.innerHeight))
-    const offsetHeight = body.scrollHeight - offset
+    let offset = Math.max(body.scrollTop, (body.scrollHeight - window.innerHeight))
+    let offsetHeight = body.scrollHeight - offset
     if (dropup || ((position.bottom + menuHeight) > offsetHeight)) {
       top = 'auto'
       bottom = offsetHeight - position.y + 2
@@ -220,8 +220,8 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
 
   _handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist()
-    const value = e.currentTarget.value
-    const clearSelection = !this.props.multiple && this.state.selected?.length
+    let value = e.currentTarget.value
+    let clearSelection = !this.props.multiple && this.state.selected?.length
     this.setState((prevState) => {
       return {
         isDirty: true,
@@ -229,15 +229,15 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
         value,
       }
     }, () => {
-      const { onInputChange = noop, onChange = noop } = this.props
+      let { onInputChange = noop, onChange = noop } = this.props
       onInputChange(value, e)
       clearSelection && onChange([])
     })
   }
 
   _handleActiveIndexChange = (activeIndex: number) => {
-    const { results = [] } = this.state
-    const activeItem = activeIndex === -1 ? null : results[activeIndex]
+    let { results = [] } = this.state
+    let activeItem = activeIndex === -1 ? null : results[activeIndex]
     this.setState({
       activeIndex,
       activeItem
@@ -245,8 +245,8 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
   }
 
   _handleKeyDown = (e: React.KeyboardEvent) => {
-    const { activeItem } = this.state
-    const { searchable } = this.props
+    let { activeItem } = this.state
+    let { searchable } = this.props
 
     // Skip most actions when the menu is hidden.
     if (!this._isMenuOpen) {
@@ -306,14 +306,14 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
       !this._isMenuOpen ? this._openMenu() : this._closeMenu()
     }
     this.__justClicked = true
-    const { onInputFocus = noop } = this.props
+    let { onInputFocus = noop } = this.props
     onInputFocus(e)
   }
 
   _onBlur = (e: React.FocusEvent) => {
     e.persist()
     this._hasFocus && this._setFocus(false)
-    const { onInputBlur = noop } = this.props
+    let { onInputBlur = noop } = this.props
     onInputBlur(e)
   }
 
@@ -322,7 +322,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
       [ACTUAL_VALUE]: selected
     } = option
     if (this.props.multiple) {
-      const prevSelected = [...(this.state.selected || [])].map(s => s[ACTUAL_VALUE])
+      let prevSelected = [...(this.state.selected || [])].map(s => s[ACTUAL_VALUE])
       selected = [...prevSelected, selected]
     } else {
       selected = [selected]
@@ -333,8 +333,8 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
 
   _onRemoveSelected = (option: OptionProps) => {
     if (!this.props.multiple) return
-    const { labelKey, onChange = noop } = this.props
-    const selected = [...(this.state.selected || [])].filter(s => s[labelKey] !== option[labelKey]).map(ms => ms[ACTUAL_VALUE])
+    let { labelKey, onChange = noop } = this.props
+    let selected = [...(this.state.selected || [])].filter(s => s[labelKey] !== option[labelKey]).map(ms => ms[ACTUAL_VALUE])
     onChange(selected)
     this._isMenuOpen && this._closeMenu()
   }
@@ -369,13 +369,13 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
     this._checkMenuPosition()
     this._enableAutoScroll()
     this.setState((prevState: SelectState) => {
-      const nextState: SelectState = {
+      let nextState: SelectState = {
         id: prevState.id,
         value: prevState.value,
         open: true,
         activeIndex: -1
       }
-      const { results = [], selected = [] } = prevState
+      let { results = [], selected = [] } = prevState
       if (!prevState.searchable) {
         nextState.activeIndex = getActiveIndex(results, selected.length ? selected : [], this.props)
       } else {
@@ -400,7 +400,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
       focus: false,
       isDirty: false,
     }, () => {
-      const {
+      let {
         // multiple,
         onClose = noop
       } = this.props
@@ -476,20 +476,20 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
   }
 
   _menuContainer = () => {
-    const {
+    let {
       animate = true,
       transitionDuration = animate ? ANIMATION_TIMER : 0,
       searchable
     } = this.props
 
-    const {
+    let {
       menuPosition,
       open,
       value,
       id
     } = this.state
 
-    const mergedStateAndProps = {
+    let mergedStateAndProps = {
       ...this.props,
       ...this.state,
     }
@@ -534,7 +534,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
   }
 
   _getRightIcon = () => {
-    const {
+    let {
       showRightIcon = true,
       icons
     } = this.props
@@ -554,7 +554,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
   })
 
   get inputHeight(): any {
-    const {
+    let {
       inputSize = 'default',
       height = HEIGHT_MAP[inputSize] || SELECT_HEIGHT
     } = this.props
@@ -562,7 +562,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
   }
 
   _getContainerStyle = () => {
-    const {
+    let {
       multiple,
       borderless,
       textOnly
@@ -575,25 +575,25 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
   }
 
   _getExtraProps = () => {
-    const {
+    let {
       searchable,
       // multiple
     } = this.props
-    const extraProps: ExtraInputProps = searchable ? {} : { onKeyDown: this._handleKeyDown }
+    let extraProps: ExtraInputProps = searchable ? {} : { onKeyDown: this._handleKeyDown }
     // if (multiple) extraProps.ref = this._setBackgroundInputRef
 
     return extraProps
   }
 
   _getPortalTarget = () => {
-    const {
+    let {
       container
     } = this.props
     return canUseDOM && container ? document.querySelector(container) : null
   }
 
   render() {
-    const {
+    let {
       disabled = false,
       inputProps,
       placeholder,
@@ -613,19 +613,19 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
       width = SELECT_WIDTH
     } = this.props
 
-    const {
+    let {
       open,
       selected,
       id
     } = this.state
 
-    const rightIcon = this._getRightIcon()
-    const leftIcon = this._getLeftIcon()
-    const containerStyle = this._getContainerStyle()
-    const extraProps = this._getExtraProps()
-    const portalTarget = this._getPortalTarget()
-    const menuContainer = this._menuContainer()
-    const isTextOnlyAndBorderLess = textOnly && borderless
+    let rightIcon = this._getRightIcon()
+    let leftIcon = this._getLeftIcon()
+    let containerStyle = this._getContainerStyle()
+    let extraProps = this._getExtraProps()
+    let portalTarget = this._getPortalTarget()
+    let menuContainer = this._menuContainer()
+    let isTextOnlyAndBorderLess = textOnly && borderless
 
     return (
       <>

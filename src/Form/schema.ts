@@ -1,7 +1,8 @@
 import * as yup from 'yup'
 import dayjs from 'dayjs'
-import { FieldComponents, FieldTypes } from './props'
-import { emailRegex } from './utils'
+import isEmpty from 'is-empty'
+import { FormFields } from './props'
+import { noopWithReturn, parseTranslationOptions } from './utils'
 
 const {
   object,
@@ -9,170 +10,190 @@ const {
   number,
   bool,
   array,
-  date,
-  mixed
+  date
 } = yup
 
-interface ErrorMessageAttrs {
-  required?: string
-  email?: string
-  default?: string
-}
-
-interface FieldAttrs {
-  name?: string
-  type?: FieldTypes
-  component?: FieldComponents
-  required?: boolean
-  email?: boolean
-  url?: boolean
-  nullable?: boolean
-  default?: any
-  enum?: Array<any>
-  min?: number | Date
-  max?: number | Date
-  hidden?: boolean
-  when?: Array<any>
-  transform?: yup.TransformFunction<any>
-  errorMessage?: ErrorMessageAttrs
-}
-
-interface SchemaAttrs {
-  [key: string]: FieldAttrs
-}
-
 export default class Schema {
-  _schema: yup.ObjectSchema
-  constructor(attrs: SchemaAttrs | Array<FieldAttrs>) {
-    let fieldSchema = this._setupSchema(attrs)
-    this._schema = object().shape(fieldSchema)
+  _schema: yup.AnyObjectSchema
+  _fieldOrder: Array<string>
+
+  _options: any
+
+  constructor(attrs: Array<FormFields>, options: any = {}) {
+    this._options = options
+    let shape = this._setupSchema(attrs)
+    this._fieldOrder = Object.keys(shape)
+    let organizedShape = Object.entries(shape).reverse().reduce((prev, [key, value]) => ({ ...prev, [key]: value }), {})
+    this._schema = object().shape(organizedShape)
   }
 
   get schema() {
     return this._schema
   }
 
-  _setupSchema = (attrs: SchemaAttrs | Array<FieldAttrs>) => {
-    let _schema: any = {}
-    for (let [attrName, props] of Object.entries(attrs).reverse()) {
-      let {
-        type,
-        default: defaultValue = '',
-        hidden,
-        transform = null,
-        nullable = false,
-        required,
-        component,
-        name = '',
-        errorMessage = {},
-        ...rest
-      } = props
-      attrName = name || attrName
-      if (hidden) {
+  get validationOrder() {
+    return this._fieldOrder
+  }
+
+  get t() {
+    let { t = noopWithReturn } = this._options
+    return t
+  }
+
+  get hasTranslation() {
+    return !isEmpty(this._options.t)
+  }
+
+  _setupSchema = (fields: Array<FormFields>, _schema: any = {}) => {
+    for (let field of fields) {
+      if (field.hidden || field.disabled) {
         continue
       }
-
-      let {
-        required: requiredMessage = 'Please fill this required field'
-      } = errorMessage
-
-      let field
-      switch (type) {
-        case 'date':
-        case 'datetime':
-          field = date().nullable(true)
-          if (Array.isArray(rest.when)) {
-            let [dependentFields, handler] = rest.when
-            field = field.when(dependentFields, handler)
-          } else if (required) field = field.required(requiredMessage)
-
-          if (defaultValue instanceof Date) field = field.default(defaultValue)
-          if (rest.min instanceof Date) field = field.min(dayjs(rest.min).startOf('d').toDate())
-          if (rest.max instanceof Date) field = field.max(dayjs(rest.max).endOf('d').toDate())
-          break
-        case 'number':
-          let {
-            nullable: _nullable = true
-          } = props
-          field = number().nullable(_nullable)
-          if (Array.isArray(rest.when)) {
-            let [dependentFields, handler] = rest.when
-            field = field.when(dependentFields, handler)
-          } else if (required) field = field.required(requiredMessage)
-
-          if (typeof defaultValue === 'number') field = field.default(defaultValue)
-          if (rest.enum?.length) field = field.oneOf(rest.enum)
-          if (typeof rest.min === 'number') field = field.min(rest.min)
-          if (typeof rest.max === 'number') field = field.max(rest.max)
-
-          if (!transform) transform = (value: any) => isNaN(value) ? null : value
-          break
-        case 'bool':
-        case 'boolean':
-          field = bool().nullable(nullable)
-          if (required) field = field.required(requiredMessage)
-          break
-        case 'string':
-        case 'text':
-        case 'email':
-        case 'url':
-        case 'password':
-          field = string().nullable(nullable)
-          if (Array.isArray(rest.when)) {
-            let [dependentFields, handler] = rest.when
-            field = field.when(dependentFields, handler)
-          } else {
-            if (required) field = field.required(requiredMessage)
-            else if (nullable) field = field.nullable()
-          }
-          field = field.default(defaultValue)
-          field = field.trim()
-          let {
-            email = (type === 'email'),
-            url = (type === 'url')
-          } = rest
-          if (email) field = field.matches(emailRegex, {
-            message: 'Enter valid email address'
-          })
-          if (url) field = field.url()
-          if (rest.enum?.length) field = field.oneOf(rest.enum)
-          break
-        case 'array':
-          field = array()
-          if (Array.isArray(rest.when)) {
-            let [dependentFields, handler] = rest.when
-            field = field.when(dependentFields, handler)
-          } else {
-            if (required) field = field.required(requiredMessage)
-            else if (nullable) field = field.nullable()
-          }
-          if (!Array.isArray(defaultValue)) defaultValue = nullable ? null : []
-          field = field.default(defaultValue)
-          break
-        case 'object':
-          field = object().nullable(nullable)
-          if (Array.isArray(rest.when)) {
-            let [dependentFields, handler] = rest.when
-            field = field.when(dependentFields, handler)
-          } else if (required) field = field.required(requiredMessage)
-          field = field.default(defaultValue || undefined)
-        default:
-          field = mixed().nullable(nullable)
-          if (Array.isArray(rest.when)) {
-            let [dependentFields, handler] = rest.when
-            field = field.when(dependentFields, handler)
-          } else if (required) field = field.required(requiredMessage)
-          field = field.default(defaultValue || null)
-          break
+      if (field.group && Array.isArray(field.fields)) {
+        this._setupSchema(field.fields, _schema)
+        continue
       }
-
-      if (typeof transform === 'function') {
-        field = field.transform(transform)
-      }
-
-      _schema[attrName] = field
+      let schema = this._getFieldSchema(field)
+      _schema[field.name] = schema
     }
 
     return _schema
+  }
+
+  _getFieldSchema = (field: FormFields) => {
+    let {
+      label = '',
+      type,
+      default: defaultValue,
+      hidden,
+      transform = null,
+      required,
+      optional = !required,
+      component,
+      name,
+      errorMessage = {},
+      ...rest
+    } = field
+
+    defaultValue = defaultValue || undefined
+
+    if (this.hasTranslation) {
+      let { translateOptions = {} } = field
+      if (!this._options.ignoreDefaultTranslationOption) {
+        translateOptions = {
+          entity: label,
+          length: rest.length,
+          ...translateOptions
+        }
+      }
+      translateOptions = parseTranslationOptions(translateOptions, this.t)
+      for (let key in errorMessage) {
+        errorMessage[key] = this.t(errorMessage[key], translateOptions)
+      }
+    }
+
+    let {
+      required: requiredMessage = 'Please fill this required field',
+      email: emailErrorMessage = 'Enter valid email address',
+      url: urlErrorMessage = 'Enter valid url',
+      exactLength = `Should be exactly ${rest.length} characters`
+    } = errorMessage
+
+    let schema
+    switch(type) {
+      case 'date':
+      case 'datetime':
+        schema = date().default(defaultValue)
+        if (Array.isArray(rest.when)) {
+          let [dependentFields, handler] = rest.when
+          schema = schema.when(dependentFields, handler)
+        } else if (required) {
+          schema = schema.required(requiredMessage)
+        } else {
+          schema = schema.optional()
+        }
+        if (rest.min instanceof Date) schema = schema.min(dayjs(rest.min).startOf('d').toDate())
+        if (rest.max instanceof Date) schema = schema.max(dayjs(rest.max).endOf('d').toDate())
+        break
+      case 'number':
+        schema = number().default(defaultValue)
+        if (Array.isArray(rest.when)) {
+          let [dependentFields, handler] = rest.when
+          schema = schema.when(dependentFields, handler)
+        } else if (required) {
+          schema = schema.required(requiredMessage)
+        } else {
+          schema = schema.optional()
+        }
+
+        if (rest.enum?.length) schema = schema.oneOf(rest.enum)
+        if (typeof rest.min === 'number') schema = schema.min(rest.min)
+        if (typeof rest.max === 'number') schema = schema.max(rest.max)
+        if (!transform) transform = (value: any) => isNaN(value) ? undefined : value
+        break
+      case 'bool':
+      case 'boolean':
+        schema = bool()
+        if (required) schema = schema.required(requiredMessage)
+        else schema = schema.optional()
+        break
+      case 'array':
+        if (!Array.isArray(defaultValue)) defaultValue = optional ? undefined : []  
+        schema = array().default(defaultValue)
+        if (Array.isArray(rest.when)) {
+          let [dependentFields, handler] = rest.when
+          schema = schema.when(dependentFields, handler)
+        } else {
+          if (required) schema = schema.required(requiredMessage)
+          else schema = schema.optional()
+        }
+        if (typeof rest.min === 'number') schema = schema.max(rest.min)
+        if (typeof rest.max === 'number') schema = schema.max(rest.max)
+        break
+      case 'object':
+        schema = object().default(defaultValue)
+        if (Array.isArray(rest.when)) {
+          let [dependentFields, handler] = rest.when
+          schema = schema.when(dependentFields, handler)
+        } else if (required) {
+          schema = schema.required(requiredMessage)
+        } else {
+          schema = schema.optional()
+        }
+        break
+      case 'string':
+      case 'password':
+      case 'url':
+      case 'email':
+      case 'text':
+      case 'tel':
+      default:
+        schema = string().trim().default(defaultValue)
+        if (Array.isArray(rest.when)) {
+          let [dependentFields, handler] = rest.when
+          schema = schema.when(dependentFields, handler)
+        } else if (required) {
+          schema = schema.required(requiredMessage)
+        } else {
+          schema = schema.optional()
+        }
+        if (type === 'email') {
+          if (rest.pattern) schema = schema.matches(rest.pattern, { message: emailErrorMessage })
+          else schema = schema.email(emailErrorMessage)
+        }
+        if (type === 'url') {
+          if (rest.pattern) schema = schema.matches(rest.pattern, { message: urlErrorMessage })
+          else schema = schema.url(urlErrorMessage)
+        }
+        if (rest.enum?.length) schema = schema.oneOf(rest.enum)
+        if (rest.length) schema = schema.length(rest.length, exactLength)
+        break
+    }
+
+    if (typeof transform === 'function') {
+      schema = schema.transform(transform)
+    }
+
+    return schema
   }
 }

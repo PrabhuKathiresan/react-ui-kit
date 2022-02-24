@@ -8,13 +8,13 @@ import { noop } from '../utils'
 import Loader from '../Loader'
 
 const getSelectedValue = (input: SelectedValueProps) => {
-  const { selected = [], multiple, key } = input
+  let { selected = [], multiple, key } = input
   if (multiple || isEmpty(selected)) return ''
   return selected[0][key] || ''
 }
 
 const Input = (props: SelectInputProps) => {
-  const {
+  let {
     disabled,
     inputClass,
     icons = {},
@@ -40,16 +40,16 @@ const Input = (props: SelectInputProps) => {
     height
   } = props
 
-  const isSmallInput = inputSize === 'small'
-  const isLargeInput = inputSize === 'large'
-  const hasLeftIcon = !isEmpty(icons.left.component)
-  const hasRightIcon = !isEmpty(icons.right.component) && !disabled
-  const value = getSelectedValue({ selected, multiple, key: labelKey })
-  const showClearIcon = (allowClear && !disabled) && (multiple ? !isEmpty(selected) : !isEmpty(value))
-  const inputEle = useRef<HTMLInputElement | null>(null)
-  const isTextOnlyAndBorderLess = textOnly && borderless
+  let isSmallInput = inputSize === 'small'
+  let isLargeInput = inputSize === 'large'
+  let hasLeftIcon = !isEmpty(icons.left.component)
+  let hasRightIcon = !isEmpty(icons.right.component) && !disabled
+  let value = getSelectedValue({ selected, multiple, key: labelKey })
+  let showClearIcon = (allowClear && !disabled) && (multiple ? !isEmpty(selected) : !isEmpty(value))
+  let inputEle = useRef<HTMLInputElement | null>(null)
+  let isTextOnlyAndBorderLess = textOnly && borderless
 
-  const inputClassHash = {
+  let inputClassHash = {
     'has-left-icon': hasLeftIcon,
     'has-right-icon': hasRightIcon,
     'has-clear-icon': showClearIcon,
@@ -61,15 +61,15 @@ const Input = (props: SelectInputProps) => {
     'ui-kit-select-input_lg': isLargeInput
   }
 
-  const renderValue = () => multiple ? renderTags() : <span className='text--ellipsis'>{value}</span>
+  let renderValue = () => multiple ? renderTags() : <span className='text--ellipsis'>{value}</span>
 
-  const renderTags = () => selected.map((_selected, i) => (
+  let renderTags = () => selected.map((_selected, i) => (
     <Tag id={`${id}-selected-input-${i}`} closeable={!disabled} disabled={disabled} onClose={() => onRemove(_selected)} key={i}>
       {_selected.__label}
     </Tag>
   ))
 
-  const style: CSSProperties = {}
+  let style: CSSProperties = {}
 
   if (isTextOnlyAndBorderLess) {
     style.width = 'auto'
@@ -120,7 +120,7 @@ const Input = (props: SelectInputProps) => {
 }
 
 const InputWrapper = (props: SelectInputProps) => {
-  const {
+  let {
     icons = {},
     disabled,
     loading,
@@ -134,11 +134,11 @@ const InputWrapper = (props: SelectInputProps) => {
     textOnly
   } = props
 
-  const isSmallInput = inputSize === 'small'
-  const isLargeInput = inputSize === 'large'
+  let isSmallInput = inputSize === 'small'
+  let isLargeInput = inputSize === 'large'
 
-  const hasLeftIcon = !isEmpty(icons.left.component)
-  const hasRightIcon = !isEmpty(icons.right.component) && !disabled
+  let hasLeftIcon = !isEmpty(icons.left.component)
+  let hasRightIcon = !isEmpty(icons.right.component) && !disabled
   let iconClass = ''
 
   if (isSmallInput || (borderless && textOnly)) {
@@ -147,13 +147,13 @@ const InputWrapper = (props: SelectInputProps) => {
     iconClass = 'ui-kit-select-input-icon-lg'
   }
 
-  const value = isEmpty(selected) ? '' : getSelectedValue({ selected, multiple, key: labelKey })
+  let value = isEmpty(selected) ? '' : getSelectedValue({ selected, multiple, key: labelKey })
 
-  const onRightIconClick = (disabled || !hasRightIcon) ? noop : () => icons.right.onClick()
+  let onRightIconClick = (disabled || !hasRightIcon) ? noop : () => icons.right.onClick()
 
-  const showClearIcon = (allowClear && !disabled) && (multiple ? !isEmpty(selected) : !isEmpty(value))
+  let showClearIcon = (allowClear && !disabled) && (multiple ? !isEmpty(selected) : !isEmpty(value))
 
-  const renderRightIcon = () => {
+  let renderRightIcon = () => {
     if (loading) {
       return (
         <div className='ui-kit-select-loader-wrapper'>

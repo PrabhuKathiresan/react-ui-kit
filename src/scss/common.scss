@@ -33,6 +33,29 @@
 
   .form-fields {
     padding: 0 16px;
+
+    &-groupped {
+      display: flex;
+      margin-bottom: 16px;
+
+      &.groupped-row {
+        .ui-kit-input-block {
+          margin-bottom: 0;
+
+          &:not(:last-child) {
+            margin-right: 16px;
+          }
+        }
+      }
+
+      &.groupped-column {
+        flex-direction: column;
+
+        .ui-kit-input-block:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
   }
 }
 

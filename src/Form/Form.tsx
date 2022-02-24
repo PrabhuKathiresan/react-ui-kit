@@ -11,28 +11,47 @@ import Checkbox from '../Checkbox'
 import Radio from '../Radio'
 import Alert from '../Alert'
 import FormData from './form-data'
+import { noopWithReturn, parseTranslationOptions } from './utils'
 import { isDefined, isEqual, isFunction, noop } from '../utils'
 import { FormFields, FormProps, FormState, AttributesType } from './props'
 
 const SERVICE_METHOD_NOT_AVAILABLE = 'Service method is not configured'
 
 export default class Form extends Component<FormProps, FormState> {
-  // fieldsHash: any
   constructor(props: FormProps) {
     super(props)
-    let { fields, data, abortEarly = true, t, idField, stripUnchanged } = props
+    let {
+      fields,
+      data,
+      abortEarly = true,
+      t,
+      idField,
+      stripUnchanged,
+      ignoreDefaultTranslationOption
+    } = props
     this.state = {
-      formData: new FormData(data, fields, { abortEarly, t, idField, stripUnchanged }),
+      formData: new FormData(data, fields, {
+        abortEarly,
+        t,
+        idField,
+        stripUnchanged,
+        ignoreDefaultTranslationOption
+      }),
       errors: {},
       genericError: null,
       submitting: false,
       dirty: false,
       startValidate: false
     }
-    // this.fieldsHash = this.props.fields.reduce((hash, field) => {
-    //   hash[field.name] = { ...field }
-    //   return hash
-    // }, {})
+  }
+
+  get t() {
+    let { t = noopWithReturn } = this.props
+    return t
+  }
+
+  get hasTranslation() {
+    return !isEmpty(this.t)
   }
 
   get formData() {
@@ -87,8 +106,8 @@ export default class Form extends Component<FormProps, FormState> {
     }
   }
 
-  serialize = (options: any = {}) => {
-    return this.formData.serialize(options)
+  serialize = () => {
+    return this.formData.serialize({ stripUnknown: true })
   }
 
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -167,6 +186,7 @@ export default class Form extends Component<FormProps, FormState> {
   }
 
   renderField = (field: FormFields) => {
+    let { name: formName } = this.props
     let { errors } = this.state
     let {
       type = 'text',
@@ -177,11 +197,27 @@ export default class Form extends Component<FormProps, FormState> {
       disabledIf = () => false,
       hiddenIf = () => false,
       label,
+      placeholder = componentProps.placeholder,
+      message = componentProps.message,
       name,
       maxLength,
       customComponent = null,
+      transform,
+      errorMessage,
+      translate,
+      translateOptions = {},
       ...restProps
     } = field
+
+    if (this.hasTranslation) {
+      if (!this.props.ignoreDefaultTranslationOption) {
+        translateOptions = { entity: label, ...translateOptions }
+      }
+      translateOptions = parseTranslationOptions(translateOptions, this.t)
+      if (label) label = this.t(label, translateOptions)
+      if (placeholder) placeholder = this.t(placeholder, translateOptions)
+      if (message) message = this.t(message, translateOptions);
+    }
 
     let customOptions = { _id: this._id, isNew: this.isNew }
 
@@ -197,11 +233,16 @@ export default class Form extends Component<FormProps, FormState> {
       disabled,
       required,
       label,
+      placeholder,
       type,
-      name,
+      name: `${formName}[${name}]`,
       id: name,
       value: get(this.data, name),
-      onChange: (e: any) => this.handleInputChange(name, e.target.value),
+      onChange: (e: any) => {
+        let { value } = e.target
+        if (value && type === 'number') value = parseFloat(value)
+        return this.handleInputChange(name, value)
+      },
       error
     }
 
@@ -269,6 +310,33 @@ export default class Form extends Component<FormProps, FormState> {
     return <FieldComponent {...inputProps} />
   }
 
+  renderFormFields = (fields: Array<FormFields>) => {
+    return fields.map((field, index) => {
+      if (field.group && Array.isArray(field.fields)) {
+        let {
+          fields: groupFields,
+          groupKey = index,
+          groupTitle,
+          groupType = 'column',
+          groupClass = ''
+        } = field;
+        return (
+          <div className={cx('form-fields-groupped', `groupped-${groupType}`, groupClass)} key={groupKey}>
+            {groupTitle && <p>{groupTitle}</p>}
+            {this.renderFormFields(groupFields)}
+          </div>
+        )
+      }
+      return (
+        <Fragment key={field.name}>
+          {
+            this.renderField(field)
+          }
+        </Fragment>
+      )
+    })
+  }
+
   render() {
     let {
       fields,
@@ -293,15 +361,7 @@ export default class Form extends Component<FormProps, FormState> {
         }
         <form name={name} data-testid={name} noValidate className={cx('ui-kit-form', { 'form-with-fixed-action': stickyFooter })} onSubmit={this.handleSubmit}>
           <div className='form-fields'>
-            {
-              renderableFields.map(field => (
-                <Fragment key={field.name}>
-                  {
-                    this.renderField(field)
-                  }
-                </Fragment>
-              ))
-            }
+            {this.renderFormFields(renderableFields)}
           </div>
           {extra}
           <div className={cx('form-action-button', { 'sticky-footer': stickyFooter })}>

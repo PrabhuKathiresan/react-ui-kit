@@ -1,6 +1,5 @@
 import React, { InputHTMLAttributes, MouseEvent, useRef, forwardRef, useImperativeHandle, useEffect, useState } from 'react'
 import cx from 'classnames'
-// import Tooltip from '../Tooltip'
 import { TextInputProps, NumberFieldProps } from './props'
 import InfoCircle from '../icons/info-circle'
 import Error from '../icons/error'
@@ -147,6 +146,11 @@ const TextInput = (props: InputHTMLAttributes<HTMLInputElement | HTMLTextAreaEle
     value,
     ...inputProps
   } = props
+
+  if (value === undefined && inputProps.onChange) {
+    value = ''
+  }
+
   let numberFieldProps: NumberFieldProps = {}
   let leftIconRef = useRef<any>(null)
   let [hasLeftIcon, setLeftIcon] = useState<boolean>(false)

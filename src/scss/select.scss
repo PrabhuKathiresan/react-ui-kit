@@ -169,7 +169,7 @@ $translateY: 50%;
 }
 
 .has-error {
-  .ui-kit-select-input {
+  .ui-kit-select-input:not(.sub-select-input) {
     border-color: $danger;
 
     &:hover{

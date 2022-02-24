@@ -6,16 +6,14 @@ import { FormFields, ChangedAttributesType, AttributesType } from './props'
 import Schema from './schema'
 import { isMultiValueField, isDateField, isBooleanField } from './utils'
 
-const noopWithReturn = (str: string) => str
-const getNumberValue = (value: any) => value ? (isNaN(value) ? '' : value) : ''
-const getDateValue = (value: any) => value instanceof Date ? value : null
+const getNumberValue = (value: any) => value ? (isNaN(value) ? undefined : value) : undefined
+const getDateValue = (value: any) => value instanceof Date ? value : undefined
 
 export default class FormData extends Schema {
   fields: Array<FormFields>
   data: object
   abortEarly: boolean
   strict: boolean = false
-  t: Function
   idField: string
   isNew: boolean
   _id: string
@@ -25,16 +23,14 @@ export default class FormData extends Schema {
   _initialValue: object = {}
 
   constructor(data: object, fields: Array<FormFields>, options: any) {
-    super(fields)
+    super(fields, options)
     this.fields = fields
     let {
       abortEarly = true,
-      t = noopWithReturn,
       idField = 'id',
       stripUnchanged = false
     } = options
     this.abortEarly = abortEarly
-    this.t = t
     this.idField = idField
     this.isNew = true
     this.stripUnchanged = stripUnchanged
@@ -65,29 +61,49 @@ export default class FormData extends Schema {
     return data
   }
 
-  handleValidationError(validationError: ValidationError): any {
-    let errors: any = {}
-    let { path, message, inner: innerError} = validationError
+  handleValidationError(validationError: ValidationError, validation: any): any {
+    validation.isValid = false
+    let {
+      inner: innerError,
+      path,
+      message
+    } = validationError
     if (this.abortEarly) {
-      errors[path] = this.t(message)
+      if (path) validation.errors[path] = message
+      else validation.genericError = [message]
     } else {
       for (let error of innerError) {
-        if (!errors[error.path]) errors[error.path] = error.message
+        if (error.path) {
+          if (!validation.errors[error.path]) validation.errors[error.path] = message
+        } else {
+          validation.genericError = (validation.genericError || []).concat([message])
+        }
       }
     }
-    return errors
+    return validation
   }
 
   validate = () => {
     let validation: any = {
       isValid: true,
-      errors: {}
+      errors: {},
+      genericError: null
     }
-    try {
-      this.schema.validateSync(this.data, this.validationOption)
-    } catch (validationError: any) {
-      validation.isValid = false
-      validation.errors = this.handleValidationError(validationError)
+    if (this.abortEarly) {
+      for (let field of this.validationOrder) {
+        try {
+          this.schema.validateSyncAt(field, this.data, { strict: true })
+        } catch (validationError: any) {
+          validation = this.handleValidationError(validationError, validation)
+          break
+        }
+      }
+    } else {
+      try {
+        this.schema.validateSync(this.data, this.validationOption)
+      } catch (validationError: any) {
+        validation = this.handleValidationError(validationError, validation)
+      }
     }
     return validation
   }
@@ -95,7 +111,10 @@ export default class FormData extends Schema {
   serialize = (options: any = {}) => {
     let parsedData: any = {}
     try {
-      parsedData = this.schema.cast(this.processableData, options)
+      parsedData = this.schema.cast(this.processableData, {
+        assert: false,
+        ...options
+      })
     } catch (error) {
       console.error(error)
     }
@@ -127,17 +146,21 @@ export default class FormData extends Schema {
     return this
   }
 
-  _setupData = (fields: Array<FormFields>, data: object) => {
+  _setupData = (fields: Array<FormFields>, data: object, formData: any = {}) => {
     let today = new Date()
-    return fields.filter((f) => !f.hidden).reduce((formData, field) => {
+    let filteredFields = fields.filter((f) => !f.hidden)
+    
+    for (let field  of filteredFields) {
+      if (field.group && Array.isArray(field.fields)) {
+        this._setupData(field.fields, data, formData)
+        continue
+      }
       let {
         name, getter, component = 'TextInput', componentProps = {},
-        type = 'text', default: defaultValue = ''
+        type = 'text', default: defaultValue = undefined
       } = field
-      let previous, current;
       let multiple = Boolean(componentProps.multiple)
       let value = getter && isFunction(getter) ? getter(data) : get(data, name)
-      previous = current = value;
       if (isMultiValueField(component, multiple)) {
         if (!value) value = []
         else if (!Array.isArray(value)) value = [value]
@@ -152,20 +175,20 @@ export default class FormData extends Schema {
       }
       if (isBooleanField(component, type)) {
         value = Boolean(value)
-        defaultValue = typeof defaultValue === 'boolean' ? defaultValue : field.nullable ? null : false
+        defaultValue = typeof defaultValue === 'boolean' ? defaultValue : field.nullable ? undefined : false
       }
       if (type === 'number') {
         value = getNumberValue(value)
         defaultValue = getNumberValue(defaultValue)
       } else {
-        value = value || defaultValue
+        value = value || defaultValue || undefined
       }
-      if (![[], '', null, undefined, today].includes(value)) current = value
       set(formData, name, value)
       set(this._initialValue, name, value)
-      set(this.attributes, name, [previous, current])
-      return formData
-    }, {})
+      set(this.attributes, name, [value])
+    }
+
+    return formData
   }
 
   hasDirtyAttributes = () => {

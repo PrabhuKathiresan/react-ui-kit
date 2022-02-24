@@ -113,7 +113,7 @@ export default function Dialog(props: DialogProps) {
             tabIndex={0}
             onClick={() => onClose()}
             data-testid={`close-${id}`}
-            className='ui-kit-dialog-close cursor-pointer element-flex-center has-hover-effect radius-circle'
+            className='ui-kit-dialog-close cursor-pointer element-flex-center has-hover-effect border-radius'
           >
             <Close width={20} height={20} />
           </span>

@@ -15,7 +15,8 @@ export default function DatePickerHeader(props: DatePickerHeaderProps) {
     yearMenuRef,
     onChange,
     onMenuClose,
-    onMenuOpen
+    onMenuOpen,
+    id
   } = props
 
   let startYear = startDate.getFullYear()
@@ -50,6 +51,8 @@ export default function DatePickerHeader(props: DatePickerHeaderProps) {
         className='element-flex-justify-around mb-0'
         inputSize='small'
         tabIndex={-1}
+        id={id}
+        inputClass='sub-select-input'
       />
       <Button tabIndex={-1} size='tiny' variant='plain' className='px-4' disabled={disableNext} onClick={() => onChange({ changeType: 'month', offset: 1 })}><Next /></Button>
     </div>

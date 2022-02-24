@@ -12,11 +12,13 @@ export function RadioGroup(props: RadioGroupProps) {
     required = false,
     variant = 'row',
     error,
-    id
+    id,
+    disabled = false,
+    containerClass = ''
   } = props
 
   return (
-    <div className='ui-kit-input-block'>
+    <div className={cx('ui-kit-input-block', containerClass)}>
       {
         label && <label className={cx('ui-kit-input-label', { 'is-required': required })}>{label}</label>
       }
@@ -29,7 +31,7 @@ export function RadioGroup(props: RadioGroupProps) {
                 label={option.label}
                 checked={option.value === value}
                 value={option.value}
-                disabled={option.disabled}
+                disabled={disabled || option.disabled}
                 onChange={(e: Event) => onChange(e)}
               />
             ))

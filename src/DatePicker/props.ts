@@ -10,7 +10,7 @@ export interface DatePickerProps extends InputProps {
   max?: Date
   closeOnSelect?: boolean
   format?: string
-  className?: string
+  inputContainerClass?: string
   transitionDuration?: number
   value?: Date
   defaultValue?: Date
@@ -34,6 +34,7 @@ export interface DatePickerState {
 }
 
 export interface DatePickerElementProps {
+  id?: string
   transitionState: TransitionState
   transitionDuration?: number
   position?: any
@@ -48,6 +49,7 @@ export interface DatePickerElementProps {
 }
 
 export interface DatePickerHeaderProps {
+  id?: string
   selectedMonth: number
   selectedYear: number
   startDate: Date

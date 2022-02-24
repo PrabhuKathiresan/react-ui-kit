@@ -48,8 +48,8 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
     let date = new Date()
     let startDate = new Date((date.getFullYear() - 10), 0, 1)
     let endDate = new Date((date.getFullYear() + 10), 11, 31)
-    if (props.min) startDate = props.min
-    if (props.max) endDate = props.max
+    if (props.min instanceof Date) startDate = props.min
+    if (props.max instanceof Date) endDate = props.max
     let year = endDate.getFullYear()
     let month = endDate.getMonth()
     let value = props.value instanceof Date ? dayjs(props.value).startOf('d').toDate().getTime() : ''
@@ -90,6 +90,10 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
 
   componentWillUnmount() {
     window.removeEventListener('click', this.addBackDrop, false)
+  }
+
+  get dateFormat() {
+    return this.props.format || 'yyyy-mm-dd';
   }
 
   addListener = () => {
@@ -313,10 +317,8 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
 
   getDateStringFromTimestamp = (timestamp: any) => {
     if (!timestamp) return '';
-    let dateObject = new Date(timestamp)
-    let month = dateObject.getMonth() + 1
-    let date = dateObject.getDate()
-    return dateObject.getFullYear() + '-' + (month < 10 ? '0' + month : month) + '-' + (date < 10 ? '0' + date : date)
+    let date = new Date(timestamp)
+    return dayjs(date).format(this.dateFormat);
   }
 
   setDateToInput = (timestamp: any) => {
@@ -450,6 +452,7 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
       year = endDate.getFullYear(),
     } = this.state
     let {
+      id,
       animate = true,
       transitionDuration = animate ? TRANSITION_DURATION : 0,
     } = this.props
@@ -470,6 +473,7 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
           {
             (transitionState: TransitionState) => (
               <DatePickerElement
+                id={id}
                 transitionState={transitionState}
                 transitionDuration={transitionDuration}
                 position={pickerPosition}
@@ -498,6 +502,7 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
       container,
       label = null,
       className = '',
+      inputContainerClass = '',
       message,
       error,
       labelClass,
@@ -535,6 +540,7 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
           hint={hint}
           hintPosition={hintPosition}
           onRightIconClick={this.triggerOpen}
+          containerClass={inputContainerClass}
           className={cx({ 'cursor-pointer': !disabled, 'cursor-not-allowed': disabled })}
         />
         {

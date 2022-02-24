@@ -39,6 +39,7 @@ function MonthPicker(props: MonthPickerProps, ref: any) {
     error,
     inputSize = 'default',
     animate = true,
+    inputClass = '',
     ...inputProps
   } = props
 
@@ -114,6 +115,7 @@ function MonthPicker(props: MonthPickerProps, ref: any) {
           width={yearWidth}
           selected={[year]}
           containerClass='mb-0 w-auto mr-8'
+          inputClass={inputClass}
           setMenuRef={yearMenuRef}
           disabled={disabled || yearsList.length < 2}
           onOpen={() => onOpen('year')}
@@ -130,6 +132,7 @@ function MonthPicker(props: MonthPickerProps, ref: any) {
           width={width}
           selected={[month]}
           containerClass='mb-0 w-auto'
+          inputClass={inputClass}
           setMenuRef={monthMenuRef}
           disabled={disabled || monthList.length < 2}
           onOpen={() => onOpen('month')}

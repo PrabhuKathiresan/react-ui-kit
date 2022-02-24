@@ -19,7 +19,8 @@ function DatePickerElement(props: DatePickerElementProps, ref: any) {
     endDate,
     monthMenuRef,
     yearMenuRef,
-    onChange
+    onChange,
+    id
   } = props
   let [menuState, setMenuState] = useState({ month: false, year: false })
 
@@ -42,6 +43,7 @@ function DatePickerElement(props: DatePickerElementProps, ref: any) {
       >
         <div className='ui-kit-select--popup ui-kit-datepicker_element--popup'>
           <DatePickerHeader
+            id={id}
             selectedMonth={month}
             selectedYear={year}
             startDate={startDate}

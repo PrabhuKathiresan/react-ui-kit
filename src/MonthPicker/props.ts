@@ -18,4 +18,5 @@ export interface MonthPickerProps extends InputProps {
   className?: string
   borderless?: boolean
   animate?: boolean
+  inputClass?: string
 }

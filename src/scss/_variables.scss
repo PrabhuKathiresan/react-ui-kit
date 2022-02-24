@@ -71,6 +71,7 @@ $info-100: lighten($info, 98% - lightness($info));
 $border-color: var(--border-color, #d8d8d8);
 $hover-border-color: var(--hover-border-color, #e8e8e8);
 $hover-bg: var(--hover-bg, #f3f5f7);
+$hover-bg-light: var(--hover-bg-light, #f8f9fa);
 $disabled: var(--disabled-bg, #f4f7fb);
 $disabled-text: var(--disabled-text, lighten(#000, 70%));
 $input-icon-width: 36px;

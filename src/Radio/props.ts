@@ -27,4 +27,6 @@ export interface RadioGroupProps {
   options: Array<Radio>
   variant: 'row' | 'column',
   error?: any
+  disabled?: boolean
+  containerClass?: string
 }

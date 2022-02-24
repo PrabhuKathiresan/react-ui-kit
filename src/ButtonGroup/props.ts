@@ -9,7 +9,7 @@ export declare type ButtonGroupActionType = 'button' | 'dropdown' | 'custom'
 
 export interface ButtonGroupActionProps {
   label: any
-  onClick: Function
+  onClick?: Function
   type?: ButtonGroupActionType
   extraProps?: {
     [k: string]: any
