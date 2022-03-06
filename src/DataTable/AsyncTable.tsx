@@ -117,7 +117,7 @@ class AsyncTable extends Component<AsyncProps, AsyncTableState> {
           this.setState({ loading: false }, () => {
             loadingHandler(false)
             setTimeout(() => {
-              this.setState({ progressing: false })
+              if (!this._unsubscribe) this.setState({ progressing: false })
             }, 500)
           })
         }

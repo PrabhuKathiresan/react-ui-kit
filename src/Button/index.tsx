@@ -1,7 +1,7 @@
 import React, { ButtonHTMLAttributes, MouseEvent } from 'react'
 import cx from 'classnames'
 import Loader from '../Loader'
-import { generateUEID, noop } from '../utils'
+import { noop } from '../utils'
 import { ButtonProps } from './props'
 
 const LoaderIconSize = {
@@ -30,7 +30,6 @@ function Button(props: ButtonHTMLAttributes<HTMLButtonElement> & ButtonProps, re
     iconTheme = '',
     raised = false,
     onClick = noop,
-    id = generateUEID(),
     component: Tag = 'button',
     hint,
     hintPosition = 'top',
@@ -83,28 +82,33 @@ function Button(props: ButtonHTMLAttributes<HTMLButtonElement> & ButtonProps, re
     onClick(e)
   }
 
-  let createRipple = ({ clientX, clientY }: any) => {
-    let ele = document.getElementById(id)
-
-    if (ele) {
+  let createRipple = (e: MouseEvent<HTMLButtonElement>) => {
+    let { clientX, clientY, currentTarget } = e
+    if (currentTarget) {
       let circle = document.createElement('span')
-      let diameter = Math.max(ele.clientWidth, ele.clientHeight)
+      let diameter = Math.max(currentTarget.clientWidth, currentTarget.clientHeight)
       let radius = diameter / 2
       circle.style.width = circle.style.height = `${diameter}px`
-      circle.style.left = `${clientX - (ele.offsetLeft + radius)}px`
-      circle.style.top = `${clientY - (ele.offsetTop + radius)}px`
+      circle.style.left = `${clientX - (currentTarget.offsetLeft + radius)}px`
+      circle.style.top = `${clientY - (currentTarget.offsetTop + radius)}px`
       circle.classList.add('ripple')
 
-      let ripple = ele.getElementsByClassName('ripple')[0]
+      let ripple = currentTarget.getElementsByClassName('ripple')[0]
 
       if (ripple) ripple.remove()
 
-      ele.appendChild(circle)
+      currentTarget.appendChild(circle)
     }
   }
 
   return (
-    <Tag ref={ref} id={id} onClick={handleClick} className={cx('ui-kit-btn', `ui-kit-btn-${theme}`, `ui-kit-btn-size-${size}`, className, computedClassNames)} disabled={loading || disabled} {...btnProps}>
+    <Tag
+      ref={ref}
+      onClick={handleClick}
+      className={cx('ui-kit-btn', `ui-kit-btn-${theme}`, `ui-kit-btn-size-${size}`, className, computedClassNames)}
+      disabled={loading || disabled}
+      {...btnProps}
+    >
       {renderIcon('left')}
       <span className={cx('element-flex-center ui-kit-btn-content')}>
         {content()}

@@ -1,9 +1,6 @@
 import { config } from 'react-transition-group'
 
-if (process.env.NODE_ENV === 'test') {
-  console.log('Disabling react-transistion on TEST env')
-  config.disabled = true
-}
+if (process.env.NODE_ENV === 'test') config.disabled = true
 
 import './scss/react-ui-kit.scss'
 
