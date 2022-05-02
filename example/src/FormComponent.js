@@ -340,7 +340,7 @@ const AGENT_FIELDS = [
       variant: 'bordered'
     },
     value: false,
-    disabledIf: (agent) => isSuperAdmin(agent.role.value)
+    disabledIf: (agent) => isSuperAdmin(agent.role?.value)
   },
   {
     name: 'managedBrands',

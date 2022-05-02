@@ -25,7 +25,6 @@ export default function DatepickerComponent() {
         label='Reminder date'
         closeOnSelect
         min={new Date()}
-        max={new Date(2021, 6, 31)}
       />
       <br />
       <DatePicker

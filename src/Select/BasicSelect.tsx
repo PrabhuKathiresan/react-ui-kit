@@ -544,13 +544,15 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
     }
     return {
       component,
+      isCustom: Boolean(icons?.right),
       onClick: this._triggerOpen,
       additionalClasses: 'is-clickable'
     }
   }
 
   _getLeftIcon = () => ({
-    component: this.props.icons?.left || null
+    component: this.props.icons?.left || null,
+    onClick: this._triggerOpen
   })
 
   get inputHeight(): any {

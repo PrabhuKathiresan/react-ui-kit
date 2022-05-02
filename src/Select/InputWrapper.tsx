@@ -163,7 +163,15 @@ const InputWrapper = (props: SelectInputProps) => {
     }
 
     return hasRightIcon ? (
-      <span role='button' tabIndex={-1} className={cx('ui-kit-select-input-icon icon-right', iconClass, icons.right.additionalClasses)} onClick={onRightIconClick} ref={icons.right.iconRef}>
+      <span
+        role='button'
+        tabIndex={-1}
+        className={cx(
+          'ui-kit-select-input-icon icon-right', iconClass, icons.right.additionalClasses
+        )}
+        onClick={onRightIconClick}
+        ref={icons.right.iconRef}
+      >
         {icons.right.component}
       </span>
     ) : null
@@ -176,21 +184,17 @@ const InputWrapper = (props: SelectInputProps) => {
           <span role='button' tabIndex={-1} className={cx('ui-kit-select-input-icon icon-left', iconClass, icons.left.additionalClasses)} onClick={() => icons.left.onClick()}>
             {icons.left.component}
           </span>
-        )
-          :
-          null
+        ) : null
       }
       <Input {...props} />
-      <>
-        {
-          showClearIcon && (
-            <span role='button' tabIndex={-1} className={cx('ui-kit-select-input-icon clear-icon is-clickable', iconClass, { 'has-right-icon': hasRightIcon })} onClick={() => onChange([])}>
-              <Close />
-            </span>
-          )
-        }
-        {renderRightIcon()}
-      </>
+      {
+        showClearIcon && (
+          <span role='button' tabIndex={-1} className={cx('ui-kit-select-input-icon clear-icon is-clickable', iconClass, { 'has-right-icon': hasRightIcon })} onClick={() => onChange([])}>
+            <Close />
+          </span>
+        )
+      }
+      {renderRightIcon()}
     </div>
   )
 }

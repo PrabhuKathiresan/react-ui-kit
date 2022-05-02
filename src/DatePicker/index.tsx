@@ -50,8 +50,8 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
     let endDate = new Date((date.getFullYear() + 10), 11, 31)
     if (props.min instanceof Date) startDate = props.min
     if (props.max instanceof Date) endDate = props.max
-    let year = endDate.getFullYear()
-    let month = endDate.getMonth()
+    let year = date.getFullYear()
+    let month = date.getMonth()
     let value = props.value instanceof Date ? dayjs(props.value).startOf('d').toDate().getTime() : ''
     let defaultValue = props.defaultValue instanceof Date ? dayjs(props.defaultValue).startOf('d').toDate().getTime() : ''
     let selectedDay = value || defaultValue
@@ -93,7 +93,7 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
   }
 
   get dateFormat() {
-    return this.props.format || 'yyyy-mm-dd';
+    return this.props.format || 'YYYY-MM-DD';
   }
 
   addListener = () => {
@@ -318,7 +318,7 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
   getDateStringFromTimestamp = (timestamp: any) => {
     if (!timestamp) return '';
     let date = new Date(timestamp)
-    return dayjs(date).format(this.dateFormat);
+    return dayjs(date).format(this.dateFormat)
   }
 
   setDateToInput = (timestamp: any) => {
