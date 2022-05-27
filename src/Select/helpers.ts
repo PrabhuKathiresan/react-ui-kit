@@ -14,6 +14,8 @@ export const stringify = (value: object) => JSON.stringify(value)
 export const isEqual = (obj1: object = {}, obj2: object = {}) => stringify(obj1) === stringify(obj2)
 
 function isMatch(input: string, string: string, props: SelectProps) {
+  if (props.async) return true
+
   let searchStr = input
   let str = string
 

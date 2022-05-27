@@ -28,6 +28,7 @@ export interface SelectProps extends InputProps {
   animate?: boolean
   transitionDuration?: number
   onMenuItemRender?: Function
+  customMenuItemRender?: Function
   dropup?: boolean
   flip?: boolean
   containerClass?: string

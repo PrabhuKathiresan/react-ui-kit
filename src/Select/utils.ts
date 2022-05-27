@@ -49,10 +49,7 @@ export const getStateFromProps = (props: SelectProps): SelectState => {
 
   let stateSelected = optionsMap([...selected], props)
 
-  // selected = optionsMap([...selected], props)
-
   if (!multiple && stateSelected && stateSelected.length) {
-    // selected = [...selected].shift() || {}
     let [first] = selected
     value = first[labelKey]
   }
@@ -103,19 +100,19 @@ export const constructMenuProps = (props: any) => {
 }
 
 export const optionsMap = (options: Array<OptionProps | string>, props: SelectProps): Array<OptionProps> => {
-  let { labelKey, onMenuItemRender } = props
+  let { labelKey, customMenuItemRender } = props
   return options.map(option => {
     if (typeof option === 'string') {
       return {
         [labelKey]: option,
-        __label: onMenuItemRender ? onMenuItemRender(option) : option,
+        __label: customMenuItemRender ? customMenuItemRender(option) : option,
         [ACTUAL_VALUE]: option
       }
     } else {
       return {
         ...option,
         [labelKey]: option[labelKey],
-        __label: onMenuItemRender ? onMenuItemRender(option) : option[labelKey],
+        __label: customMenuItemRender ? customMenuItemRender(option) : option[labelKey],
         [ACTUAL_VALUE]: {
           ...option
         }

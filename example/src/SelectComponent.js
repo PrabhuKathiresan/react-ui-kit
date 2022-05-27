@@ -112,6 +112,7 @@ export default function SelectComponent() {
             searchable
             label={`${options.label} - Async version`}
             onSearch={handleSearch}
+            customMenuItemRender={(item) => <span style={{ color: 'teal' }}>{item.name}</span>}
           />
         </div>
         <div className='col-lg-3'>
