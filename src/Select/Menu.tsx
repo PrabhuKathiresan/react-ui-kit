@@ -14,7 +14,7 @@ const Menu = (props: MenuProps) => {
     selected, activeIndex, labelKey, style, menuRef, onMenuClick, autoScroll,
     searchInputProps, searchable, id, transitionState, transitionDuration, options,
     maxHeight, loading, isDirty, disableAutoScroll, scrollableAreaRef, minDropdownWidth,
-    containerMargin
+    containerMargin, allowCreate, onCreate, closeMenu
   } = props
 
   const { dropup = false, ...menuPositionStyle } = style
@@ -37,14 +37,31 @@ const Menu = (props: MenuProps) => {
     disableAutoScroll()
   }
 
+  const handleOnCreate = () => {
+    onCreate(searchInputProps.value)
+    return closeMenu()
+  }
+
   const emptyStateText = (isDirty || !searchable) ? 'No result found' : 'Type to search...'
 
-  const renderOptions = () => (options.length === 0 ?
-    (
+  const renderCreateOption = () => (
+    <div className='ui-kit-select--dropdown_item has-hover-effect'>
+      <span className='d-block w-100' role='button' onClick={handleOnCreate}>
+        + Create "{searchInputProps.value}"
+      </span>
+    </div>
+  )
+
+  const renderEmptyState = () => (
+    allowCreate ? renderCreateOption() : (
       <div className='ui-kit-select--dropdown_item item-as-plain-text' data-testid={`${id}-options-empty`}>
         {emptyStateText}
       </div>
     )
+  )
+
+  const renderOptions = () => (options.length === 0 ?
+    renderEmptyState()
     :
     (
       options.map((option, i) => (

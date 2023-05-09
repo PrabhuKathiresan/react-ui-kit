@@ -4,7 +4,7 @@ import {
 import FormData from './form-data'
 
 export type FieldComponents = 'TextInput' | 'TextArea' | 'Checkbox' | 'Checkbox.Group' | 'Select' | 'Radio' | 'Radio.Group' | 'DatePicker' | 'MonthPicker' | 'Custom'
-export type FieldTypes = 'text' | 'tel' | 'string' | 'email' | 'url' | 'password' | 'number' | 'date' | 'datetime' | 'boolean' | 'bool' | 'array' | 'object'
+export type FieldTypes = 'text' | 'tel' | 'string' | 'email' | 'url' | 'password' | 'number' | 'date' | 'datetime' | 'boolean' | 'bool' | 'array' | 'object' | 'nested'
 interface ErrorMessageAttrs {
   required?: string
   email?: string
@@ -65,7 +65,6 @@ export interface FormFields extends FieldValidationAttrs {
 
   // manage group fields
   group?: boolean
-  groupKey?: string // unique key for group
   groupTitle?: string
   groupType?: 'row' | 'column'
   groupClass?: string

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import cx from 'classnames'
-import dayjs from 'dayjs'
 import { createPortal } from 'react-dom'
 import { Transition } from 'react-transition-group'
+import cx from 'classnames'
+import dayjs from 'dayjs'
+import isEmpty from 'is-empty'
 import TextInput from '../TextInput'
 import MenuContainer from '../common/MenuContainer'
 import DatePickerElement from './DatePickerElement'
@@ -77,14 +78,31 @@ export default class Datepicker extends Component<DatePickerProps, DatePickerSta
   }
 
   componentDidUpdate() {
-    let { value } = this.props
+    let { value, min, max } = this.props
+    let update: any = {}
+    let setDateTimestamp = false
     if (value) {
       let nextSelectedDay = dayjs(value).startOf('d').toDate().getTime()
 
       if (nextSelectedDay !== this.state.selectedDay) {
-        this.setState({ selectedDay: nextSelectedDay }, this.setDateFromTimestamp)
+        setDateTimestamp = true
+        update.selectedDay = nextSelectedDay
         this.setDateToInput(nextSelectedDay)
       }
+    }
+
+    if (min instanceof Date && min !== this.state.startDate) {
+      update.startDate = min
+    }
+
+    if (max instanceof Date && max !== this.state.endDate) {
+      update.endDate = max
+    }
+
+    if (!isEmpty(update)) {
+      this.setState(update, () => {
+        if (setDateTimestamp) this.setDateFromTimestamp()
+      })
     }
   }
 

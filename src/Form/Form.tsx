@@ -11,7 +11,7 @@ import Checkbox from '../Checkbox'
 import Radio from '../Radio'
 import Alert from '../Alert'
 import FormData from './form-data'
-import { noopWithReturn, parseTranslationOptions } from './utils'
+import { isGroupField, isNestedField, noopWithReturn, parseTranslationOptions } from './utils'
 import { isDefined, isEqual, isFunction, noop } from '../utils'
 import { FormFields, FormProps, FormState, AttributesType } from './props'
 
@@ -100,8 +100,7 @@ export default class Form extends Component<FormProps, FormState> {
     if (!isEqual(prevProps.data, data)) {
       let formData = this.formData.update(data)
       this.setState({
-        formData,
-        dirty: false
+        formData
       })
     }
   }
@@ -126,7 +125,10 @@ export default class Form extends Component<FormProps, FormState> {
     let { onSubmit, constructParams } = this.props
     if (typeof constructParams === 'function') data = constructParams(data)
     if (onSubmit && isFunction(onSubmit)) {
-      return onSubmit(data)
+      return onSubmit(data, {
+        data: this.formData.data,
+        _id: this.formData._id
+      })
     }
 
     let {
@@ -185,7 +187,7 @@ export default class Form extends Component<FormProps, FormState> {
     return updates
   }
 
-  renderField = (field: FormFields) => {
+  renderField = (field: FormFields, parentKey: string = '') => {
     let { name: formName } = this.props
     let { errors } = this.state
     let {
@@ -222,6 +224,8 @@ export default class Form extends Component<FormProps, FormState> {
     let customOptions = { _id: this._id, isNew: this.isNew }
 
     if (hiddenIf(this.data, customOptions)) return null
+
+    name = parentKey ? `${parentKey}.${name}` : name
 
     let error = get(errors, name)
 
@@ -310,27 +314,27 @@ export default class Form extends Component<FormProps, FormState> {
     return <FieldComponent {...inputProps} />
   }
 
-  renderFormFields = (fields: Array<FormFields>) => {
-    return fields.map((field, index) => {
-      if (field.group && Array.isArray(field.fields)) {
+  renderFormFields = (fields: Array<FormFields>, parentKey: string = '') => {
+    return fields.map((field) => {
+      let { name } = field;
+      if (isGroupField(field)) {
         let {
-          fields: groupFields,
-          groupKey = index,
+          fields: groupFields = [],
           groupTitle,
           groupType = 'column',
           groupClass = ''
-        } = field;
+        } = field; // nested field props
         return (
-          <div className={cx('form-fields-groupped', `groupped-${groupType}`, groupClass)} key={groupKey}>
-            {groupTitle && <p>{groupTitle}</p>}
-            {this.renderFormFields(groupFields)}
+          <div className={cx('form-fields-groupped', `groupped-${groupType}`, groupClass)} key={name}>
+            {groupTitle && <label className='text-secondary text-bold mb-8'>{groupTitle}</label>}
+            {this.renderFormFields(groupFields, isNestedField(field) ? name : '')}
           </div>
         )
       }
       return (
-        <Fragment key={field.name}>
+        <Fragment key={name}>
           {
-            this.renderField(field)
+            this.renderField(field, parentKey)
           }
         </Fragment>
       )

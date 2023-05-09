@@ -206,6 +206,7 @@ $btn-font-weight: var(--ui-kit-btn-font-weight, 500);
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
   -webkit-appearance: none;
+  appearance: none;
   text-decoration: none;
   outline-width: 0;
   border-radius: $border-radius;
@@ -244,14 +245,13 @@ $btn-font-weight: var(--ui-kit-btn-font-weight, 500);
     width: 100%;
   }
 
-  &:not(:disabled):hover {
+  &:not(:disabled):not(.ui-kit-btn-raised):hover {
     background-image: none !important;
-    box-shadow: none;
+    box-shadow: 0 0 2px 1px inset rgba(0, 0, 0, 0.12);
   }
 
   &:not(:disabled):focus {
     outline: 0;
-    // box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.6), 0 2px 8px 0px rgba(0, 0, 0, 0.3), 0 0px 0px 2px rgba(0, 0, 0, 0.05);
   }
 
   &:disabled {

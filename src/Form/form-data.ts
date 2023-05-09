@@ -1,10 +1,10 @@
 import get from 'lodash.get'
 import set from 'lodash.set'
 import { ValidationError } from 'yup'
-import { isEqual, isFunction } from '../utils'
+import { isEqual, isFunction, isObject } from '../utils'
 import { FormFields, ChangedAttributesType, AttributesType } from './props'
 import Schema from './schema'
-import { isMultiValueField, isDateField, isBooleanField } from './utils'
+import { isMultiValueField, isDateField, isBooleanField, isGroupField, isNestedField } from './utils'
 
 const getNumberValue = (value: any) => value ? (isNaN(value) ? undefined : value) : undefined
 const getDateValue = (value: any) => value instanceof Date ? value : undefined
@@ -146,19 +146,21 @@ export default class FormData extends Schema {
     return this
   }
 
-  _setupData = (fields: Array<FormFields>, data: object, formData: any = {}) => {
+  _setupData = (fields: Array<FormFields>, data: object, formData: any = {}, parentKey: string = '') => {
     let today = new Date()
     let filteredFields = fields.filter((f) => !f.hidden)
     
     for (let field  of filteredFields) {
-      if (field.group && Array.isArray(field.fields)) {
-        this._setupData(field.fields, data, formData)
-        continue
-      }
       let {
         name, getter, component = 'TextInput', componentProps = {},
         type = 'text', default: defaultValue = undefined
       } = field
+      name = parentKey ? `${parentKey}.${name}` : name
+      if (isGroupField(field)) {
+        let { fields = [] } = field;
+        this._setupData(fields, data, formData, isNestedField(field) ? name : '')
+        continue
+      }
       let multiple = Boolean(componentProps.multiple)
       let value = getter && isFunction(getter) ? getter(data) : get(data, name)
       if (isMultiValueField(component, multiple)) {
@@ -191,22 +193,27 @@ export default class FormData extends Schema {
     return formData
   }
 
-  hasDirtyAttributes = () => {
-    let attrs = Object.entries(this.attributes)
-
-    return attrs.some(([, prop]) => {
-      let [previous, current = previous] = prop
+  hasDirtyAttributes = (allAttrs: ChangedAttributesType = this.attributes): boolean => {
+    let attrs = Object.entries(allAttrs);
+    return attrs.some(([, prop]: [any, [any, any]]) => {
+      if (!Array.isArray(prop) && isObject(prop)) {
+        return this.hasDirtyAttributes(prop as ChangedAttributesType)
+      }
+      let [previous, current = previous] = prop as [any, any]
       return !isEqual(previous, current)
-    })
+    });
   }
 
-  changedAttributes = (): AttributesType => {
-    let attrs = Object.entries(this.attributes)
-
-    return attrs.reduce((attributes, [key, prop]) => {
-      let [previous, current = previous] = prop
-      if (!isEqual(previous, current)) attributes[key] = current
+  changedAttributes = (allAttrs: ChangedAttributesType = this.attributes, data: AttributesType = {}, parentKey: string = ''): AttributesType => {
+    let attrs = Object.entries(allAttrs)
+    return attrs.reduce((attributes, [key, prop]: [any, [any, any]]) => {
+      key = parentKey ? `${parentKey}.${key}` : key
+      if (!Array.isArray(prop) && isObject(prop)) {
+        return this.changedAttributes(prop, attributes, key)
+      }
+      let [previous, current = previous] = prop as [any, any]
+      if (!isEqual(previous, current)) set(attributes, key, current)
       return attributes
-    }, {})
+    }, data)
   }
 }

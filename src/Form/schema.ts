@@ -1,8 +1,9 @@
 import * as yup from 'yup'
 import dayjs from 'dayjs'
 import isEmpty from 'is-empty'
+import set from 'lodash.set'
 import { FormFields } from './props'
-import { noopWithReturn, parseTranslationOptions } from './utils'
+import { isGroupField, isNestedField, noopWithReturn, parseTranslationOptions } from './utils'
 
 const {
   object,
@@ -44,17 +45,30 @@ export default class Schema {
     return !isEmpty(this._options.t)
   }
 
-  _setupSchema = (fields: Array<FormFields>, _schema: any = {}) => {
+  _nestedSchema = (fields: Array<FormFields> = []) => {
+    let shape = this._setupSchema(fields)
+    this._fieldOrder = Object.keys(shape)
+    let organizedShape = Object.entries(shape).reverse().reduce((prev, [key, value]) => ({ ...prev, [key]: value }), {})
+    return object().shape(organizedShape)
+  }
+
+  _setupSchema = (fields: Array<FormFields>, _schema: any = {}, parentKey: string = '') => {
     for (let field of fields) {
-      if (field.hidden || field.disabled) {
+      let { hidden = false, disabled = false, name } = field
+      if (hidden || disabled) {
         continue
       }
-      if (field.group && Array.isArray(field.fields)) {
-        this._setupSchema(field.fields, _schema)
+      name = parentKey ? `${parentKey}.${name}` : name
+      if (isGroupField(field)) {
+        let { fields: nestedFields = [] } = field
+        if (isNestedField(field) && nestedFields?.length) {
+          set(_schema, name, this._nestedSchema(nestedFields))
+        } else {
+          this._setupSchema(nestedFields, _schema, name)
+        }
         continue
       }
-      let schema = this._getFieldSchema(field)
-      _schema[field.name] = schema
+      set(_schema, name, this._getFieldSchema(field))
     }
 
     return _schema

@@ -54,6 +54,9 @@ export interface SelectProps extends InputProps {
   setMenuRef?: Function
   onOpen?: Function
   onChange?: Function
+  allowCreate?: boolean
+  onCreate?: Function
+  clearOnSearch?: boolean
 }
 
 export interface SelectState {
@@ -137,6 +140,8 @@ export interface MenuProps {
   inputContainerRef?: MutableRefObject<HTMLDivElement> | RefObject<HTMLDivElement>
   focus?: boolean
   containerMargin?: string
+  allowCreate?: boolean
+  onCreate: Function
 }
 
 export interface ExtraInputProps {

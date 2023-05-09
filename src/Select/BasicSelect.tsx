@@ -221,15 +221,17 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
   _handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist()
     let value = e.currentTarget.value
-    let clearSelection = !this.props.multiple && this.state.selected?.length
-    this.setState((prevState) => {
-      return {
-        isDirty: true,
-        selected: clearSelection ? [] : prevState.selected,
-        value,
-      }
+    let {
+      clearOnSearch = false,
+      multiple = false,
+      onInputChange = noop, onChange = noop
+    } = this.props
+    let clearSelection = clearOnSearch && !multiple && this.state.selected?.length
+    this.setState(() => {
+      let update: any = { isDirty: true, value }
+      if (clearSelection) update.selected = []
+      return update
     }, () => {
-      let { onInputChange = noop, onChange = noop } = this.props
       onInputChange(value, e)
       clearSelection && onChange([])
     })
@@ -368,10 +370,11 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
   _openMenu = () => {
     this._checkMenuPosition()
     this._enableAutoScroll()
+    let { onOpen = noop, defaultFirstItemSelected = false, multiple = false, labelKey } = this.props
     this.setState((prevState: SelectState) => {
       let nextState: SelectState = {
         id: prevState.id,
-        value: prevState.value,
+        value: '',
         open: true,
         activeIndex: -1
       }
@@ -379,7 +382,8 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
       if (!prevState.searchable) {
         nextState.activeIndex = getActiveIndex(results, selected.length ? selected : [], this.props)
       } else {
-        nextState.activeIndex = this.props.defaultFirstItemSelected ? 0 : -1
+        if (selected.length && !multiple) nextState.value = selected[0][labelKey]
+        nextState.activeIndex = defaultFirstItemSelected ? 0 : -1
       }
       nextState.activeItem = nextState.activeIndex === -1 ? null : results[nextState.activeIndex]
       return nextState
@@ -387,7 +391,7 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
       setTimeout(() => {
         this._listenClickEvent()
       }, 100)
-      this.props.onOpen && this.props.onOpen()
+      onOpen()
     })
   }
 
@@ -479,7 +483,9 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
     let {
       animate = true,
       transitionDuration = animate ? ANIMATION_TIMER : 0,
-      searchable
+      searchable,
+      allowCreate,
+      onCreate = noop
     } = this.props
 
     let {
@@ -519,6 +525,8 @@ class BasicSelect extends PureComponent<SelectProps, SelectState> {
               closeMenu={this._closeMenu}
               onMenuClick={this._onMenuClick}
               searchable={searchable || false}
+              allowCreate={searchable && allowCreate}
+              onCreate={onCreate}
               searchInputProps={{
                 value,
                 onChange: searchable ? this._handleInputChange : noop,

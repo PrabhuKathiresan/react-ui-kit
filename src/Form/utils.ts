@@ -1,4 +1,5 @@
 import { isString, isObject } from '../utils'
+import { FormFields } from './props'
 
 export const MULTI_VALUE_FIELDS = ['Select', 'Checkbox.Group']
 export const BOOLEAN_FIELDS = ['Checkbox']
@@ -30,3 +31,7 @@ export const parseTranslationOptions = (options: any = {}, t: Function = noopWit
   }
   return options
 }
+
+export const isNestedField = (field: FormFields) => field.type === 'nested'
+
+export const isGroupField = (field: FormFields) => (isNestedField(field) || Boolean(field.group)) && Array.isArray(field.fields)
