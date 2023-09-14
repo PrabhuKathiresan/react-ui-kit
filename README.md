@@ -15,13 +15,14 @@
 7. Radio and Radio group
 8. Dropdown
 9. Alert and AlertStack
-10. DatePicker and MonthPicker
-11. ProgressBar
-12. Loader
-13. Reusable Forms.
-14. Progressbar
-15. Accordion
-16. Tabs
-17. Button and Button group
-18. Carousel
-19. Tooltip
+10. DatePicker
+11. MonthPicker
+12. ProgressBar
+13. Loader
+14. Reusable Forms.
+15. Progressbar
+16. Accordion
+17. Tabs
+18. Button and Button group
+19. Carousel
+20. Tooltip
