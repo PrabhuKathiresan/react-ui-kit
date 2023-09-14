@@ -1,5 +1,7 @@
 # React-ui-kit
 
+Reusable react components
+
 ### Reusable components build using Reactjs
 
 `npm i --save @pk-design/react-ui-kit`
